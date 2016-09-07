@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="MyAlertDialogStyle" parent="Base.V7.Theme.AppCompat.Dialog">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#1b1b1b</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#8f8f8f</item>
+        <!-- Used for the background -->
+        <item name="android:background">#ffffff</item>
+    </style>
 </resources>
