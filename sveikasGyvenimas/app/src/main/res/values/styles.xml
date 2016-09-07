@@ -17,4 +17,18 @@
         <!-- Used for the background -->
         <item name="android:background">#ffffff</item>
     </style>
+
+
+    <style name="AppThemeBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimaryDark">#236a99</item>
+    <item name="colorPrimary">#2980b9</item>
+    <item name="colorAccent">#f39c12</item>
+</style>
+
+    <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">#236a99</item>
+        <item name="colorPrimary">#2980b9</item>
+        <item name="colorAccent">#f39c12</item>
+    </style>
+
 </resources>
