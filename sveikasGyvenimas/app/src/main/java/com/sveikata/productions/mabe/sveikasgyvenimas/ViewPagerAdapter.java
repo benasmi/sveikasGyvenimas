@@ -16,6 +16,20 @@ public class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapte
     @Override
     public Fragment getItem(int position) {
 
+        switch (position){
+            case 0:
+                return new HealthyLifeActivity();
+
+            case 1:
+                return new PlayActivity();
+
+            case 2:
+                return new IntrestingFactsActivity();
+
+            case 3:
+                return new AskQuestionsActivity();
+
+        }
 
         return null;
     }
@@ -23,12 +37,11 @@ public class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapte
     @Override
     public int getCount() {
 
-        return 0;
+        return TabActivityLoader.tabIcons.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-
-        return "S";
+      return null;
     }
 }

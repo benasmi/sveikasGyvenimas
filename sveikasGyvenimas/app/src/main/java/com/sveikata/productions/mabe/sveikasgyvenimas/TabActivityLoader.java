@@ -8,8 +8,8 @@ import android.view.View;
 
 public class TabActivityLoader extends AppCompatActivity {
 
-    int[] tabIcons = {R.drawable.schedule, R.drawable.play,R.drawable.facts,R.drawable.questions};
-    public static String[] tabs = {"Schedule", "Play", ""};
+    public static int[] tabIcons = {R.drawable.schedule, R.drawable.play,R.drawable.facts,R.drawable.questions};
+
     private ViewPager viewPager;
     public static TabLayout tabLayout;
 
@@ -28,7 +28,8 @@ public class TabActivityLoader extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                viewPager.setCurrentItem(tab.getPosition());
+                tabLayout.getTabAt(tab.getPosition()).setIcon(tabIcons[tab.getPosition()]);
             }
 
             @Override
@@ -38,7 +39,8 @@ public class TabActivityLoader extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                viewPager.setCurrentItem(tab.getPosition());
+                tabLayout.getTabAt(tab.getPosition()).setIcon(tabIcons[tab.getPosition()]);
             }
         });
 
