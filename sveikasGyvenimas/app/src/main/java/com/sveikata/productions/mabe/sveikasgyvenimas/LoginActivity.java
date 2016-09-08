@@ -3,6 +3,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username_ET;
     private EditText password_ET;
     private TextView register_link_TV;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
         register_link_TV = (TextView) findViewById(R.id.register_link);
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar.setTitle("Prisijungimas");
 
         register_link_TV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
+
     }
 
     public void logIn(View view){
