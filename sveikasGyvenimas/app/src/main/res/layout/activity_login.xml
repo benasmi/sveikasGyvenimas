@@ -30,14 +30,15 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:hint="Vartotojo vardas"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="50dp" />
 
         <EditText
             android:layout_width="380dp"
             android:layout_height="50dp"
-            android:inputType="textPassword"
             android:drawableLeft="@drawable/lock_icon"
             android:drawablePadding="5dp"
+            android:inputType="textPassword"
             android:ems="10"
             android:textColorHint="#515959"
             android:id="@+id/login_password_text"
@@ -45,7 +46,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:hint="Slaptažodis"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:layout_marginLeft="50dp" />
 
     </RelativeLayout>
 
@@ -69,7 +71,7 @@
         android:text="Registruotis"
         android:textColor="#ecf0f1"
         android:id="@+id/register_link_button"
-        android:onClick="registerRedirect"
+        android:onClick="logIn"
         android:background="@drawable/button_borders_green"
         android:layout_alignBottom="@+id/login_button"
         android:layout_alignParentRight="true"
