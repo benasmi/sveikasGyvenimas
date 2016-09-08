@@ -36,6 +36,7 @@
         <item name="colorPrimary">#2980b9</item>
         <item name="colorControlNormal">#9b59b6</item>
         <item name="colorControlActivated">#9b59b6</item>
+        <item name="android:windowDisablePreview">true</item>
         <item name="colorControlHighlight">#9b59b6</item>
         <item name="colorAccent">#f39c12</item>
     </style>

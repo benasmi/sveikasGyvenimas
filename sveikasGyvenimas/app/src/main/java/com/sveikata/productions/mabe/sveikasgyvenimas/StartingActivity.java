@@ -16,16 +16,6 @@ public class StartingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting);
 
-        TextView textView = (TextView) findViewById(R.id.top);
-        TextView textView1 = (TextView) findViewById(R.id.bot_view);
-
-
-        Typeface tf = Typeface.createFromAsset(getAssets(),
-                "fonts/manteka.ttf");
-
-        textView.setTypeface(tf);
-        textView1.setTypeface(tf);
-
 
         new Timer().schedule(new TimerTask() {
             @Override
