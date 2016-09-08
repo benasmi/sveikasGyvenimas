@@ -32,7 +32,7 @@
 </style>
 
     <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#27ae60</item>
+        <item name="colorPrimaryDark">#388E3C</item>
         <item name="colorPrimary">#2980b9</item>
         <item name="colorControlNormal">#ecf0f1</item>
         <item name="colorControlActivated">#ecf0f1</item>
