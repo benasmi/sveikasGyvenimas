@@ -12,7 +12,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText username_ET;
     private EditText password_ET;
-    private TextView register_link_TV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +19,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
-        register_link_TV = (TextView) findViewById(R.id.register_link);
-
-        register_link_TV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
-        });
-
-
     }
 
     public void logIn(View view){
@@ -37,5 +26,9 @@ public class LoginActivity extends AppCompatActivity {
         String password = password_ET.getText().toString().trim();
 
         //TODO: handle log in
+    }
+
+    public void registerRedirect(View view){
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
     }
 }
