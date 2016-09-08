@@ -7,109 +7,114 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#2ecc71"
+    android:background="#4CAF50"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout"
-        android:layout_above="@+id/view"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="27dp">
+        android:layout_marginTop="51dp">
 
         <EditText
-            android:layout_width="170dp"
+            android:layout_width="160dp"
             android:layout_height="40dp"
-            android:id="@+id/editText2"
+            android:id="@+id/surname"
             android:layout_weight="1"
             android:textColorHint="#ffffff"
             android:hint="Pavardė"
             android:paddingLeft="7dp"
-            android:layout_alignTop="@+id/editText"
+            android:layout_alignTop="@+id/name"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textColor="#ffffff" />
 
         <EditText
-            android:layout_width="170dp"
+            android:layout_width="160dp"
             android:layout_height="40dp"
-            android:id="@+id/editText"
+            android:id="@+id/name"
             android:layout_weight="1"
             android:textColorHint="#ffffff"
             android:hint="Vardas"
             android:paddingLeft="7dp"
+            android:textColor="#ffffff"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textColor="#ffffff" />
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:layout_width="380dp"
             android:layout_height="40dp"
             android:textColorHint="#ffffff"
-            android:id="@+id/editText3"
-            android:layout_below="@+id/editText2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
+            android:id="@+id/password"
             android:hint="Slaptažodis"
             android:paddingLeft="7dp"
-            android:textColor="#ffffff" />
-
-        <EditText
-            android:layout_width="380dp"
-            android:layout_height="40dp"
-            android:id="@+id/editText4"
-            android:hint="Pakartoti slaptažodį"
-            android:paddingLeft="7dp"
-            android:layout_below="@+id/editText3"
-            android:textColorHint="#ffffff"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:textColor="#ffffff" />
-
-        <EditText
-            android:layout_width="380dp"
-            android:layout_height="40dp"
-            android:id="@+id/editText5"
-            android:hint="El. Paštas"
-            android:paddingLeft="7dp"
-            android:layout_below="@+id/editText4"
-            android:textColorHint="#ffffff"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:textColor="#ffffff" />
-
-        <Spinner
-            android:layout_width="110dp"
-            android:layout_height="30dp"
-            android:id="@+id/spinner"
-            android:layout_below="@+id/editText5"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/username"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp" />
 
-        <Spinner
-            android:layout_width="110dp"
-            android:layout_height="30dp"
-            android:id="@+id/spinner2"
-            android:layout_alignTop="@+id/spinner"
-            android:layout_toRightOf="@+id/spinner"
-            android:layout_toEndOf="@+id/spinner"
-            android:layout_marginLeft="10dp" />
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="40dp"
+            android:id="@+id/repeat_password"
+            android:hint="Pakartoti slaptažodį"
+            android:paddingLeft="7dp"
+            android:layout_below="@+id/password"
+            android:textColorHint="#ffffff"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="40dp"
+            android:id="@+id/mail"
+            android:hint="El. Paštas"
+            android:paddingLeft="7dp"
+            android:layout_below="@+id/repeat_password"
+            android:textColorHint="#ffffff"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:textColor="#ffffff" />
 
         <Spinner
-            android:layout_width="110dp"
+            android:layout_width="170dp"
             android:layout_height="30dp"
-            android:id="@+id/spinner3"
-            android:layout_alignTop="@+id/spinner2"
-            android:layout_toRightOf="@+id/spinner2"
-            android:layout_toEndOf="@+id/spinner2"
-            android:layout_marginLeft="10dp" />
+            android:id="@+id/years"
+            android:layout_below="@+id/mail"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:spinnerMode="dropdown" />
+
+        <Spinner
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:id="@+id/gender"
+            android:spinnerMode="dropdown"
+            android:layout_alignTop="@+id/years"
+            android:layout_alignLeft="@+id/surname"
+            android:layout_alignStart="@+id/surname" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="40dp"
+            android:textColorHint="#ffffff"
+            android:id="@+id/username"
+            android:hint="Vartotojo vardas"
+            android:paddingLeft="7dp"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/name"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
 
     </RelativeLayout>
 
@@ -118,11 +123,13 @@
         android:layout_height="50dp"
         android:background="@drawable/button_borders_green"
         android:text="Registruotis !"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="29dp"
-        android:id="@+id/view">
+        android:id="@+id/register"
+        android:textColor="#ffffff"
+        android:onClick="register"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="31dp">
 
     </android.support.v7.widget.AppCompatButton>
 
