@@ -13,70 +13,76 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:id="@+id/relativeLayout"
+        android:layout_above="@+id/view"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/relativeLayout">
+        android:layout_marginBottom="27dp">
 
         <EditText
             android:layout_width="170dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:id="@+id/editText2"
             android:layout_weight="1"
-            android:background="@drawable/edit_borders"
+            android:textColorHint="#ffffff"
             android:hint="Pavardė"
             android:paddingLeft="7dp"
             android:layout_alignTop="@+id/editText"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:textColor="#ffffff" />
 
         <EditText
             android:layout_width="170dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:id="@+id/editText"
             android:layout_weight="1"
-            android:background="@drawable/edit_borders"
+            android:textColorHint="#ffffff"
             android:hint="Vardas"
             android:paddingLeft="7dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textColor="#ffffff" />
 
         <EditText
             android:layout_width="380dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
+            android:textColorHint="#ffffff"
             android:id="@+id/editText3"
-            android:background="@drawable/edit_borders"
             android:layout_below="@+id/editText2"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
             android:hint="Slaptažodis"
-            android:paddingLeft="7dp" />
+            android:paddingLeft="7dp"
+            android:textColor="#ffffff" />
 
         <EditText
             android:layout_width="380dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:id="@+id/editText4"
-            android:background="@drawable/edit_borders"
             android:hint="Pakartoti slaptažodį"
             android:paddingLeft="7dp"
             android:layout_below="@+id/editText3"
+            android:textColorHint="#ffffff"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:textColor="#ffffff" />
 
         <EditText
             android:layout_width="380dp"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:id="@+id/editText5"
-            android:background="@drawable/edit_borders"
             android:hint="El. Paštas"
             android:paddingLeft="7dp"
             android:layout_below="@+id/editText4"
+            android:textColorHint="#ffffff"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:textColor="#ffffff" />
 
         <Spinner
             android:layout_width="110dp"
@@ -112,9 +118,11 @@
         android:layout_height="50dp"
         android:background="@drawable/button_borders_green"
         android:text="Registruotis !"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="29dp"
+        android:id="@+id/view">
 
     </android.support.v7.widget.AppCompatButton>
 
