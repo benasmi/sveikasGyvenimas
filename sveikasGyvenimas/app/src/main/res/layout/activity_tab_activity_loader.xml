@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        >
+        android:layout_below="@+id/my_toolbar">
 
     </android.support.v4.view.ViewPager>
 
@@ -20,7 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:id="@+id/tab_layout"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="56dp"
+        >
 
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
@@ -33,6 +36,15 @@
             android:background="#DD4337"></android.support.design.widget.TabLayout>
 
     </RelativeLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#DD4337"
+        android:theme="@style/AppThemeBar"
+        app:popupTheme="@style/AppThemeBar"/>
+
 
 
 

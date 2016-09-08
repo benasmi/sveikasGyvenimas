@@ -3,8 +3,12 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowManager;
 
 /**
  * Created by Benas on 9/7/2016.
@@ -24,8 +28,6 @@ public class CheckingUtils {
     }
 
     public static void createErrorBox(String message, Context context) {
-
-
         new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 .setMessage(message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -37,4 +39,14 @@ public class CheckingUtils {
                 })
                 .show();
     }
+
+    public static void changeNotifBarColor(String color, Window window){
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.parseColor(color));
+        }
+    }
+
 }

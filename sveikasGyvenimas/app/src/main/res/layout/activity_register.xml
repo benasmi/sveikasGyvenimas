@@ -7,6 +7,103 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#2ecc71"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:id="@+id/editText2"
+            android:layout_weight="1"
+            android:background="@drawable/edit_borders"
+            android:hint="Pavardė"
+            android:paddingLeft="7dp"
+            android:layout_alignTop="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:id="@+id/editText"
+            android:layout_weight="1"
+            android:background="@drawable/edit_borders"
+            android:hint="Vardas"
+            android:paddingLeft="7dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="30dp"
+            android:id="@+id/editText3"
+            android:background="@drawable/edit_borders"
+            android:layout_below="@+id/editText2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:hint="Slaptažodis"
+            android:paddingLeft="7dp" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="30dp"
+            android:id="@+id/editText4"
+            android:background="@drawable/edit_borders"
+            android:hint="Pakartoti slaptažodį"
+            android:paddingLeft="7dp"
+            android:layout_below="@+id/editText3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="30dp"
+            android:id="@+id/editText5"
+            android:background="@drawable/edit_borders"
+            android:hint="El. Paštas"
+            android:paddingLeft="7dp"
+            android:layout_below="@+id/editText4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:layout_width="110dp"
+            android:layout_height="30dp"
+            android:id="@+id/spinner"
+            android:layout_below="@+id/editText5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
+
+        <Spinner
+            android:layout_width="110dp"
+            android:layout_height="30dp"
+            android:id="@+id/spinner2"
+            android:layout_alignTop="@+id/spinner"
+            android:layout_toRightOf="@+id/spinner"
+            android:layout_toEndOf="@+id/spinner"
+            android:layout_marginLeft="10dp" />
+
+        <Spinner
+            android:layout_width="110dp"
+            android:layout_height="30dp"
+            android:id="@+id/spinner3"
+            android:layout_alignTop="@+id/spinner2"
+            android:layout_toRightOf="@+id/spinner2"
+            android:layout_toEndOf="@+id/spinner2"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

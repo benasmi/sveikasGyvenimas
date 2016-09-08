@@ -14,6 +14,7 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_intresting_facts,container,false);
 
+
         return rootView;
     }
 }

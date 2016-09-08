@@ -26,7 +26,7 @@
 </style>
 
     <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#236a99</item>
+        <item name="colorPrimaryDark">#27ae60</item>
         <item name="colorPrimary">#2980b9</item>
         <item name="colorAccent">#f39c12</item>
     </style>
