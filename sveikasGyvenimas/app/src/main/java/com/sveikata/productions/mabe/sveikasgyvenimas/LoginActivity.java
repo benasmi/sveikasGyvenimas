@@ -13,7 +13,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username_ET;
     private EditText password_ET;
     private TextView register_link_TV;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +21,6 @@ public class LoginActivity extends AppCompatActivity {
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
         register_link_TV = (TextView) findViewById(R.id.register_link);
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setTitle("Prisijungimas");
 
         register_link_TV.setOnClickListener(new View.OnClickListener() {
             @Override
