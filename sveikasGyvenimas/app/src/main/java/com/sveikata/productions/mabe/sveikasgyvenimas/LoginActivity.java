@@ -20,6 +20,9 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        if(!getIntent().getExtras().getBoolean("isAnimDisabled", false))
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_out);
+
         setContentView(R.layout.activity_login);
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: handle log in
     }
+
 
     public void register(View view){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

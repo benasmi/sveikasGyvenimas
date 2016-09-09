@@ -14,7 +14,7 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/imageView"
+        android:id="@+id/heart"
         android:src="@drawable/icon"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
@@ -28,7 +28,7 @@
         android:textColor="#ffffff"
         android:textSize="18dp"
         android:textStyle="italic"
-        android:layout_above="@+id/imageView"
+        android:layout_above="@+id/heart"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp" />
 

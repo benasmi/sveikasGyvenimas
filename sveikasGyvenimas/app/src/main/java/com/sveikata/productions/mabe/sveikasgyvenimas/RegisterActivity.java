@@ -35,14 +35,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private TextView register_txt;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
         //EditTexts
         name_ET = (EditText) findViewById(R.id.name);
         last_name_ET = (EditText) findViewById(R.id.last_name);
