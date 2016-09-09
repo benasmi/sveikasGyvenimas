@@ -25,7 +25,13 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     private int response;
     private SharedPreferences sharedPreferences;
     private Context context;
-    public static String SERVER_ADRESS_LOGIN = "http://sveikasgyvenimas.ax.lt/login.php";
+
+    private String username_login;
+    private String password_login;
+
+    public static String SERVER_ADRESS_REGISTER = "http://dvp.lt/android/register.php";
+    public static String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
+
 
 
     public ServerManager(Context context){
@@ -52,6 +58,13 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String type = params[8];
 
             response = register(name,last_name,username,password,mail,gender,years,type);
+        }
+        if(method_type.equals("LOGIN")) {
+
+            username_login = params[1];
+            password_login = params[2];
+
+            response = login(username_login,password_login);
         }
 
         return null;
@@ -83,17 +96,58 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             }
         }
 
+        if(method_type.equals("LOGIN")){
+            switch (response) {
+                case 0:
+                    sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username_login);
+                    editor.putString("password", password_login);
+                    editor.commit();
+                    context.startActivity(new Intent(context, TabActivityLoader.class));
+                    break;
+                case 1:
+                    CheckingUtils.createErrorBox("Wrong username or password", context);
+                    break;
+
+                case 2:
+                    context.startActivity(new Intent(context, ActivateAccountActivity.class));
+                    break;
+
+                case 3:
+                    CheckingUtils.createErrorBox("You need internet connection to do that", context);
+                    break;
+            }
+
+         }
         super.onPostExecute(aVoid);
-    }
+        }
+
+
+
 
     public int register(String name, String last_name, String username, String password, String mail, String gender, String age, String type){
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGIN);
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_REGISTER);
 
         //JSON object.
         JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("name", name);
+            jsonObject.putOpt("last_name", last_name);
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("mail", mail);
+            jsonObject.putOpt("gender", gender);
+            jsonObject.putOpt("age", age);
+            jsonObject.putOpt("type", type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         EntityBuilder entity = EntityBuilder.create();
         entity.setText(jsonObject.toString());
@@ -119,6 +173,49 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             return 0;
         }
 
+    }
+
+
+    private int login(String username, String password) {
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGIN);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        EntityBuilder entity = EntityBuilder.create();
+        entity.setText(jsonObject.toString());
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            return responseObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
 }

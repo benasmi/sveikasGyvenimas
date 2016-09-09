@@ -9,20 +9,14 @@
         android:supportsRtl="true"
 
         android:theme="@style/AppThemeNoBar">
-<<<<<<< HEAD
+
         <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".TabActivityLoader" android:screenOrientation="portrait"/>
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait">
-
         </activity>
 
         <activity android:name=".StartingActivity" android:noHistory="true" android:screenOrientation="portrait">
-=======
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".TabActivityLoader" />
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".StartingActivity">
->>>>>>> 37a4640f046d186df955c8092f543fcd908d6cdf
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
