@@ -9,17 +9,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoBar">
         <activity android:name=".LoginActivity" />
-        <activity android:name=".TabActivityLoader"/>
-        <activity android:name=".RegisterActivity">
-
-        </activity>
-
+        <activity android:name=".TabActivityLoader" />
+        <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".StartingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActivateAccountActivity"></activity>
     </application>
 
 </manifest>
