@@ -13,12 +13,17 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username_ET;
     private EditText password_ET;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
+
     }
 
     public void logIn(View view){
@@ -28,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         //TODO: handle log in
     }
 
-    public void registerRedirect(View view){
+    public void register(View view){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+
     }
 }

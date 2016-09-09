@@ -7,120 +7,142 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#4CAF50"
+    android:background="#009688"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="51dp">
+        android:layout_alignParentStart="true">
 
         <EditText
             android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:id="@+id/surname"
+            android:layout_height="35dp"
+            android:id="@+id/last_name"
             android:layout_weight="1"
-            android:textColorHint="#ffffff"
+            android:textColorHint="#999999"
             android:hint="Pavardė"
-            android:paddingLeft="7dp"
+            android:paddingLeft="10dp"
             android:layout_alignTop="@+id/name"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:textColor="#ffffff" />
+            android:textColor="#999999"
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp"
+            android:maxLength="18" />
 
         <EditText
             android:layout_width="160dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:id="@+id/name"
             android:layout_weight="1"
-            android:textColorHint="#ffffff"
+            android:textColorHint="#999999"
             android:hint="Vardas"
-            android:paddingLeft="7dp"
-            android:textColor="#ffffff"
+            android:paddingLeft="10dp"
+            android:textColor="#999999"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp"
+            android:maxLength="18" />
 
         <EditText
-            android:layout_width="380dp"
-            android:layout_height="40dp"
-            android:textColorHint="#ffffff"
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:textColorHint="#999999"
             android:id="@+id/password"
             android:hint="Slaptažodis"
-            android:paddingLeft="7dp"
-            android:textColor="#ffffff"
-            android:layout_below="@+id/username"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
-
-        <EditText
-            android:layout_width="380dp"
-            android:layout_height="40dp"
-            android:id="@+id/repeat_password"
-            android:hint="Pakartoti slaptažodį"
-            android:paddingLeft="7dp"
-            android:layout_below="@+id/password"
-            android:textColorHint="#ffffff"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp"
-            android:textColor="#ffffff" />
-
-        <EditText
-            android:layout_width="380dp"
-            android:layout_height="40dp"
-            android:id="@+id/mail"
-            android:hint="El. Paštas"
-            android:paddingLeft="7dp"
-            android:layout_below="@+id/repeat_password"
-            android:textColorHint="#ffffff"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp"
-            android:textColor="#ffffff" />
-
-        <Spinner
-            android:layout_width="170dp"
-            android:layout_height="30dp"
-            android:id="@+id/years"
+            android:paddingLeft="10dp"
+            android:textColor="#999999"
+            android:inputType="textPassword"
             android:layout_below="@+id/mail"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="15dp"
-            android:spinnerMode="dropdown" />
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp"
+            android:maxLength="18" />
 
-        <Spinner
-            android:layout_width="170dp"
-            android:layout_height="30dp"
-            android:id="@+id/gender"
-            android:spinnerMode="dropdown"
-            android:layout_alignTop="@+id/years"
-            android:layout_alignLeft="@+id/surname"
-            android:layout_alignStart="@+id/surname" />
+        <EditText
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:id="@+id/repeat_password"
+            android:inputType="textPassword"
+            android:hint="Kartoti slaptažodį"
+            android:paddingLeft="10dp"
+            android:textColorHint="#999999"
+            android:textColor="#999999"
+            android:layout_alignTop="@+id/password"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp"
+            android:maxLength="18" />
 
         <EditText
             android:layout_width="380dp"
-            android:layout_height="40dp"
-            android:textColorHint="#ffffff"
+            android:layout_height="35dp"
+            android:id="@+id/mail"
+            android:hint="El. Paštas"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="10dp"
+            android:layout_below="@+id/username"
+            android:textColorHint="#999999"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:textColor="#999999"
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:id="@+id/years"
+            android:layout_below="@+id/password"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/button_borders_different_color"
+             />
+
+        <Spinner
+            android:layout_width="160dp"
+            android:layout_height="35dp"
+            android:id="@+id/gender"
+            android:layout_below="@id/password"
+            android:spinnerMode="dropdown"
+            android:layout_alignTop="@+id/years"
+            android:layout_alignLeft="@+id/last_name"
+            android:layout_alignStart="@+id/last_name"
+            android:background="@drawable/button_borders_different_color" />
+
+        <EditText
+            android:layout_width="380dp"
+            android:layout_height="35dp"
+            android:textColorHint="#999999"
             android:id="@+id/username"
             android:hint="Vartotojo vardas"
-            android:paddingLeft="7dp"
-            android:textColor="#ffffff"
+            android:paddingLeft="10dp"
+            android:textColor="#999999"
             android:layout_below="@+id/name"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp"
+            android:maxLength="32" />
 
     </RelativeLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="370dp"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:background="@drawable/button_borders_green"
         android:text="Registruotis !"
         android:id="@+id/register"
@@ -129,9 +151,20 @@
         android:layout_below="@+id/relativeLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="31dp">
+        android:layout_marginTop="39dp">
 
     </android.support.v7.widget.AppCompatButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Registracija"
+        android:id="@+id/register_textview"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="52dp"
+        android:textSize="40dp" />
 
 
 </RelativeLayout>
