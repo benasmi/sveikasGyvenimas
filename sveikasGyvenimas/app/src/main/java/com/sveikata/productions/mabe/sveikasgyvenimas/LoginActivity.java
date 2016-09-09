@@ -33,12 +33,21 @@ public class LoginActivity extends AppCompatActivity {
         String username = username_ET.getText().toString().trim();
         String password = password_ET.getText().toString().trim();
 
-        //TODO: handle log in
+        if(username.isEmpty()){
+            username_ET.setError("Įveskite vartotojo vardą");
+            return;
+        }
+        if(password.isEmpty()){
+            password_ET.setError("Įveskite slaptažodį");
+            return;
+        }
+
+        new ServerManager(this).execute("LOGIN", username,password);
+
     }
 
 
     public void register(View view){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-
     }
 }

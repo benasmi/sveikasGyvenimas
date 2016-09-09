@@ -131,20 +131,11 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if(!CheckingUtils.isNetworkConnected(this)){
+            CheckingUtils.createErrorBox("Norėdami prisijungti, turite įjungti internetą",this);
+            return;
+        }
+        new ServerManager(this).execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular");
 
     }
 }
