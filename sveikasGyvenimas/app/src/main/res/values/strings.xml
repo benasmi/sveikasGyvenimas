@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Sveikas gyvenimas</string>
     <string name="years">Labas</string>
+    <string name="facebook_app_id">758055920999143</string>
 </resources>
