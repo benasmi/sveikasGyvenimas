@@ -41,7 +41,7 @@
 
         <EditText
             android:layout_width="160dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:id="@+id/last_name"
             android:layout_weight="1"
             android:textColorHint="#999999"
@@ -57,7 +57,7 @@
 
         <EditText
             android:layout_width="160dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:id="@+id/name"
             android:layout_weight="1"
             android:textColorHint="#999999"
@@ -73,7 +73,7 @@
 
         <EditText
             android:layout_width="160dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:textColorHint="#999999"
             android:id="@+id/password"
             android:hint="Slaptažodis"
@@ -90,7 +90,7 @@
 
         <EditText
             android:layout_width="160dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:id="@+id/repeat_password"
             android:inputType="textPassword"
             android:hint="Kartoti slaptažodį"
@@ -106,7 +106,7 @@
 
         <EditText
             android:layout_width="380dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:id="@+id/mail"
             android:hint="El. Paštas"
             android:inputType="textEmailAddress"
@@ -122,7 +122,7 @@
 
         <Spinner
             android:layout_width="160dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:id="@+id/years"
             android:layout_below="@+id/password"
             android:layout_alignParentLeft="true"
@@ -134,7 +134,7 @@
 
         <Spinner
             android:layout_width="160dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:id="@+id/gender"
             android:layout_below="@id/password"
             android:spinnerMode="dropdown"
@@ -145,7 +145,7 @@
 
         <EditText
             android:layout_width="380dp"
-            android:layout_height="35dp"
+            android:layout_height="38dp"
             android:textColorHint="#999999"
             android:id="@+id/username"
             android:hint="Vartotojo vardas"
@@ -163,7 +163,7 @@
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="370dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:background="@drawable/button_borders_green"
         android:text="Registruotis !"
         android:id="@+id/register"

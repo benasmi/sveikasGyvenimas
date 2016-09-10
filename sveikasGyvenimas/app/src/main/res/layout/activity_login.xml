@@ -29,7 +29,8 @@
             android:layout_centerHorizontal="true"
             android:hint="Vartotojo vardas"
             android:paddingLeft="5dp"
-            android:layout_marginLeft="50dp" />
+            android:layout_marginLeft="50dp"
+            android:textSize="18dp" />
 
         <EditText
             android:layout_width="380dp"
@@ -45,7 +46,8 @@
             android:layout_centerHorizontal="true"
             android:hint="Slaptažodis"
             android:paddingLeft="5dp"
-            android:layout_marginLeft="50dp" />
+            android:layout_marginLeft="50dp"
+            android:textSize="18dp" />
 
         <Button
             android:layout_width="100dp"

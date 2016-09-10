@@ -6,9 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">#9b59b6</item>
-        <item name="colorControlActivated">#9b59b6</item>
-        <item name="colorControlHighlight">#9b59b6</item>
+        <item name="colorControlNormal">#ecf0f1</item>
+        <item name="colorControlActivated">#ecf0f1</item>
+        <item name="colorControlHighlight">#ecf0f1</item>
     </style>
 
 
@@ -26,18 +26,18 @@
     <item name="colorPrimaryDark">#236a99</item>
     <item name="colorPrimary">#2980b9</item>
     <item name="colorAccent">#f39c12</item>
-        <item name="colorControlNormal">#9b59b6</item>
-        <item name="colorControlActivated">#9b59b6</item>
-        <item name="colorControlHighlight">#9b59b6</item>
+        <item name="colorControlNormal">#2c3e50</item>
+        <item name="colorControlActivated">#2c3e50</item>
+        <item name="colorControlHighlight">#2c3e50</item>
 </style>
 
     <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">#00796B</item>
         <item name="colorPrimary">#2980b9</item>
-        <item name="colorControlNormal">#9b59b6</item>
-        <item name="colorControlActivated">#9b59b6</item>
+        <item name="colorControlNormal">#ecf0f1</item>
+        <item name="colorControlActivated">#ecf0f1</item>
         <item name="android:windowDisablePreview">true</item>
-        <item name="colorControlHighlight">#9b59b6</item>
+        <item name="colorControlHighlight">#ecf0f1</item>
         <item name="colorAccent">#f39c12</item>
     </style>
 
