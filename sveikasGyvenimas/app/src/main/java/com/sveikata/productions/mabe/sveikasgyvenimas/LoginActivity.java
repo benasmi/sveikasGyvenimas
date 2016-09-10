@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password_ET;
     private Button loginButton;
     private CallbackManager callbackManager;
+    private SharedPreferences sharedPrefs;
 
 
     @Override
@@ -45,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
+
+        sharedPrefs = getSharedPreferences("DataPrefs", MODE_PRIVATE);
 
         setContentView(R.layout.activity_login);
 
@@ -62,6 +66,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         loginButton = (Button) findViewById(R.id.login_button);
+
+
+        if(!sharedPrefs.getString("username", "").isEmpty())
+            startActivity(new Intent(this, TabActivityLoader.class));
+
 
 
 
@@ -87,17 +96,21 @@ public class LoginActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
+
+                                Log.i("TEST", object.toString());
                                 try {
-                                    String name = object.getString("name");
+                                    String name = object.getString("first_name");
                                     String last_name = object.getString("last_name");
                                     String username = object.getString("id");
-                                    String password = String.valueOf(loginResult.getAccessToken());
+                                    String password = loginResult.getAccessToken().getToken().toString();
                                     String mail = object.getString("email");
                                     String gender = object.getString("gender");
-                                    String years = object.getString("age");
+                                    String years = "15";
                                     String type = "fb";
 
-                                    new ServerManager(LoginActivity.this).execute("REGISTRATION", name, last_name, username, mail, gender, years, type);
+                                    new ServerManager(LoginActivity.this).execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type);
+                                    sharedPrefs.edit().putString("username", username).commit();
+                                    sharedPrefs.edit().putString("password", password).commit();
                                 }catch (Exception e ){
                                     Log.i("TEST", "ERROR");
                                 }

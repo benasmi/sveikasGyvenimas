@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -57,7 +58,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String years = params[7];
             String type = params[8];
 
+
             response = register(name,last_name,username,password,mail,gender,years,type);
+
+            if(!type.equals("regular"))
+                context.startActivity(new Intent(context, TabActivityLoader.class));
+
         }
         if(method_type.equals("LOGIN")) {
 
@@ -148,6 +154,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
         }
 
+        Log.i("TEST", jsonObject.toString());
+
 
         EntityBuilder entity = EntityBuilder.create();
         entity.setText(jsonObject.toString());
@@ -162,9 +170,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String responseBody = EntityUtils.toString(response.getEntity());
             System.err.println(responseBody);
             responseObject = new JSONObject(responseBody);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
 
         try {
             return responseObject.getInt("code");
@@ -172,6 +183,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
             return 0;
         }
+
+
 
     }
 
@@ -216,6 +229,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
             return 0;
         }
+
+
     }
 
 }
