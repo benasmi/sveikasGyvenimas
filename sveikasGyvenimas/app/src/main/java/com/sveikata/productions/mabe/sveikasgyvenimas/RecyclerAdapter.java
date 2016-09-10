@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
     public Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<InfoHolder> infoHolder;
+
 
     public RecycleAdapter(Context context, ArrayList<InfoHolder> infoHolder) {
         this.infoHolder = infoHolder;
@@ -40,14 +42,6 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
     }
 
 
-    @Override
-    public int getItemViewType(int position) {
-        InfoHolder data = infoHolder.get(position);
-        int type = Integer.valueOf(data.getType());
-
-
-        return type;
-    }
 
     @Override
     public int getItemCount() {
@@ -56,60 +50,51 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        switch (viewType) {
-            case 0:
-
-//                View view = layoutInflater.inflate(R.layout.list_item, parent, false);
-//                ViewHolder holder = new ViewHolder(view, 0);
-//                return holder;
-
-            case 1:
-
-//                View view1 = layoutInflater.inflate(R.layout.message_list_item, parent, false);
-//                ViewHolder holder1 = new ViewHolder(view1, 1);
-//                return holder1;
-
-        }
-
-
-
-        return null;
-
+        View view = layoutInflater.inflate(R.layout.schedule_item, parent, false);
+        ViewHolder holder = new ViewHolder(view, 0);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         InfoHolder data = infoHolder.get(position);
 
+        holder.event_date_and_place.setText(data.getEvent_location_and_date());
+        holder.event_name.setText(data.getEvent_name());
+        holder.event_description.setText(data.getEvent_description());
 
-        String dataType = data.getType();
-        if (dataType.equals("0")) {
-            //HANDLE ADMINISTRATOR
-        } else {
-           //HANDLE USER
-        }
     }
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private RelativeLayout layout;
+        private TextView event_name;
+        private TextView event_date_and_place;
+        private TextView event_description;
+        private boolean isClicked = true;
 
         public ViewHolder(View itemView, int type) {
 
             super(itemView);
 
+            event_date_and_place = (TextView) itemView.findViewById(R.id.event_date_and_place);
+            event_name = (TextView) itemView.findViewById(R.id.event_name);
+            event_description = (TextView) itemView.findViewById(R.id.event_description);
 
-            switch (type) {
-                case 0:
-
-                    break;
-                case 1:
-
-                    break;
-            }
-
-
+            layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
+            layout.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View view) {
+            ResizeAnimation expand = new ResizeAnimation(view, (int) CheckingUtils.convertPixelsToDp(110, context), (int) CheckingUtils.convertPixelsToDp(55, context));
+            expand.setDuration(200);
+            ResizeAnimation shrink = new ResizeAnimation(view, (int) CheckingUtils.convertPixelsToDp(55, context), (int) CheckingUtils.convertPixelsToDp(110, context));
+            shrink.setDuration(200);
+            view.startAnimation(isClicked ? expand : shrink);
+
+            isClicked = !isClicked;
+        }
     }
 
 }

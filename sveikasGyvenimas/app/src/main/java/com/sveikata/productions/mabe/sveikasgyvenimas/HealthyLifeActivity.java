@@ -13,7 +13,6 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_healthy_life,container,false);
-
         return rootView;
     }
 }

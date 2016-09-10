@@ -3,10 +3,12 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -20,6 +22,11 @@ public class CheckingUtils {
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+    public static float convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, resources.getDisplayMetrics());
+
     }
 
     public static boolean isGpsEnabled(Context context){
