@@ -20,6 +20,12 @@
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
         <activity android:name=".StartingActivity" android:noHistory="true" android:screenOrientation="portrait">
 
             <intent-filter>
