@@ -13,7 +13,7 @@
 
         android:theme="@style/AppThemeNoBar">
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
 
         <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".TabActivityLoader" android:screenOrientation="portrait"/>
@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivateAccountActivity"></activity>
+
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

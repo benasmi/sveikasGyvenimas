@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText username_ET;
@@ -20,10 +22,15 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+         
+        setContentView(R.layout.activity_login);
+
         if(!getIntent().getExtras().getBoolean("isAnimDisabled", false))
             overridePendingTransition(R.anim.slide_down, R.anim.slide_out);
 
-        setContentView(R.layout.activity_login);
+
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
 
