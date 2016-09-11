@@ -15,14 +15,14 @@ import java.util.ArrayList;
 /**
  * Created by Martyno on 2016.09.10.
  */
-class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
+class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     public Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<InfoHolder> infoHolder;
 
 
-    public RecycleAdapter(Context context, ArrayList<InfoHolder> infoHolder) {
+    public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder) {
         this.infoHolder = infoHolder;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -54,6 +54,8 @@ class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
         ViewHolder holder = new ViewHolder(view, 0);
         return holder;
     }
+
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

@@ -38,20 +38,15 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
     private ArrayList<InfoHolder> data = new ArrayList<InfoHolder>();
     private RecyclerView recyclerView;
-    private RecycleAdapter adapter;
+    private RecyclerAdapter adapter;
 
     //OBJECTS for checking if user is admin
     private JSONArray jsonArray;
     private JSONObject userData;
-    private String checkingIfAdmin;
-
-    //OBJECTS for loading schedule data into recyclerView
-    private JSONArray scheduleDataArray;
-    private JSONObject scheduleData;
-    private String schedule;
 
     private String is_administrator;
     private View rootView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,9 +55,6 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
         SharedPreferences userPrefs = getActivity().getSharedPreferences("UserData", getActivity().MODE_PRIVATE);
         String user_data = userPrefs.getString("user_data", "");
 
-        //Preferences to fetch all schedule data
-        SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
-        String schedule = dataPrefs.getString("schedule_data", "");
 
 
         try {
@@ -81,7 +73,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.activity_schedule_layout_admin,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-            adapter = new RecycleAdapter(getActivity(), data);
+            adapter = new RecyclerAdapter(getActivity(), data);
+            initializeData(adapter);
 
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -92,7 +85,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.activity_schedule_layout,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
-            adapter = new RecycleAdapter(getActivity(), data);
+            adapter = new RecyclerAdapter(getActivity(), data);
+            initializeData(adapter);
 
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -141,6 +135,32 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                         "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
                         .show();
             }
+
+    }
+    public void initializeData(RecyclerAdapter adapter){
+        //Preferences to fetch all schedule data
+        SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
+        String schedule = dataPrefs.getString("schedule_data", "");
+
+        try {
+           JSONArray scheduleDataArray = new JSONArray(schedule);
+            for (int i = 0; i<scheduleDataArray.length(); i++){
+                JSONObject scheduleData = scheduleDataArray.getJSONObject(i);
+
+                String event_description = scheduleData.getString("description");
+                String event_name = scheduleData.getString("name");
+                String event_location = scheduleData.getString("location");
+                String event_date = scheduleData.getString("date");
+
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description));
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
