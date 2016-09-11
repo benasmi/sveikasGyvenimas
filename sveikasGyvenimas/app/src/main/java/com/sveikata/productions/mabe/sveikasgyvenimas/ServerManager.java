@@ -114,6 +114,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(method_type.equals("LOGIN")){
             switch (response) {
                 case 0:
+                    sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username_login);
+                    editor.putString("password", password_login);
+                    editor.commit();
                     new fetchData().execute();
                     break;
                 case 1:
@@ -192,6 +197,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
+    public void startFetchingData(){
+        new fetchData().execute();
+    }
+
 
     private int login(String username, String password) {
 
@@ -236,13 +245,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
-    public void fetchScheduleData(String username, String password){
+    public void fetchScheduleData(){
 
-        if(username.isEmpty() || password.isEmpty()){
+
+
+
             SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-            username =loginPrefs.getString("username","");
-            password = loginPrefs.getString("password","");
-        }
+            String username =loginPrefs.getString("username","");
+            String password = loginPrefs.getString("password","");
+
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -269,7 +280,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             SharedPreferences sharedPreferences = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("schedule_data", jsonArray.toString());
+            editor.putString("schedule_data", jsonArray.toString()).commit();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -279,14 +290,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
-    public void fetchUserData(String username, String password){
+    public void fetchUserData(){
 
 
-        if(username.isEmpty() || password.isEmpty()){
+
+
             SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-            username =loginPrefs.getString("username","");
-            password = loginPrefs.getString("password","");
-        }
+            String username =loginPrefs.getString("username","");
+            String password = loginPrefs.getString("password","");
+
 
 
         //Connect to mysql.
@@ -310,9 +322,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String responseBody = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = new JSONArray(responseBody);
 
+            System.out.println("async" + jsonArray.toString());
+
             SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("user_data", jsonArray.toString());
+            editor.putString("user_data", jsonArray.toString()).commit();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -331,8 +345,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            fetchScheduleData(username_login, password_login);
-            fetchUserData(username_login,password_login);
+            fetchScheduleData();
+            fetchUserData();
 
             return null;
         }
@@ -340,11 +354,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username", username_login);
-            editor.putString("password", password_login);
-            editor.commit();
+
             context.startActivity(new Intent(context, TabActivityLoader.class));
 
             super.onPostExecute(aVoid);

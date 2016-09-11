@@ -69,10 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(!sharedPrefs.getString("username", "").isEmpty())
-            startActivity(new Intent(this, TabActivityLoader.class));
-
-
-
+            new ServerManager(this).startFetchingData();
 
 
     }

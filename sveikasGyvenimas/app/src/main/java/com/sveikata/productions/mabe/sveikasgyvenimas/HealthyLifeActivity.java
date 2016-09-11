@@ -61,12 +61,14 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
         String user_data = userPrefs.getString("user_data", "");
 
         //Preferences to fetch all schedule data
-        SharedPreferences dataPrefs = getActivity().getSharedPreferences("UserData", getActivity().MODE_PRIVATE);
+        SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
         String schedule = dataPrefs.getString("schedule_data", "");
+
 
         try {
             jsonArray = new JSONArray(user_data);
             userData = jsonArray.getJSONObject(0);
+
 
             is_administrator = userData.getString("is_admin");
 
@@ -141,4 +143,5 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             }
 
     }
+
 }
