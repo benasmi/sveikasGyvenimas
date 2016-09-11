@@ -38,6 +38,7 @@
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBGiAZ62W0aiWDFdoOot1MxKIjcdb81Ysk"></meta-data>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        android:name="android.support.multidex.MultiDexApplication">
     </application>
 
 </manifest>

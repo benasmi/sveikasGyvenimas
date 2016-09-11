@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:background="#ecf0f1"
-        android:layout_below="@+id/map_container">
+        android:layout_below="@+id/map_container"
+        android:id="@+id/add_layout">
 
         <EditText
             android:layout_width="match_parent"
@@ -73,5 +74,14 @@
 
 
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
+        android:layout_below="@+id/add_layout">
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>

@@ -8,14 +8,19 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.facebook.TestUserManager;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * Created by Benas on 9/7/2016.+-
@@ -32,11 +37,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     public static String SERVER_ADRESS_REGISTER = "http://dvp.lt/android/register.php";
     public static String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
-
+    public static String SERVER_ADRESS_FETCH_SCHEDULE = "http://dvp.lt/android/fetch_schedule.php";
+    public static String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
 
 
     public ServerManager(Context context){
         this.context=context;
+
+
+
     }
     @Override
     protected void onPreExecute() {
@@ -105,12 +114,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(method_type.equals("LOGIN")){
             switch (response) {
                 case 0:
-                    sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("username", username_login);
-                    editor.putString("password", password_login);
-                    editor.commit();
-                    context.startActivity(new Intent(context, TabActivityLoader.class));
+                    new fetchData().execute();
                     break;
                 case 1:
                     CheckingUtils.createErrorBox("Wrong username or password", context);
@@ -232,5 +236,120 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+    public void fetchScheduleData(String username, String password){
+
+        if(username.isEmpty() || password.isEmpty()){
+            SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+            username =loginPrefs.getString("username","");
+            password = loginPrefs.getString("password","");
+        }
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_FETCH_SCHEDULE);
+
+
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+
+            EntityBuilder entity = EntityBuilder.create();
+            entity.setText(jsonObject.toString());
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("schedule_data", jsonArray.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void fetchUserData(String username, String password){
+
+
+        if(username.isEmpty() || password.isEmpty()){
+            SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+            username =loginPrefs.getString("username","");
+            password = loginPrefs.getString("password","");
+        }
+
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_FETCH_USER_DATA);
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+
+            EntityBuilder entity = EntityBuilder.create();
+            entity.setText(jsonObject.toString());
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("user_data", jsonArray.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    class fetchData extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            fetchScheduleData(username_login, password_login);
+            fetchUserData(username_login,password_login);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", username_login);
+            editor.putString("password", password_login);
+            editor.commit();
+            context.startActivity(new Intent(context, TabActivityLoader.class));
+
+            super.onPostExecute(aVoid);
+        }
+    }
 
 }
+
