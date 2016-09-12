@@ -73,19 +73,19 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.activity_schedule_layout_admin,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-            adapter = new RecyclerAdapter(getActivity(), data);
+            adapter = new RecyclerAdapter(getActivity(), data, this);
+            initializeDataFirstTime(adapter, "1");
             initializeData(adapter);
 
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                        
-
         } else{
             rootView = inflater.inflate(R.layout.activity_schedule_layout,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
-            adapter = new RecyclerAdapter(getActivity(), data);
+            adapter = new RecyclerAdapter(getActivity(), data,this);
+            initializeDataFirstTime(adapter,"2");
             initializeData(adapter);
 
             recyclerView.setAdapter(adapter);
@@ -144,7 +144,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
         try {
            JSONArray scheduleDataArray = new JSONArray(schedule);
-            for (int i = 0; i<scheduleDataArray.length(); i++){
+            for (int i = 1; i<scheduleDataArray.length(); i++){
                 JSONObject scheduleData = scheduleDataArray.getJSONObject(i);
 
                 String event_description = scheduleData.getString("description");
@@ -152,7 +152,10 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_location = scheduleData.getString("location");
                 String event_date = scheduleData.getString("date");
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description));
+
+
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0","",""));
+
             }
 
 
@@ -161,7 +164,34 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
         }
 
 
+    }
+
+    public void initializeDataFirstTime(RecyclerAdapter adapter, String type){
+        //Preferences to fetch all schedule data
+        SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
+        String schedule = dataPrefs.getString("schedule_data", "");
+
+        try {
+                JSONArray scheduleDataArray = new JSONArray(schedule);
+                JSONObject scheduleData = scheduleDataArray.getJSONObject(0);
+
+                String event_description = scheduleData.getString("description");
+                String event_name = scheduleData.getString("name");
+                String event_location = scheduleData.getString("location");
+                String event_date = scheduleData.getString("date");
+
+
+
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type,"Projektas", "geras projektas"));
+
+            } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
+
+
 
     }
+
 
 }
