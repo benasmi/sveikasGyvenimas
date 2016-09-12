@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -71,20 +74,19 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){
             case 0:
-
                 View schedule = layoutInflater.inflate(R.layout.schedule_item, parent, false);
                 ViewHolder schedule_item = new ViewHolder(schedule, 0);
                 return schedule_item;
 
             case 1:
                 View view = layoutInflater.inflate(R.layout.layout_map, parent, false);
-                ViewHolder holder = new ViewHolder(view, 0);
+                ViewHolder holder = new ViewHolder(view, 1);
                 return holder;
 
 
             case 2:
-                View view1 = layoutInflater.inflate(R.layout.schedule_layout, parent, false);
-                ViewHolder holder1 = new ViewHolder(view1, 0);
+                View view1 = layoutInflater.inflate(R.layout.layout_description, parent, false);
+                ViewHolder holder1 = new ViewHolder(view1, 2);
                 return holder1;
 
         }
@@ -98,25 +100,39 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         InfoHolder data = infoHolder.get(position);
         String dataType = data.getRecycler_view_type();
 
-        if(data.equals("0")){
+        if(dataType.equals("0")){
             holder.event_date_and_place.setText(data.getEvent_location_and_date());
             holder.event_name.setText(data.getEvent_name());
             holder.event_description.setText(data.getEvent_description());
         }
-        if(data.equals("2")){
+        if(dataType.equals("1")){
+
+
+
+
+
+        }
+        if(dataType.equals("2")){
            holder.project_name_client.setText(data.getProject_name());
            holder.project_description_client.setText(data.getProject_description());
+
+            Log.i("TEST", "BFONCREATE");
+            holder.map.onCreate(null);
+            holder.map.onResume();
+            holder.map.getMapAsync(holder);
+            Log.i("TEST", "Pocle on creatov");
+
         }
 
     }
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback {
 
         //Map objects
-        private GoogleMap googleMaps;
+
         private SupportMapFragment mapfragment;
 
         //Schedule item layout
@@ -137,6 +153,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private TextView project_name_client;
         private TextView project_description_client;
 
+        private GoogleMap googleMaps;
+        private MapView map;
 
         public ViewHolder(View itemView, int type) {
 
@@ -169,43 +187,14 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_description_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
                     event_place_admin = (EditText) itemView.findViewById(R.id.event_location_admin);
 
-
-                    FragmentManager fm =  fragment.getChildFragmentManager();
-                    mapfragment = (SupportMapFragment) fm.findFragmentById(R.id.map_container);
-                    if (mapfragment == null) {
-                        mapfragment = SupportMapFragment.newInstance();
-                        fm.beginTransaction().replace(R.id.map_container, mapfragment).commit();
-
-                        mapfragment.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap googleMap) {
-                                googleMaps = googleMap;
-                                initilizeMap();
-                            }
-                        });
-
-                    }
+                    map = (MapView) itemView.findViewById(R.id.map_container);
 
 
                 case 2:
                     project_name_client = (TextView) itemView.findViewById(R.id.project_name_client);
                     project_description_client = (TextView) itemView.findViewById(R.id.project_description_client);
 
-                    FragmentManager fm1 =  fragment.getChildFragmentManager();
-                    mapfragment = (SupportMapFragment) fm1.findFragmentById(R.id.map_container_client);
-                    if (mapfragment == null) {
-                        mapfragment = SupportMapFragment.newInstance();
-                        fm1.beginTransaction().replace(R.id.map_container, mapfragment).commit();
-
-                        mapfragment.getMapAsync(new OnMapReadyCallback() {
-                            @Override
-                            public void onMapReady(GoogleMap googleMap) {
-                                googleMaps = googleMap;
-                                initilizeMap();
-                            }
-                        });
-
-                    }
+                    map = (MapView) itemView.findViewById(R.id.map_container_client);
 
             }
 
@@ -229,6 +218,14 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         .show();
             }
 
+        }
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            MapsInitializer.initialize(context.getApplicationContext());
+            Log.i("TEST", "TEST");
+            googleMaps = googleMap;
+            initilizeMap();
         }
     }
 

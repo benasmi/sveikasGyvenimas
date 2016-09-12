@@ -74,8 +74,9 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
             adapter = new RecyclerAdapter(getActivity(), data, this);
-            initializeDataFirstTime(adapter, "1");
             initializeData(adapter);
+            initializeDataFirstTime(adapter, "1");
+
 
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -85,8 +86,9 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
             adapter = new RecyclerAdapter(getActivity(), data,this);
-            initializeDataFirstTime(adapter,"2");
             initializeData(adapter);
+            initializeDataFirstTime(adapter,"2");
+
 
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -97,7 +99,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
     }
 
-    
+
     public void initializeData(RecyclerAdapter adapter){
         //Preferences to fetch all schedule data
         SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
@@ -110,7 +112,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
                 String event_description = scheduleData.getString("description");
                 String event_name = scheduleData.getString("name");
-                String event_location = scheduleData.getString("location");
+                String event_location = scheduleData.getString("location_name");
                 String event_date = scheduleData.getString("date");
 
 
@@ -138,7 +140,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
                 String event_description = scheduleData.getString("description");
                 String event_name = scheduleData.getString("name");
-                String event_location = scheduleData.getString("location");
+                String event_location = scheduleData.getString("location_name");
                 String event_date = scheduleData.getString("date");
 
 

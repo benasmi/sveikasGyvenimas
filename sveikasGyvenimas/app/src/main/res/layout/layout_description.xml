@@ -3,11 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.google.android.gms.maps.MapView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/map_container_client">
-    </RelativeLayout>
+    </com.google.android.gms.maps.MapView>
 
 
     <TextView
@@ -16,7 +16,6 @@
         android:id="@+id/project_name_client"
         android:text="&quot;Sveikas gyvenimas - gyvenimas be alkoholio&quot;"
         android:gravity="center"
-        android:layout_below="@+id/map_container_client"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textSize="20dp" />

@@ -5,17 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".HealthyLifeActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/map_container"></RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view_client"
-        android:layout_below="@+id/project_description">
+       >
 
     </android.support.v7.widget.RecyclerView>
 
