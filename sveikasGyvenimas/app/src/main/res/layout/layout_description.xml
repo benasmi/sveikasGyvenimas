@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/map_container_client">
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/project_name_client"
+        android:text="&quot;Sveikas gyvenimas - gyvenimas be alkoholio&quot;"
+        android:gravity="center"
+        android:layout_below="@+id/map_container_client"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/project_description_client"
+        android:text="Šiuo projektu mes siekiame padaryti jus blaiviais, kad nerukytumėte jokių cigarų ir negertumėte alkoholioŠiuo projektu mes siekiame padaryti jus blaiviais, kad nerukytumėte jokių cigarų ir negertumėte alkoholio Šiuo projektu mes siekiame padaryti jus blaiviais, kad nerukytumėte jokių cigarų ir negertumėte alkoholio"
+        android:layout_below="@+id/project_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:textSize="16dp" />
+
+</LinearLayout>

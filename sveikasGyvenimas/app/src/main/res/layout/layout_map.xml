@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<RelativeLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:id="@+id/map_container">
+    </RelativeLayout>
+
+<RelativeLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="5dp"
+android:background="#ecf0f1"
+android:layout_below="@+id/map_container"
+android:id="@+id/add_layout">
+
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Renginio pavadinimas"
+    android:padding="7dp"
+    android:textSize="15dp"
+    android:background="@drawable/button_borders_different_color"
+    android:gravity="center"
+    android:id="@+id/event_name_admin"
+    />
+
+<EditText
+    android:layout_width="150dp"
+    android:layout_height="30dp"
+    android:hint="Data"
+    android:gravity="center"
+    android:background="@drawable/button_borders_different_color"
+    android:textSize="15dp"
+    android:id="@id/event_date_admin"
+    android:layout_below="@id/event_name_admin"
+    />
+<EditText
+    android:layout_width="200dp"
+    android:layout_height="30dp"
+    android:hint="Renginio vieta"
+    android:textSize="15dp"
+    android:background="@drawable/button_borders_different_color"
+    android:gravity="center"
+    android:id="@id/event_location_admin"
+    android:layout_toRightOf="@id/event_date_admin"
+    android:layout_below="@id/event_name_admin"
+    android:layout_alignParentRight="true" />
+
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="7dp"
+    android:hint="Aprašymas"
+    android:textSize="15dp"
+    android:gravity="center"
+    android:background="@drawable/button_borders_different_color"
+    android:layout_below="@id/event_date_admin"
+    android:id="@+id/event_description_admin"
+    />
+
+<android.support.v7.widget.AppCompatButton
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:textSize="15dp"
+    android:text="PRIDĖTI"
+    android:id="@+id/add_event"
+    android:background="@drawable/button_borders_gray"
+    android:layout_below="@id/event_description_admin"/>
+
+
+</RelativeLayout>
+
+</RelativeLayout>
