@@ -33,7 +33,8 @@ public class TabActivityLoader extends AppCompatActivity {
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-        myToolbar.setBackgroundColor(Color.parseColor("#2ecc71"));
+        myToolbar.setBackgroundColor(Color.parseColor("#009688"));
+        myToolbar.setTitle("Aktyvuokis  - keisk save!");
         setSupportActionBar(myToolbar);
 
         tabLayout = (TabLayout) findViewById(R.id.my_tab_layout);
@@ -47,8 +48,8 @@ public class TabActivityLoader extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         tabLayout.getTabAt(3).setIcon(tabIcons[3]);
-        tabLayout.setBackgroundColor(Color.parseColor("#2ecc71"));
-        CheckingUtils.changeNotifBarColor("#27ae60", window);
+        tabLayout.setBackgroundColor(Color.parseColor("#009688"));
+        CheckingUtils.changeNotifBarColor("#00796B", window);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
@@ -66,9 +67,9 @@ public class TabActivityLoader extends AppCompatActivity {
 
 
                     case 0:
-                        CheckingUtils.changeNotifBarColor("#27ae60", window);
-                        myToolbar.setBackgroundColor(Color.parseColor("#2ecc71"));
-                        tabLayout.setBackgroundColor(Color.parseColor("#2ecc71"));
+                        CheckingUtils.changeNotifBarColor("#00796B", window);
+                        myToolbar.setBackgroundColor(Color.parseColor("#009688"));
+                        tabLayout.setBackgroundColor(Color.parseColor("#009688"));
                         break;
 
                     case 1:
@@ -120,6 +121,7 @@ public class TabActivityLoader extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("username", "").putString("password", "").commit();
+                HealthyLifeActivity.addData=false;
 
                 Intent intent = new Intent(TabActivityLoader.this, LoginActivity.class);
                 intent.putExtra("isAnimDisabled", true);

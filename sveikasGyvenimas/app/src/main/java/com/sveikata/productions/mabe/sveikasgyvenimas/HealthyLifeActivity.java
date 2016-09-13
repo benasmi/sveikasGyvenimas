@@ -47,6 +47,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     private String is_administrator;
     private View rootView;
 
+    public static boolean addData = true;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,7 +56,6 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
         //Preferences to check if user is admin
         SharedPreferences userPrefs = getActivity().getSharedPreferences("UserData", getActivity().MODE_PRIVATE);
         String user_data = userPrefs.getString("user_data", "");
-
 
 
         try {
@@ -74,8 +75,12 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
             adapter = new RecyclerAdapter(getActivity(), data, this);
-            initializeData(adapter);
-            initializeDataFirstTime(adapter, "1");
+
+            if(addData) {
+                addData = false;
+                initializeData(adapter);
+                initializeDataFirstTime(adapter, "1");
+            }
 
 
             recyclerView.setAdapter(adapter);
@@ -86,8 +91,12 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
             adapter = new RecyclerAdapter(getActivity(), data,this);
-            initializeData(adapter);
-            initializeDataFirstTime(adapter,"2");
+
+            if(addData) {
+                addData = false;
+                initializeData(adapter);
+                initializeDataFirstTime(adapter, "2");
+            }
 
 
             recyclerView.setAdapter(adapter);
@@ -107,7 +116,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
         try {
            JSONArray scheduleDataArray = new JSONArray(schedule);
-            for (int i = 1; i<scheduleDataArray.length(); i++){
+            for (int i = 0; i<scheduleDataArray.length(); i++){
                 JSONObject scheduleData = scheduleDataArray.getJSONObject(i);
 
                 String event_description = scheduleData.getString("description");
@@ -145,7 +154,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
 
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type,"Projektas", "geras projektas"));
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type,"\"Sveikas gyvenimas - gyvenimas be alkoholio\"", "Renginį organizuoja UAB „De Futuro“, sveikatingumo klasteris iVita. Renginio partneriai Lietuvos sporto universitetas, Sveikatos alėja, Sporto klubas „Linija“. Renginys yra skirta jauniems, aktyviems, norintiems pradėti ar mėgstantiems sportuoti, bet nežinantiems nuo ko pradėti žmonėms."));
 
             } catch (JSONException e1) {
             e1.printStackTrace();

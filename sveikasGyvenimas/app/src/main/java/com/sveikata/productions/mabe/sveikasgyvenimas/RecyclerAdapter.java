@@ -3,6 +3,8 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -108,23 +112,27 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             holder.event_date_and_place.setText(data.getEvent_location_and_date());
             holder.event_name.setText(data.getEvent_name());
             holder.event_description.setText(data.getEvent_description());
+
+            if(position % 2 == 0) {
+                holder.layout.setBackgroundColor(Color.parseColor("#FAFAFA"));
+            }
         }
         if(dataType.equals("1")){
 
 
-
+            holder.project_name_admin.setText(data.getProject_name());
+            holder.project_description_admin.setText(data.getProject_description());
+            holder.map.onCreate(null);
+            holder.map.onResume();
+            holder.map.getMapAsync(holder);
 
 
         }
         if(dataType.equals("2")){
-           holder.project_name_client.setText(data.getProject_name());
-           holder.project_description_client.setText(data.getProject_description());
 
-            Log.i("TEST", "BFONCREATE");
             holder.map.onCreate(null);
             holder.map.onResume();
             holder.map.getMapAsync(holder);
-            Log.i("TEST", "Pocle on creatov");
 
         }
 
@@ -136,7 +144,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private SupportMapFragment mapfragment;
 
         //Schedule item layout
-        private RelativeLayout layout;
+        private LinearLayout layout;
         private TextView event_name;
         private TextView event_date_and_place;
         private TextView event_description;
@@ -147,12 +155,10 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private EditText event_date_admin;
         private EditText event_description_admin;
         private EditText event_place_admin;
-
+        private TextView project_name_admin;
+        private TextView project_description_admin;
 
         //Client Map layout
-        private TextView project_name_client;
-        private TextView project_description_client;
-
         private GoogleMap googleMaps;
         private MapView map;
 
@@ -165,20 +171,11 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_date_and_place = (TextView) itemView.findViewById(R.id.event_date_and_place);
                     event_name = (TextView) itemView.findViewById(R.id.event_name);
                     event_description = (TextView) itemView.findViewById(R.id.event_description);
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    event_name.setTypeface(tf);
+                    layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
 
-                    layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
-                    layout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ResizeAnimation expand = new ResizeAnimation(view, (int) CheckingUtils.convertPixelsToDp(110, context), (int) CheckingUtils.convertPixelsToDp(55, context));
-                            expand.setDuration(200);
-                            ResizeAnimation shrink = new ResizeAnimation(view, (int) CheckingUtils.convertPixelsToDp(55, context), (int) CheckingUtils.convertPixelsToDp(110, context));
-                            shrink.setDuration(200);
-                            view.startAnimation(isClicked ? expand : shrink);
 
-                            isClicked = !isClicked;
-                        }
-                    });
 
                     break;
                 case 1:
@@ -186,15 +183,19 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_date_admin = (EditText) itemView.findViewById(R.id.event_date_admin);
                     event_description_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
                     event_place_admin = (EditText) itemView.findViewById(R.id.event_location_admin);
+                    project_name_admin = (TextView) itemView.findViewById(R.id.project_name_admin);
+                    project_description_admin = (TextView) itemView.findViewById(R.id.project_description_admin);
+
 
                     map = (MapView) itemView.findViewById(R.id.map_container);
 
+                    break;
+
 
                 case 2:
-                    project_name_client = (TextView) itemView.findViewById(R.id.project_name_client);
-                    project_description_client = (TextView) itemView.findViewById(R.id.project_description_client);
-
                     map = (MapView) itemView.findViewById(R.id.map_container_client);
+
+                    break;
 
             }
 
@@ -202,14 +203,14 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
         private void initilizeMap() {
             googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            googleMaps.getUiSettings().setMyLocationButtonEnabled(true);
-            googleMaps.getUiSettings().setCompassEnabled(true);
-            googleMaps.getUiSettings().setRotateGesturesEnabled(true);
-
+            googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
+            googleMaps.getUiSettings().setAllGesturesEnabled(false);
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(55.5, 23.7)).zoom(6.25f).build();
-            googleMaps.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(cameraPosition));
+                    .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
+
+
+
+            googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
             // check if map is created successfully or not
             if (googleMaps == null) {
