@@ -92,6 +92,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
             adapter = new RecyclerAdapter(getActivity(), data,this);
 
+
             if(addData) {
                 addData = false;
                 initializeData(adapter);
@@ -103,6 +104,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         }
+
+
 
         return rootView;
 

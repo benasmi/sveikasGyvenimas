@@ -138,7 +138,14 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
                     while(data.getLatitude()==0){
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())));
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
+                    }
+
+                    if (googleMaps != null) {
+
+                        LayoutInflater layoutInflater = LayoutInflater.from(context);
+                        View view = layoutInflater.inflate(R.layout.marker_info, null);
+                        googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
                     }
 
                     googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -147,7 +154,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                             return false;
                         }
                     });
-
 
                     // check if map is created successfully or not
                     if (googleMaps == null) {
@@ -175,9 +181,26 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
 
+
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+                    while(data.getLatitude()==0){
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
+                    }
 
+                    if (googleMaps != null) {
+
+                        LayoutInflater layoutInflater = LayoutInflater.from(context);
+                        View view = layoutInflater.inflate(R.layout.marker_info, null);
+                        googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
+                    }
+
+                    googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            return false;
+                        }
+                    });
 
                     // check if map is created successfully or not
                     if (googleMaps == null) {
@@ -215,6 +238,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         //Client Map layout
         private GoogleMap googleMaps;
         private MapView map;
+
+
 
         public ViewHolder(View itemView, int type) {
 
