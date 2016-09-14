@@ -39,6 +39,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
     public static String SERVER_ADRESS_FETCH_SCHEDULE = "http://dvp.lt/android/fetch_schedule.php";
     public static String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
+    public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_data.php";
+
 
 
     public ServerManager(Context context){
@@ -80,6 +82,18 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             password_login = params[2];
 
             response = login(username_login,password_login);
+        }
+        if(method_type.equals("INSERT_EVENT")){
+
+            String username = params[1];
+            String password = params[2];
+            String event_location = params[3];
+            String date = params[4];
+            double latitude = Double.parseDouble(params[5]);
+            double longtitude = Double.parseDouble(params[6]);
+
+            insert_event_data(username, password,event_location,date,latitude,longtitude);
+
         }
 
         return null;
@@ -287,6 +301,45 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void insert_event_data(String username, String password, String location, String date, double latitude, double longtitude){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_INSERT_EVENT_DATA);
+
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("location", location);
+            jsonObject.putOpt("date", date);
+            jsonObject.putOpt("latitude", latitude);
+            jsonObject.putOpt("longtitude", longtitude);
+
+            EntityBuilder entity = EntityBuilder.create();
+            entity.setText(jsonObject.toString());
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 

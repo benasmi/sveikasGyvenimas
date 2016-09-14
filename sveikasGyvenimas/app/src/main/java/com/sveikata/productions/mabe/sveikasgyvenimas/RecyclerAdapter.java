@@ -137,7 +137,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    while(data.getLatitude()==0){
+                    while(data.getLatitude() !=0 ){
                         googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
                     }
 
@@ -151,6 +151,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
+                            marker.showInfoWindow();
                             return false;
                         }
                     });
@@ -184,7 +185,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    while(data.getLatitude()==0){
+                    while(data.getLatitude()!=0){
                         googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
                     }
 
@@ -198,6 +199,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
+                            marker.showInfoWindow();
                             return false;
                         }
                     });
