@@ -119,9 +119,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         }
         if(dataType.equals("1")){
 
-
-            holder.project_name_admin.setText(data.getProject_name());
-            holder.project_description_admin.setText(data.getProject_description());
             holder.map.onCreate(null);
             holder.map.onResume();
             holder.map.getMapAsync(holder);
@@ -155,8 +152,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private EditText event_date_admin;
         private EditText event_description_admin;
         private EditText event_place_admin;
-        private TextView project_name_admin;
-        private TextView project_description_admin;
+        
 
         //Client Map layout
         private GoogleMap googleMaps;
@@ -183,8 +179,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_date_admin = (EditText) itemView.findViewById(R.id.event_date_admin);
                     event_description_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
                     event_place_admin = (EditText) itemView.findViewById(R.id.event_location_admin);
-                    project_name_admin = (TextView) itemView.findViewById(R.id.project_name_admin);
-                    project_description_admin = (TextView) itemView.findViewById(R.id.project_description_admin);
 
 
                     map = (MapView) itemView.findViewById(R.id.map_container);
