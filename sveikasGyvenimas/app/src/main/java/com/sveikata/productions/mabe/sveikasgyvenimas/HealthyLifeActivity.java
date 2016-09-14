@@ -126,8 +126,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 double latitude = scheduleData.getDouble("latitude");
                 double longtitude = scheduleData.getDouble("longtitude");
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0"));
-                adapter.add(new InfoHolder(latitude, longtitude));
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0", latitude, longtitude));
             }
 
 
@@ -153,7 +152,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_date = scheduleData.getString("date");
 
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type));
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type, 123, 123));
 
 
             } catch (JSONException e1) {
