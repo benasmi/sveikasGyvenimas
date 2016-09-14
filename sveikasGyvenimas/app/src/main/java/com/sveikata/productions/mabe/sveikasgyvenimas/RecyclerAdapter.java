@@ -27,6 +27,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private ArrayList<InfoHolder> infoHolder;
     private Fragment fragment;
+    private GoogleMap googleMaps;
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment) {
         this.infoHolder = infoHolder;
@@ -105,7 +108,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        InfoHolder data = infoHolder.get(position);
+        final InfoHolder data = infoHolder.get(position);
         String dataType = data.getRecycler_view_type();
 
         if(dataType.equals("0")){
@@ -119,12 +122,42 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         }
         if(dataType.equals("1")){
 
-
-            holder.project_name_admin.setText(data.getProject_name());
-            holder.project_description_admin.setText(data.getProject_description());
             holder.map.onCreate(null);
             holder.map.onResume();
-            holder.map.getMapAsync(holder);
+            holder.map.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    googleMaps = googleMap;
+                    googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
+                    googleMaps.getUiSettings().setAllGesturesEnabled(false);
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
+
+
+                    googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                    while(data.getLatitude()==0){
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())));
+                    }
+
+                    googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            return false;
+                        }
+                    });
+
+
+                    // check if map is created successfully or not
+                    if (googleMaps == null) {
+                        Toast.makeText(context,
+                                "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
+                }
+            });
 
 
         }
@@ -132,12 +165,34 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
             holder.map.onCreate(null);
             holder.map.onResume();
-            holder.map.getMapAsync(holder);
+            holder.map.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    googleMaps = googleMap;
+                    googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
+                    googleMaps.getUiSettings().setAllGesturesEnabled(false);
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
+
+                    googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
+
+                    // check if map is created successfully or not
+                    if (googleMaps == null) {
+                        Toast.makeText(context,
+                                "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
+                }
+            });
 
         }
 
     }
-    class ViewHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         //Map objects
 
@@ -166,7 +221,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
             super(itemView);
 
-            switch (type){
+            switch (type) {
                 case 0:
                     event_date_and_place = (TextView) itemView.findViewById(R.id.event_date_and_place);
                     event_name = (TextView) itemView.findViewById(R.id.event_name);
@@ -174,7 +229,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
                     event_name.setTypeface(tf);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
-
 
 
                     break;
@@ -201,34 +255,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
         }
 
-        private void initilizeMap() {
-            googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
-            googleMaps.getUiSettings().setAllGesturesEnabled(false);
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
-
-
-
-            googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-            // check if map is created successfully or not
-            if (googleMaps == null) {
-                Toast.makeText(context,
-                        "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-        }
-
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            MapsInitializer.initialize(context.getApplicationContext());
-            Log.i("TEST", "TEST");
-            googleMaps = googleMap;
-            initilizeMap();
-        }
     }
+
 
 
 }
