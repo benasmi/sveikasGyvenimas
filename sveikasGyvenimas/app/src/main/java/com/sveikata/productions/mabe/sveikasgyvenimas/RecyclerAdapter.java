@@ -233,7 +233,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private EditText event_date_admin;
         private EditText event_description_admin;
         private EditText event_place_admin;
-        
+
 
         //Client Map layout
         private GoogleMap googleMaps;
