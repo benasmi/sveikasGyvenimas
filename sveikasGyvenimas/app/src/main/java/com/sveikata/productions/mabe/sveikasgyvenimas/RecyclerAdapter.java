@@ -7,11 +7,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +31,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
 
 import java.util.ArrayList;
 
@@ -42,12 +47,16 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private ArrayList<InfoHolder> infoHolder;
     private Fragment fragment;
     private GoogleMap googleMaps;
+    private SharedPreferences sharedPreferences;
+
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment) {
         this.infoHolder = infoHolder;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.fragment = fragment;
+
+        sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
     }
 
@@ -126,7 +135,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             holder.map.onResume();
             holder.map.getMapAsync(new OnMapReadyCallback() {
                 @Override
-                public void onMapReady(GoogleMap googleMap) {
+                public void onMapReady(final GoogleMap googleMap) {
                     googleMaps = googleMap;
                     googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
@@ -148,12 +157,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
                     }
 
-                    googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(Marker marker) {
-                            return false;
-                        }
-                    });
+                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        marker.showInfoWindow();
+                        return false;
+                    }
+                });
 
                     // check if map is created successfully or not
                     if (googleMaps == null) {
@@ -184,7 +194,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    while(data.getLatitude()==0){
+                    while(data.getLatitude()!=0){
                         googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
                     }
 
@@ -233,6 +243,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private EditText event_date_admin;
         private EditText event_description_admin;
         private EditText event_place_admin;
+        private AppCompatButton event_add_button;
 
 
         //Client Map layout
@@ -261,6 +272,37 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_date_admin = (EditText) itemView.findViewById(R.id.event_date_admin);
                     event_description_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
                     event_place_admin = (EditText) itemView.findViewById(R.id.event_location_admin);
+                    event_add_button = (AppCompatButton) itemView.findViewById(R.id.add_event);
+
+                    event_add_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String event_name = event_name_admin.getText().toString().trim();
+                            String event_date = event_date_admin.getText().toString().trim();
+                            String event_description = event_description_admin.getText().toString().trim();
+                            String event_location = event_place_admin.getText().toString().trim();
+
+                            String username = sharedPreferences.getString("username", "");
+                            String password = sharedPreferences.getString("password", "");
+
+                            GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyD7CmlEdYr_-nU6pNDxik_8FTq-tD53iw8");
+                            GeocodingResult[] results = new GeocodingResult[0];
+                            try {
+                                results = GeocodingApi.geocode(context, event_location).await();
+
+                                double latitude = results[0].geometry.location.lat;
+                                double longtitude = results[0].geometry.location.lng;
+
+                                new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude));
+
+                            } catch (Exception e) {
+                                CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context);
+                            }
+
+
+
+                        }
+                    });
 
 
                     map = (MapView) itemView.findViewById(R.id.map_container);
