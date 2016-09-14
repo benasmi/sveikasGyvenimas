@@ -2,6 +2,8 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.model.MarkerOptions;
+
 /**
  * Created by Martyno on 2016.09.10.
  */
@@ -12,17 +14,36 @@ public class InfoHolder {
     public String event_location_and_date;
     public String event_description;
     public String recycler_view_type;
-    public String project_name;
-    public String project_description;
+    public double longtitude;
+    public double latitude;
 
 
-    public InfoHolder(String event_name, String event_location_and_date, String event_description, String recycler_view_type, String project_name, String project_description) {
+    public InfoHolder(String event_name, String event_location_and_date, String event_description, String recycler_view_type) {
         this.recycler_view_type = recycler_view_type;
         this.event_description = event_description;
         this.event_name = event_name;
-        this.project_description = project_description;
-        this.project_name = project_name;
         this.event_location_and_date = event_location_and_date;
+    }
+
+    public InfoHolder(double latitude, double longtitude){
+        this.longtitude = longtitude;
+        this.latitude = latitude;
+    }
+
+    public double getLongtitude() {
+        return longtitude;
+    }
+
+    public void setLongtitude(double longtitude) {
+        this.longtitude = longtitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public String getRecycler_view_type() {
@@ -31,22 +52,6 @@ public class InfoHolder {
 
     public void setRecycler_view_type(String recycler_view_type) {
         this.recycler_view_type = recycler_view_type;
-    }
-
-    public String getProject_name() {
-        return project_name;
-    }
-
-    public void setProject_name(String project_name) {
-        this.project_name = project_name;
-    }
-
-    public String getProject_description() {
-        return project_description;
-    }
-
-    public void setProject_description(String project_description) {
-        this.project_description = project_description;
     }
 
     public String getEvent_name() {

@@ -123,11 +123,11 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_name = scheduleData.getString("name");
                 String event_location = scheduleData.getString("location_name");
                 String event_date = scheduleData.getString("date");
+                double latitude = scheduleData.getDouble("latitude");
+                double longtitude = scheduleData.getDouble("longtitude");
 
-
-
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0","",""));
-
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0"));
+                adapter.add(new InfoHolder(latitude, longtitude));
             }
 
 
@@ -153,8 +153,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_date = scheduleData.getString("date");
 
 
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type));
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type,"\"Sveikas gyvenimas - gyvenimas be alkoholio\"", "Renginį organizuoja UAB „De Futuro“, sveikatingumo klasteris iVita. Renginio partneriai Lietuvos sporto universitetas, Sveikatos alėja, Sporto klubas „Linija“. Renginys yra skirta jauniems, aktyviems, norintiems pradėti ar mėgstantiems sportuoti, bet nežinantiems nuo ko pradėti žmonėms."));
 
             } catch (JSONException e1) {
             e1.printStackTrace();
