@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,7 +57,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     //Map pos
     public LatLng currentPos = new LatLng(55.3, 23.7);
     public float mapZoom = 5.8f;
-
 
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview) {
@@ -165,6 +165,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     }
 
+
     private void refreshMap(ViewHolder holder){
 
         holder.map.onCreate(null);
@@ -201,6 +202,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     View view = layoutInflater.inflate(R.layout.marker_info, null);
                     googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
                 }
+
 
 
 
@@ -244,8 +246,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         private EditText event_date_admin;
         private EditText event_description_admin;
         private EditText event_place_admin;
-        private AppCompatButton event_add_button;
 
+        private EditText notif_message;
+        private EditText notif_description;
+
+        private AppCompatButton send_notif;
+        private AppCompatButton event_add_button;
 
         //Client Map layout
         private GoogleMap googleMaps;
@@ -273,8 +279,11 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_date_admin = (EditText) itemView.findViewById(R.id.event_date_admin);
                     event_description_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
                     event_place_admin = (EditText) itemView.findViewById(R.id.event_location_admin);
-                    event_add_button = (AppCompatButton) itemView.findViewById(R.id.add_event);
 
+                    notif_message = (EditText) itemView.findViewById(R.id.message_notification);
+                    notif_description = (EditText) itemView.findViewById(R.id.description_notification);
+
+                    event_add_button = (AppCompatButton) itemView.findViewById(R.id.add_event);
                     event_add_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -303,6 +312,14 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                             }
 
 
+
+                        }
+                    });
+
+                    send_notif = (AppCompatButton) itemView.findViewById(R.id.send_notification);
+                    send_notif.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
 
                         }
                     });
