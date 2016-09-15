@@ -78,9 +78,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             if(addData) {
                 addData = false;
-                initializeDataFirstTime(adapter, "1");
                 initializeData(adapter);
-
+                initializeDataFirstTime(adapter, "1");
             }
 
 
@@ -96,8 +95,9 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             if(addData) {
                 addData = false;
-                initializeDataFirstTime(adapter, "2");
+
                 initializeData(adapter);
+                initializeDataFirstTime(adapter, "2");
 
             }
 
@@ -131,7 +131,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 double latitude = Double.parseDouble(scheduleData.getString("latitude"));
                 double longtitude = Double.parseDouble(scheduleData.getString("longtitude"));
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0", latitude, longtitude), 1);
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0", latitude, longtitude), 0);
             }
 
 
