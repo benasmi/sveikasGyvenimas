@@ -45,6 +45,7 @@ import java.util.HashMap;
  */
 class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
+
     public Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<InfoHolder> infoHolder;
@@ -52,9 +53,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private GoogleMap googleMaps;
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerview;
-    private LatLng currentPos = new LatLng(55.3, 23.7);
 
-    private float mapZoom = 5.8f;
+
+    //Map pos
+    public LatLng currentPos = new LatLng(55.3, 23.7);
+    public float mapZoom = 5.8f;
+
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview) {
         this.infoHolder = infoHolder;
