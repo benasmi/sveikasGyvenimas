@@ -40,6 +40,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_FETCH_SCHEDULE = "http://dvp.lt/android/fetch_schedule.php";
     public static String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
     public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_event.php";
+    public static String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
 
 
 
@@ -97,6 +98,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             insert_event_data(username, password,event_location,date,latitude,longtitude, name, description);
 
+        }
+        if(method_type.equals("SEND_NOTIFICATION")){
+            String message = params[1];
+            String description = params[2];
+
+            sendNotifcation(message,description);
         }
 
         return null;
@@ -262,6 +269,41 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+
+    public void sendNotifcation(String message, String description){
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_NOTIFICATION);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("message", message);
+            jsonObject.putOpt("description", description);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        EntityBuilder entity = EntityBuilder.create();
+        entity.setText(jsonObject.toString());
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     public void fetchScheduleData(){
 
 

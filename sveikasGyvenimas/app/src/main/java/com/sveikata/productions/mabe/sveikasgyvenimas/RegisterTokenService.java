@@ -44,7 +44,7 @@ public class RegisterTokenService extends IntentService {
 
 
             InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(getString(5),
+            String token = instanceID.getToken(getString(R.string.gcm_api),
                     GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             sharedPreferences.edit().putString("device_id", token).commit();
 

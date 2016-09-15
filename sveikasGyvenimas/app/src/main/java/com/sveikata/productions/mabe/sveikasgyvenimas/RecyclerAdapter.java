@@ -54,12 +54,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private RecyclerView recyclerview;
     private LatLng currentPos = new LatLng(55.3, 23.7);
 
-
-
-
-
     private float mapZoom = 5.8f;
-
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview) {
         this.infoHolder = infoHolder;
@@ -86,13 +81,10 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         return type;
     }
 
-
     public void add(InfoHolder info, int position) {
         infoHolder.add(position,info);
         notifyDataSetChanged();
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -322,6 +314,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     send_notif.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            String message = notif_message.getText().toString().trim();
+                            String description = notif_description.getText().toString().trim();
+
+                            new ServerManager(context).execute("SEND_NOTIFICATION", message, description);
+
+                            CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context);
 
                         }
                     });

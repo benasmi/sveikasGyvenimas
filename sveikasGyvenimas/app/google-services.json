@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "114370283840",
+    "project_id": "aktyvuokis"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388513264057:android:f36173e948059ccb",
+        "android_client_info": {
+          "package_name": "com.sveikata.productions.mabe.sveikasgyvenimas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy5fK8iHbsPF6CLODCJCl7PX0rebEa9g4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
