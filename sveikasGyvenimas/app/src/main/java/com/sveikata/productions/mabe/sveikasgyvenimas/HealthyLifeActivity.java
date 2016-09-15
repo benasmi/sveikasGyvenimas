@@ -78,8 +78,9 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             if(addData) {
                 addData = false;
-                initializeData(adapter);
                 initializeDataFirstTime(adapter, "1");
+                initializeData(adapter);
+
             }
 
 
@@ -95,8 +96,9 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             if(addData) {
                 addData = false;
-                initializeData(adapter);
                 initializeDataFirstTime(adapter, "2");
+                initializeData(adapter);
+
             }
 
 
@@ -126,10 +128,10 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_name = scheduleData.getString("name");
                 String event_location = scheduleData.getString("location_name");
                 String event_date = scheduleData.getString("date");
-                double latitude = scheduleData.getDouble("latitude");
-                double longtitude = scheduleData.getDouble("longtitude");
+                double latitude = Double.parseDouble(scheduleData.getString("latitude"));
+                double longtitude = Double.parseDouble(scheduleData.getString("longtitude"));
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0", latitude, longtitude));
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0", latitude, longtitude), 1);
             }
 
 
@@ -155,7 +157,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_date = scheduleData.getString("date");
 
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type, 123, 123));
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type, 123, 123), 0);
 
 
             } catch (JSONException e1) {

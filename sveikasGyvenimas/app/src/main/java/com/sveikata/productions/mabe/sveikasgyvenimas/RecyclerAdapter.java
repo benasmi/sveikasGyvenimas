@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
@@ -48,6 +49,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Fragment fragment;
     private GoogleMap googleMaps;
     private SharedPreferences sharedPreferences;
+
+
 
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment) {
@@ -73,8 +76,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     }
 
 
-    public void add(InfoHolder info) {
-        infoHolder.add(0,info);
+    public void add(InfoHolder info, int position) {
+        infoHolder.add(position,info);
         notifyDataSetChanged();
     }
 
@@ -128,6 +131,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             if(position % 2 == 0) {
                 holder.layout.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
+
+
+
         }
         if(dataType.equals("1")){
 
@@ -146,9 +152,12 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    while(data.getLatitude() !=0 ){
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
+                    for(int i=0;i<infoHolder.size(); i++){
+                        InfoHolder info = infoHolder.get(i);
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLatitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
                     }
+
+                    Log.i("TEST", "latitude: " + data.getLatitude());
 
                     if (googleMaps != null) {
 
@@ -156,6 +165,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                         View view = layoutInflater.inflate(R.layout.marker_info, null);
                         googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
                     }
+
+
 
                     googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
@@ -195,9 +206,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                    while(data.getLatitude()!=0){
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(data.getLatitude(),data.getLongtitude())).title(data.getEvent_name()).snippet(data.event_location_and_date));
+
+                    for(int i=0;i<infoHolder.size(); i++){
+                        InfoHolder info = infoHolder.get(i);
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLatitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
                     }
+
+
 
                     if (googleMaps != null) {
 
@@ -295,7 +310,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 double latitude = results[0].geometry.location.lat;
                                 double longtitude = results[0].geometry.location.lng;
 
-                                new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude));
+                                new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
+
+                                add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
 
                             } catch (Exception e) {
                                 CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context);

@@ -39,7 +39,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
     public static String SERVER_ADRESS_FETCH_SCHEDULE = "http://dvp.lt/android/fetch_schedule.php";
     public static String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
-    public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_data.php";
+    public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_event.php";
 
 
 
@@ -91,8 +91,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String date = params[4];
             double latitude = Double.parseDouble(params[5]);
             double longtitude = Double.parseDouble(params[6]);
+            String name = params[7];
+            String description = params[8];
 
-            insert_event_data(username, password,event_location,date,latitude,longtitude);
+
+            insert_event_data(username, password,event_location,date,latitude,longtitude, name, description);
 
         }
 
@@ -292,6 +295,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String responseBody = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = new JSONArray(responseBody);
 
+
+            Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("schedule_data", jsonArray.toString()).commit();
@@ -304,7 +309,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
-    public void insert_event_data(String username, String password, String location, String date, double latitude, double longtitude){
+    public void insert_event_data(String username, String password, String location, String date, double latitude, double longtitude, String name, String description){
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -319,6 +324,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             JSONObject jsonObject = new JSONObject();
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
+            jsonObject.putOpt("description", description);
+            jsonObject.putOpt("name", name);
             jsonObject.putOpt("location", location);
             jsonObject.putOpt("date", date);
             jsonObject.putOpt("latitude", latitude);
