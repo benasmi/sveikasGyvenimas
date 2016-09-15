@@ -2,29 +2,18 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
-import android.support.multidex.MultiDex;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.plus.model.people.Person;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,6 +77,20 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
+            //Swipe to refresh init
+            final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout_admin);
+            swipeRefreshLayout.setEnabled(true);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() { //TODO: fix swipe spam glitch
+                    adapter.currentPos = new LatLng(55.3, 23.7);
+                    adapter.mapZoom = 5.8f;
+                    adapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+
         } else{
             rootView = inflater.inflate(R.layout.activity_schedule_layout,container,false);
             recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
@@ -95,6 +98,18 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
             adapter = new RecyclerAdapter(getActivity(), data,this, recyclerView);
 
+            //Swipe to refresh init
+            final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout_client);
+            swipeRefreshLayout.setEnabled(true);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() { //TODO: fix swipe spam glitch
+                    adapter.currentPos = new LatLng(55.3, 23.7);
+                    adapter.mapZoom = 5.8f;
+                    adapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
 
             if(addData) {
                 addData = false;
@@ -109,6 +124,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         }
+
+
 
 
 
