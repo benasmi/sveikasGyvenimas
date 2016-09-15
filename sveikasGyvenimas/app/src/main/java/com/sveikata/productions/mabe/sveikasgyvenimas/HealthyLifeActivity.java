@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.plus.model.people.Person;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,6 +76,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
             adapter = new RecyclerAdapter(getActivity(), data, this, recyclerView);
+            recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
 
             if(addData) {
                 addData = false;
@@ -88,6 +90,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
         } else{
             rootView = inflater.inflate(R.layout.activity_schedule_layout,container,false);
+            recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
             adapter = new RecyclerAdapter(getActivity(), data,this, recyclerView);
