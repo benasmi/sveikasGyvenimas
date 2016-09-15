@@ -38,6 +38,7 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Martyno on 2016.09.10.
@@ -51,6 +52,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private GoogleMap googleMaps;
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerview;
+    private LatLng currentPos = new LatLng(55.3, 23.7);
+
+
+
+
+
+    private float mapZoom = 5.8f;
 
 
     public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview) {
@@ -69,6 +77,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
         notifyItemRemoved(position);
 
     }
+
+
     @Override
     public int getItemViewType(int position) {
         InfoHolder data = infoHolder.get(position);
@@ -120,7 +130,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder,final int position) {
         final InfoHolder data = infoHolder.get(position);
         String dataType = data.getRecycler_view_type();
 
@@ -129,6 +139,20 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             holder.event_name.setText(data.getEvent_name());
             holder.event_description.setText(data.getEvent_description());
 
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recyclerview.smoothScrollToPosition(0);
+
+
+                    currentPos = new LatLng(infoHolder.get(position).getLatitude(), infoHolder.get(position).getLongtitude());
+                    mapZoom = 8f;
+                    notifyDataSetChanged();
+
+                }
+            });
+
+
             if(position % 2 == 0) {
                 holder.layout.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
@@ -136,112 +160,76 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
 
         }
-        if(dataType.equals("1")){
 
-            holder.map.onCreate(null);
-            holder.map.onResume();
-            holder.map.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(final GoogleMap googleMap) {
-                    googleMaps = googleMap;
-                    googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
-                    googleMaps.getUiSettings().setAllGesturesEnabled(false);
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
-
-
-                    googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-                    for(int i=0;i<infoHolder.size(); i++){
-                        InfoHolder info = infoHolder.get(i);
-                        Log.i("TEST", String.valueOf(info.getLatitude()));
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLongtitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
-                    }
-
-
-                    if (googleMaps != null) {
-
-                        LayoutInflater layoutInflater = LayoutInflater.from(context);
-                        View view = layoutInflater.inflate(R.layout.marker_info, null);
-                        googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
-                    }
-
-
-
-                    googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(Marker marker) {
-                            marker.showInfoWindow();
-                            return false;
-                        }
-                    });
-
-
-                    // check if map is created successfully or not
-                    if (googleMaps == null) {
-                        Toast.makeText(context,
-                                "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-
-                }
-            });
-
-
-        }
-        if(dataType.equals("2")){
-
-            holder.map.onCreate(null);
-            holder.map.onResume();
-            holder.map.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    googleMaps = googleMap;
-                    googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                    googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
-                    googleMaps.getUiSettings().setAllGesturesEnabled(false);
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(55.3, 23.7)).zoom(5.8f).build();
-
-
-                    googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
-                    for(int i=0;i<infoHolder.size(); i++){
-                        InfoHolder info = infoHolder.get(i);
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLongtitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
-                    }
-
-                    
-                    if (googleMaps != null) {
-
-                        LayoutInflater layoutInflater = LayoutInflater.from(context);
-                        View view = layoutInflater.inflate(R.layout.marker_info, null);
-                        googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
-                    }
-
-                    googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(Marker marker) {
-                            marker.showInfoWindow();
-                            return false;
-                        }
-                    });
-
-                    // check if map is created successfully or not
-                    if (googleMaps == null) {
-                        Toast.makeText(context,
-                                "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-
-                }
-            });
-
+        if(dataType.equals("1") || dataType.equals("2")){
+           refreshMap(holder);
         }
 
     }
+
+
+    private void refreshMap(ViewHolder holder){
+
+        holder.map.onCreate(null);
+        holder.map.onResume();
+        holder.map.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(final GoogleMap googleMap) {
+                googleMaps = googleMap;
+                googleMaps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                googleMaps.getUiSettings().setMyLocationButtonEnabled(false);
+                googleMaps.getUiSettings().setAllGesturesEnabled(false);
+
+                //Zooming into selected marker
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(currentPos).zoom(mapZoom).build();
+                googleMaps.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                //Reseting to default values
+                mapZoom = 5.8f;
+                currentPos = new LatLng(55.3, 23.7);
+
+
+                //Adding markers
+                for(int i=0;i<infoHolder.size(); i++){
+                    InfoHolder info = infoHolder.get(i);
+                    MarkerOptions marker = new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLongtitude())).title(info.getEvent_name()).snippet(info.event_location_and_date);
+                    googleMaps.addMarker(marker);
+                }
+
+
+                //Seeting marker info windows
+                if (googleMaps != null) {
+                    LayoutInflater layoutInflater = LayoutInflater.from(context);
+                    View view = layoutInflater.inflate(R.layout.marker_info, null);
+                    googleMaps.setInfoWindowAdapter(new MarkerInfoClass(view));
+                }
+
+
+
+
+                googleMaps.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        marker.showInfoWindow();
+                        return false;
+                    }
+                });
+
+
+                // check if map is created successfully or not
+                if (googleMaps == null) {
+                    Toast.makeText(context,
+                            "Atsiprašome! Jums žemėlapis neveikia.", Toast.LENGTH_SHORT)
+                            .show();
+                }
+
+            }
+        });
+
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         //Map objects
@@ -286,13 +274,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_name.setTypeface(tf);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
 
-                    layout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            recyclerview.smoothScrollToPosition(0);
-                        }
-                    });
-
 
                     break;
                 case 1:
@@ -327,8 +308,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
 
                                 add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
-
-
 
                             } catch (Exception e) {
                                 CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context);
