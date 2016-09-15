@@ -154,10 +154,10 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     for(int i=0;i<infoHolder.size(); i++){
                         InfoHolder info = infoHolder.get(i);
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLatitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
+                        Log.i("TEST", String.valueOf(info.getLatitude()));
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLongtitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
                     }
 
-                    Log.i("TEST", "latitude: " + data.getLatitude());
 
                     if (googleMaps != null) {
 
@@ -209,8 +209,10 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                     for(int i=0;i<infoHolder.size(); i++){
                         InfoHolder info = infoHolder.get(i);
-                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLatitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
+                        googleMaps.addMarker(new MarkerOptions().position(new LatLng(info.getLatitude(), info.getLongtitude())).title(info.getEvent_name()).snippet(info.event_location_and_date));
                     }
+
+
 
 
 
