@@ -49,15 +49,16 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Fragment fragment;
     private GoogleMap googleMaps;
     private SharedPreferences sharedPreferences;
+    private RecyclerView recyclerview;
 
 
 
-
-    public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment) {
+    public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview) {
         this.infoHolder = infoHolder;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.fragment = fragment;
+        this.recyclerview = recyclerview;
 
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
@@ -282,6 +283,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_name.setTypeface(tf);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
 
+                    layout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recyclerview.smoothScrollToPosition(0);
+                        }
+                    });
+
 
                     break;
                 case 1:
@@ -313,6 +321,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                 new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
 
                                 add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
+
+
 
                             } catch (Exception e) {
                                 CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context);

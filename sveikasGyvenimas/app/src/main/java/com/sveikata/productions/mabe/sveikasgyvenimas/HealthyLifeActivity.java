@@ -74,7 +74,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.activity_schedule_layout_admin,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-            adapter = new RecyclerAdapter(getActivity(), data, this);
+            adapter = new RecyclerAdapter(getActivity(), data, this, recyclerView);
 
             if(addData) {
                 addData = false;
@@ -91,7 +91,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.activity_schedule_layout,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
-            adapter = new RecyclerAdapter(getActivity(), data,this);
+            adapter = new RecyclerAdapter(getActivity(), data,this, recyclerView);
 
 
             if(addData) {
