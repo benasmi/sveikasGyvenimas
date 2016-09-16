@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sveikinu užsiregistravus!!!"
+        android:text="Sveikinu prisijungus prie mūsų !"
         android:id="@+id/textView3"
         android:layout_marginTop="63dp"
         android:layout_alignParentTop="true"
@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Norėdami prisijungti, nueikite į paštą ir aktyvuokite savo paskyrą "
+        android:text="Norėdami prisijungti, nueikite į paštą ir aktyvuokite savo paskyrą. Gero naudojimo"
         android:id="@+id/textView4"
 
         android:gravity="center"

@@ -93,7 +93,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
         } else{
             rootView = inflater.inflate(R.layout.activity_schedule_layout,container,false);
-            recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
+
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
             adapter = new RecyclerAdapter(getActivity(), data,this, recyclerView);

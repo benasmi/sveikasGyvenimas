@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         register_txt = (TextView) findViewById(R.id.register_textview);
-        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/manteka.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/bevan.ttf");
         register_txt.setTypeface(tf);
 
 

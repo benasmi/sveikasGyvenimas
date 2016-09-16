@@ -9,11 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.iid.InstanceID;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import java.util.Timer;
 import java.util.TimerTask;
 

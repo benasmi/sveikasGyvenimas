@@ -77,7 +77,7 @@ android:id="@+id/add_layout">
     android:text="PRIDĖTI"
     android:layout_marginBottom="10dp"
     android:id="@+id/add_event"
-    android:background="@drawable/button_borders_gray"
+    android:background="@drawable/blue_borders"
     android:layout_below="@id/event_description_admin"/>
 
 

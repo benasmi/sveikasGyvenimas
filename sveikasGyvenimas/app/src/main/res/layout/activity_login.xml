@@ -17,63 +17,15 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="55dp">
 
-        <EditText
-            android:layout_width="380dp"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/user_icon"
-            android:drawablePadding="8dp"
-            android:textColorHint="#515959"
-            android:background="@drawable/button_borders_different_color"
-            android:id="@+id/login_username_text"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:hint="Vartotojo vardas"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="50dp"
-            android:textSize="18dp" />
-
-        <EditText
-            android:layout_width="380dp"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/lock_icon"
-            android:background="@drawable/button_borders_different_color"
-            android:drawablePadding="8dp"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:textColorHint="#515959"
-            android:id="@+id/login_password_text"
-            android:layout_below="@+id/login_username_text"
-            android:layout_centerHorizontal="true"
-            android:hint="Slaptažodis"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="50dp"
-            android:textSize="18dp" />
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Prisijungti"
-            android:textColor="#ecf0f1"
-            android:id="@+id/regular_login_button"
-            android:onClick="logIn"
-            android:background="@drawable/button_borders_green"
-            android:layout_below="@+id/login_password_text"
-
-            android:layout_alignRight="@+id/login_password_text"
-            android:layout_alignEnd="@+id/login_password_text"
-            android:layout_alignLeft="@+id/login_password_text"
-            android:layout_alignStart="@+id/login_password_text"
-            android:layout_marginTop="10dp" />
-
     </RelativeLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:id="@+id/linearLayout"
-        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/regular_login_button"
         android:layout_centerHorizontal="true">
 
 
@@ -112,9 +64,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Prisijungimas"
         android:id="@+id/textView"
-        android:layout_marginTop="75dp"
         android:textColor="#ffffff"
         android:textSize="40dp"
+        android:layout_marginTop="36dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -124,7 +76,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#00796B">
+        android:background="#00796B"
+        android:id="@+id/relativeLayout3">
 
         <TextView
             android:layout_width="wrap_content"
@@ -142,29 +95,79 @@
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/login_button"
-        android:layout_below="@id/linearLayout"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:textColor="#FFFFFF"
         android:drawableLeft="@drawable/fb_icon"
-        android:drawablePadding="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_gravity="center_horizontal"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#3B5998"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:paddingLeft="15dp"
+        android:background="@drawable/blue_borders"
         android:textSize="13dp"
 
         android:onClick="onfbClick"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="Prisijunkite su Facebook" />
+        android:text="Prisijunkite su Facebook"
+        android:paddingRight="30dp"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="Prisijungti"
+        android:textColor="#ecf0f1"
+        android:id="@+id/regular_login_button"
+        android:onClick="logIn"
+        android:background="@drawable/button_borders_green"
+
+        android:textSize="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/login_password_text"
+        android:layout_alignLeft="@+id/login_password_text"
+        android:layout_alignStart="@+id/login_password_text" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:drawableLeft="@drawable/lock_icon"
+        android:background="@drawable/button_borders_different_color"
+        android:drawablePadding="8dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:textColorHint="#515959"
+        android:id="@+id/login_password_text"
+        android:hint="Slaptažodis"
+        android:paddingLeft="5dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/login_username_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:drawableLeft="@drawable/user_icon"
+        android:drawablePadding="8dp"
+        android:textColorHint="#515959"
+
+        android:background="@drawable/button_borders_different_color"
+        android:id="@+id/login_username_text"
+        android:hint="Vartotojo vardas"
+        android:paddingLeft="5dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignLeft="@+id/login_password_text"
+        android:layout_alignStart="@+id/login_password_text"
+        android:layout_marginTop="50dp" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/icon"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
 
