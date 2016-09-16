@@ -185,6 +185,18 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 mapZoom = 5.8f;
                 currentPos = new LatLng(55.3, 23.7);
 
+                //Scrolling to event schedule item on info window click
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        for(int i = 0; i < infoHolder.size(); i++){
+                            if(marker.getTitle().equals(infoHolder.get(i).getEvent_name())){
+                                recyclerview.smoothScrollToPosition(i);
+                                break;
+                            }
+                        }
+                    }
+                });
 
                 //Adding markers
                 for(int i=0;i<infoHolder.size(); i++){
