@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
 
+
+
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.sveikata.productions.mabe.sveikasgyvenimas"
@@ -18,22 +20,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.facebook.android:facebook-android-sdk:4.8.0'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.google.android.gms:play-services:7.5.0'
-    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.android.support:support-v4:23.1.0'
     compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.google.maps:google-maps-services:0.1.15'
-    compile 'com.android.support:design:22.2.1'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
+    compile 'com.android.support:design:23.1.0'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient-4.3.jar"
     }
-
 }
+apply plugin: 'com.google.gms.google-services'

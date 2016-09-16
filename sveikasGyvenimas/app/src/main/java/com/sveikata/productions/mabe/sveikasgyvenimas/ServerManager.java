@@ -41,7 +41,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
     public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_event.php";
     public static String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
-
+    public static String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
 
 
     public ServerManager(Context context){

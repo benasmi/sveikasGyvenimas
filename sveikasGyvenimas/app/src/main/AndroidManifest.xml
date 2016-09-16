@@ -9,14 +9,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="com.example.benas.prestanotifications.C2D_MESSAGE" />
 
-    <permission
-        android:name="com.example.benas.prestanotifications.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+
 
     <application
 
@@ -27,41 +24,19 @@
         android:theme="@style/AppThemeNoBar">
 
 
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND"
-            >
-
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <category android:name="com.example.benas.prestanotifications" />
-            </intent-filter>
-        </receiver>
-
         <service
-            android:name=".GcmMessageReceiver"
-            android:exported="false" >
+            android:name=".GcmMessageReceiver">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <service
-            android:name=".GcmOnTokenRefresh"
-            android:exported="false" >
+            android:name=".GcmOnTokenRefresh">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".RegisterTokenService"
-            android:exported="false"></service>
-
 
 
         <activity android:name=".LoginActivity" android:screenOrientation="portrait"
