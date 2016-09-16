@@ -37,7 +37,6 @@ public class CheckingUtils {
     public static void createErrorBox(String message, Context context) {
         new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 .setMessage(message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

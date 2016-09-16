@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -50,12 +51,14 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
 
-            notificationBuilder.setSmallIcon(R.drawable.app_icon)
+            notificationBuilder.setSmallIcon(R.drawable.icon_for_notif)
                     .setContentTitle(message)
                     .setContentText(description)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
+                    .setColor(Color.argb(1,72,103,170))
                     .setContentIntent(pendingIntent);
+
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
