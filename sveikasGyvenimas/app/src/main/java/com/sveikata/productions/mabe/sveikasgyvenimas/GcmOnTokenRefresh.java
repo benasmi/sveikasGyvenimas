@@ -44,7 +44,7 @@ public class GcmOnTokenRefresh extends FirebaseInstanceIdService {
         Log.i("TEST", token);
 
         if(!old_id.equals(token)){
-            update_device_id();
+           //update_device_id();
         }
 
         super.onTokenRefresh();
@@ -61,8 +61,7 @@ public class GcmOnTokenRefresh extends FirebaseInstanceIdService {
         JSONObject jsonObject = new JSONObject();
 
         try {
-
-            jsonObject.putOpt("email_username", sharedPreferences.getString("username", ""));
+            jsonObject.putOpt("username", sharedPreferences.getString("username", ""));
             jsonObject.putOpt("password", sharedPreferences.getString("password", ""));
             jsonObject.putOpt("device_id", sharedPreferences.getString("device_id", ""));
             jsonObject.putOpt("device_id_old", sharedPreferences.getString("old_device_id", ""));

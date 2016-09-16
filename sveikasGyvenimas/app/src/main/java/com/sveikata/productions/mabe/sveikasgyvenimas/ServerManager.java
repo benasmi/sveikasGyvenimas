@@ -81,8 +81,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             username_login = params[1];
             password_login = params[2];
+            String device_id = params[3];
 
-            response = login(username_login,password_login);
+            response = login(username_login,password_login, device_id);
         }
         if(method_type.equals("INSERT_EVENT")){
 
@@ -94,6 +95,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             double longtitude = Double.parseDouble(params[6]);
             String name = params[7];
             String description = params[8];
+
 
 
             insert_event_data(username, password,event_location,date,latitude,longtitude, name, description);
@@ -226,7 +228,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
 
-    private int login(String username, String password) {
+    private int login(String username, String password, String device_id) {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -239,6 +241,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         try {
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
+            jsonObject.putOpt("device_id", device_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }

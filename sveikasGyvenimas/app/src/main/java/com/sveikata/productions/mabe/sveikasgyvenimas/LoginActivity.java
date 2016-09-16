@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
-        sharedPrefs = getSharedPreferences("DataPrefs", MODE_PRIVATE);
+        sharedPrefs = getSharedPreferences("UserData", MODE_PRIVATE);
 
         setContentView(R.layout.activity_login);
 
@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_button);
 
 
-        if(!sharedPrefs.getString("username", "").isEmpty())
+        if(!sharedPrefs.getString("password", "").isEmpty())
             new ServerManager(this).startFetchingData();
 
 
@@ -145,7 +145,9 @@ public class LoginActivity extends AppCompatActivity {
     public void logIn(View view){
         String username = username_ET.getText().toString().trim();
         String password = password_ET.getText().toString().trim();
+        String device_id = sharedPrefs.getString("device_id", "");
 
+        Log.i("TEST", "Device id " + device_id);
         if(username.isEmpty()){
             username_ET.setError("Įveskite vartotojo vardą");
             return;
@@ -155,10 +157,9 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        new ServerManager(this).execute("LOGIN", username,password);
+        new ServerManager(this).execute("LOGIN", username,password, device_id);
 
     }
-
 
     public void register(View view){
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
