@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
             CheckingUtils.createErrorBox("Norėdami prisijungti, turite įjungti internetą",this);
             return;
         }
-        new ServerManager(this).execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular");
+        new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular");
 
     }
 }

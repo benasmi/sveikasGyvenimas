@@ -247,7 +247,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            new ServerManager(context).execute("DELETE_EVENT",username, password,name,description);
+                            new ServerManager(context, "DELETE_EVENT").execute("DELETE_EVENT",username, password,name,description);
                             remove(position);
                     }
                 })
@@ -385,7 +385,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                                     event_description_admin.setText("");
                                                     event_place_admin.setText("");
 
-                                                    new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
+                                                    new ServerManager(RecyclerAdapter.this.context, "INSERT_EVENT").execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
                                                     add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
 
                                                 }
@@ -429,7 +429,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 notif_message.setText("");
                                                 notif_description.setText("");
-                                                new ServerManager(context).execute("SEND_NOTIFICATION", message, description);
+                                                new ServerManager(context, "SEND_NOTIFICATION").execute("SEND_NOTIFICATION", message, description);
                                             }
                                         })
                                         .setNegativeButton("NE", new DialogInterface.OnClickListener() {

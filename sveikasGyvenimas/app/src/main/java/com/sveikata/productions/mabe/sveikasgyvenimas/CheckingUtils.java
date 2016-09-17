@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -44,6 +45,14 @@ public class CheckingUtils {
                     }
                 })
                 .show();
+    }
+    public static ProgressDialog progressDialog(Context context, String message){
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(message);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        return progressDialog;
     }
 
     public static void changeNotifBarColor(String color, Window window){

@@ -31,7 +31,7 @@ public class TabActivityLoader extends AppCompatActivity {
         setContentView(R.layout.activity_tab_activity_loader);
 
         window = getWindow();
-        sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
@@ -123,13 +123,12 @@ public class TabActivityLoader extends AppCompatActivity {
 
                 String username = sharedPreferences.getString("username", "");
                 String password = sharedPreferences.getString("password", "");
-                String device_id = sharedPreferences.getString("device_id", "");
 
                 if(!CheckingUtils.isNetworkConnected(TabActivityLoader.this)){
                     CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this);
                     return false;
                 }else{
-                    new ServerManager(TabActivityLoader.this).execute("LOGOUT", username, password, device_id);
+                    new ServerManager(TabActivityLoader.this, "LOGOUT").execute("LOGOUT", username, password);
                 }
 
                 return false;

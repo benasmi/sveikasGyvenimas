@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private CallbackManager callbackManager;
     private SharedPreferences sharedPrefs;
-
+    private SharedPreferences loginPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         sharedPrefs = getSharedPreferences("UserData", MODE_PRIVATE);
+
+        loginPrefs = getSharedPreferences("DataPrefs", MODE_PRIVATE);
 
         setContentView(R.layout.activity_login);
 
@@ -68,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_button);
 
 
-        if(!sharedPrefs.getString("password", "").isEmpty())
-            new ServerManager(this).startFetchingData();
+        if(!loginPrefs.getString("password", "").isEmpty())
+            new ServerManager(this, "LOGIN").startFetchingData();
 
     }
     public void onfbClick(View view) {
@@ -105,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String type = "fb";
                                     String token = sharedPrefs.getString("device_id", "");
 
-                                    new ServerManager(LoginActivity.this).execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type,token);
+                                    new ServerManager(LoginActivity.this, "REGISTRATION").execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type,token);
                                     sharedPrefs.edit().putString("username", username).commit();
                                     sharedPrefs.edit().putString("password", password).commit();
                                 }catch (Exception e ){
@@ -157,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        new ServerManager(this).execute("LOGIN", username,password, device_id);
+        new ServerManager(this, "LOGIN").execute("LOGIN", username,password, device_id);
 
     }
 

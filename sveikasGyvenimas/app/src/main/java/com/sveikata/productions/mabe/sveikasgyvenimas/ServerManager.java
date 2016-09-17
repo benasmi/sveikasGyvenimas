@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.CharsetUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,12 +33,15 @@ import java.io.IOException;
 public class ServerManager extends AsyncTask<String, Void, Void> {
 
     private String method_type;
+    private String dialogType;
     private int response;
     private SharedPreferences sharedPreferences;
     private Context context;
 
     private String username_login;
     private String password_login;
+
+    private ProgressDialog progressDialog = null;
 
     public static String SERVER_ADRESS_REGISTER = "http://dvp.lt/android/register.php";
     public static String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
@@ -50,14 +55,21 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
 
-    public ServerManager(Context context){
+    public ServerManager(Context context, String dialogType){
         this.context=context;
+        this.dialogType = dialogType;
 
 
 
     }
     @Override
     protected void onPreExecute() {
+        if(dialogType.equals("LOGIN")){
+            progressDialog = CheckingUtils.progressDialog(context,"Jungiamasi...Palaukite kelias sekundes");
+        }
+        if(dialogType.equals("REGISTRATION")){
+            progressDialog = CheckingUtils.progressDialog(context, "Duomenys perkeliami į serverį");
+        }
         super.onPreExecute();
     }
 
@@ -123,13 +135,23 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             delete_event(username,password,name,description);
 
         }
+        if(method_type.equals("LOGOUT")){
+            String username = params[1];
+            String password = params[2];
+
+            logout(username, password);
+
+        }
 
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
+
+
         if (method_type.equals("REGISTRATION")) {
+            progressDialog.cancel();
             switch (response) {
                 case 0:
                     new AlertDialog.Builder(context)
@@ -154,6 +176,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
         if(method_type.equals("LOGIN")){
+            progressDialog.cancel();
             switch (response) {
                 case 0:
                     sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
@@ -368,7 +391,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
-    public void logout (String username, String password, String device_id){
+    public void logout (String username, String password){
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGOUT);
 
@@ -377,7 +400,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         try{
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
-            jsonObject.putOpt("device_id", device_id);
+
 
         }catch (Exception e){
 

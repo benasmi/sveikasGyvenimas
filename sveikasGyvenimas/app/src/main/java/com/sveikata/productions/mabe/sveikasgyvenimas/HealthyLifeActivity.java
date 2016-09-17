@@ -34,6 +34,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     private JSONArray jsonArray;
     private JSONObject userData;
 
+
+
     private String is_administrator;
     private View rootView;
 

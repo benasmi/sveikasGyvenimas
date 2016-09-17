@@ -24,6 +24,8 @@ import org.json.JSONObject;
 public class GcmOnTokenRefresh extends FirebaseInstanceIdService {
 
     private SharedPreferences sharedPreferences;
+    private SharedPreferences loginPrefs;
+
 
     public GcmOnTokenRefresh(){
         Log.i("TEST","OnTokenRefresh");
