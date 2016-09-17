@@ -309,7 +309,6 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     if(is_administrator.equals("1")){
 
 
-
                         layout.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View v) {
@@ -354,25 +353,53 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     event_add_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String event_name = event_name_admin.getText().toString().trim();
-                            String event_date = event_date_admin.getText().toString().trim();
-                            String event_description = event_description_admin.getText().toString().trim();
-                            String event_location = event_place_admin.getText().toString().trim();
+                            final String event_name = event_name_admin.getText().toString().trim();
+                            final  String event_date = event_date_admin.getText().toString().trim();
+                            final String event_description = event_description_admin.getText().toString().trim();
+                            final String event_location = event_place_admin.getText().toString().trim();
 
-                            String username = sharedPreferences.getString("username", "");
-                            String password = sharedPreferences.getString("password", "");
+                            final String username = sharedPreferences.getString("username", "");
+                            final String password = sharedPreferences.getString("password", "");
 
-                            GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyD7CmlEdYr_-nU6pNDxik_8FTq-tD53iw8");
+
+
+                            GeoApiContext geoContext = new GeoApiContext().setApiKey("AIzaSyD7CmlEdYr_-nU6pNDxik_8FTq-tD53iw8");
                             GeocodingResult[] results = new GeocodingResult[0];
                             try {
-                                results = GeocodingApi.geocode(context, event_location).await();
+                                results = GeocodingApi.geocode(geoContext, event_location).await();
+                                final double latitude = results[0].geometry.location.lat;
+                                final double longtitude = results[0].geometry.location.lng;
 
-                                double latitude = results[0].geometry.location.lat;
-                                double longtitude = results[0].geometry.location.lng;
+                                if(!CheckingUtils.isNetworkConnected(context)){
+                                    CheckingUtils.createErrorBox("Norėdami pridėti renginį, jums reikia įjungti internetą", context);
+                                    return;
+                                }else{
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                                new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
+                                    builder.setMessage("Ar tikrai norite pridėti renginį ?")
+                                            .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    event_name_admin.setText("");
+                                                    event_date_admin.setText("");
+                                                    event_description_admin.setText("");
+                                                    event_place_admin.setText("");
 
-                                add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
+                                                    new ServerManager(RecyclerAdapter.this.context).execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
+                                                    add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
+
+                                                }
+                                            })
+                                            .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    return;
+                                                }
+                                            });
+                                    builder.show();
+                                    builder.create();
+                                }
+
 
                             } catch (Exception e) {
                                 CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context);
@@ -387,12 +414,34 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     send_notif.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            String message = notif_message.getText().toString().trim();
-                            String description = notif_description.getText().toString().trim();
+                           final String message = notif_message.getText().toString().trim();
+                           final String description = notif_description.getText().toString().trim();
 
-                            new ServerManager(context).execute("SEND_NOTIFICATION", message, description);
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Norėdami išsiųsti žinutę visiems vartotojams, jums reikia įjungti internetą", context);
+                                return;
+                            }else{
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                            CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context);
+                                builder.setMessage("Ar tikrai norite išsiųsti pranešimą visiems vartotojams ?")
+                                        .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                notif_message.setText("");
+                                                notif_description.setText("");
+                                                new ServerManager(context).execute("SEND_NOTIFICATION", message, description);
+                                            }
+                                        })
+                                        .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                return;
+                                            }
+                                        });
+                                builder.show();
+                                builder.create();
+
+                            }
 
                         }
                     });

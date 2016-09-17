@@ -46,6 +46,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
     public static String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
     public static String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
+    public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
 
 
 
@@ -74,9 +75,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String gender = params[6];
             String years = params[7];
             String type = params[8];
+            String token = params[9];
 
 
-            response = register(name,last_name,username,password,mail,gender,years,type);
+            response = register(name,last_name,username,password,mail,gender,years,type, token);
 
             if(!type.equals("regular"))
                 context.startActivity(new Intent(context, TabActivityLoader.class));
@@ -175,13 +177,28 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             }
 
          }
+        if(method_type.equals("LOGOUT")){
+            sharedPreferences = context.getSharedPreferences("DataPrefs", context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", "");
+            editor.putString("password", "");
+            editor.commit();
+            HealthyLifeActivity.addData=true;
+
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra("isAnimDisabled", true);
+            context.startActivity(intent);
+        }
+        if(method_type.equals("SEND_NOTIFICATION")){
+            CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context);
+        }
         super.onPostExecute(aVoid);
         }
 
 
 
 
-    public int register(String name, String last_name, String username, String password, String mail, String gender, String age, String type){
+    public int register(String name, String last_name, String username, String password, String mail, String gender, String age, String type, String token){
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -199,12 +216,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("gender", gender);
             jsonObject.putOpt("age", age);
             jsonObject.putOpt("type", type);
+            jsonObject.putOpt("device_id", token);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        Log.i("TEST", jsonObject.toString());
-
 
         EntityBuilder entity = EntityBuilder.create();
         entity.setText(jsonObject.toString());
@@ -353,6 +368,37 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
+    public void logout (String username, String password, String device_id){
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGOUT);
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("device_id", device_id);
+
+        }catch (Exception e){
+
+        }
+
+        EntityBuilder entity = EntityBuilder.create();
+        entity.setText(jsonObject.toString());
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
     public void fetchScheduleData(){
 
@@ -436,9 +482,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-
 
     }
 

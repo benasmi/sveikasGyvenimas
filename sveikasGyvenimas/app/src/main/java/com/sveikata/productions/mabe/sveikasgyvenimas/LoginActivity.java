@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         if(!sharedPrefs.getString("password", "").isEmpty())
             new ServerManager(this).startFetchingData();
 
-
     }
     public void onfbClick(View view) {
         callbackManager = CallbackManager.Factory.create();
@@ -104,8 +103,9 @@ public class LoginActivity extends AppCompatActivity {
                                     String gender = object.getString("gender");
                                     String years = "15";
                                     String type = "fb";
+                                    String token = sharedPrefs.getString("device_id", "");
 
-                                    new ServerManager(LoginActivity.this).execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type);
+                                    new ServerManager(LoginActivity.this).execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type,token);
                                     sharedPrefs.edit().putString("username", username).commit();
                                     sharedPrefs.edit().putString("password", password).commit();
                                 }catch (Exception e ){

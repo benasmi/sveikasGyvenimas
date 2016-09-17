@@ -24,12 +24,14 @@ public class TabActivityLoader extends AppCompatActivity {
     private Toolbar myToolbar;
     private Window window;
     private boolean normal_or_reverse;
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_activity_loader);
 
         window = getWindow();
+        sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
@@ -118,14 +120,17 @@ public class TabActivityLoader extends AppCompatActivity {
         menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                SharedPreferences sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("username", "").putString("password", "").commit();
-                HealthyLifeActivity.addData=false;
 
-                Intent intent = new Intent(TabActivityLoader.this, LoginActivity.class);
-                intent.putExtra("isAnimDisabled", true);
-                startActivity(intent);
+                String username = sharedPreferences.getString("username", "");
+                String password = sharedPreferences.getString("password", "");
+                String device_id = sharedPreferences.getString("device_id", "");
+
+                if(!CheckingUtils.isNetworkConnected(TabActivityLoader.this)){
+                    CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this);
+                    return false;
+                }else{
+                    new ServerManager(TabActivityLoader.this).execute("LOGOUT", username, password, device_id);
+                }
 
                 return false;
             }
