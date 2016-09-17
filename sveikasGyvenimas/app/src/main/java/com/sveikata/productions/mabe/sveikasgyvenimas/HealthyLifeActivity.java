@@ -64,19 +64,19 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.activity_schedule_layout_admin,container,false);
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-            adapter = new RecyclerAdapter(getActivity(), data, this, recyclerView);
+            adapter = new RecyclerAdapter(getActivity(), data, this, recyclerView, is_administrator);
             recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
 
             if(addData) {
                 addData = false;
                 initializeData(adapter);
                 initializeDataFirstTime(adapter, "1");
+
             }
 
 
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 
             //Swipe to refresh init
             final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout_admin);
@@ -96,7 +96,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
 
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_client);
-            adapter = new RecyclerAdapter(getActivity(), data,this, recyclerView);
+            adapter = new RecyclerAdapter(getActivity(), data,this, recyclerView, is_administrator);
 
             //Swipe to refresh init
             final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout_client);
@@ -163,30 +163,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     }
 
     public void initializeDataFirstTime(RecyclerAdapter adapter, String type){
-        //Preferences to fetch all schedule data
-        SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
-        String schedule = dataPrefs.getString("schedule_data", "");
-
-        try {
-                JSONArray scheduleDataArray = new JSONArray(schedule);
-                JSONObject scheduleData = scheduleDataArray.getJSONObject(0);
-
-                String event_description = scheduleData.getString("description");
-                String event_name = scheduleData.getString("name");
-                String event_location = scheduleData.getString("location_name");
-                String event_date = scheduleData.getString("date");
-
-
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,type, 123, 123), 0);
-
-
-            } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-
-
-
-
+                adapter.add(new InfoHolder("", "","",type, 123, 123), 0);
     }
 
 

@@ -2,11 +2,13 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
@@ -53,19 +55,20 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private GoogleMap googleMaps;
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerview;
-
+    public String is_administrator;
 
     //Map pos
     public LatLng currentPos = new LatLng(55.3, 23.7);
     public float mapZoom = 5.8f;
 
 
-    public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview) {
+    public RecyclerAdapter(Context context, ArrayList<InfoHolder> infoHolder, Fragment fragment, RecyclerView recyclerview, String is_administrator) {
         this.infoHolder = infoHolder;
         layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.fragment = fragment;
         this.recyclerview = recyclerview;
+        this.is_administrator = is_administrator;
 
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
@@ -140,13 +143,13 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                 public void onClick(View view) {
                     recyclerview.smoothScrollToPosition(0);
 
-
                     currentPos = new LatLng(infoHolder.get(position).getLatitude(), infoHolder.get(position).getLongtitude());
                     mapZoom = 8f;
                     notifyDataSetChanged();
 
                 }
             });
+
 
 
             if(position % 2 == 0) {
@@ -198,6 +201,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     }
                 });
 
+
                 //Adding markers
                 for(int i=0;i<infoHolder.size(); i++){
                     InfoHolder info = infoHolder.get(i);
@@ -235,6 +239,26 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
             }
         });
 
+    }
+
+    public void delete_event(final Context context, final String username, final String password, final String name, final String description, final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Ar tikrai norite pašalinti renginį ?")
+                .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            new ServerManager(context).execute("DELETE_EVENT",username, password,name,description);
+                            remove(position);
+                    }
+                })
+                .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        builder.show();
+        builder.create();
     }
 
 
@@ -281,6 +305,39 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                     Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
                     event_name.setTypeface(tf);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
+
+                    if(is_administrator.equals("1")){
+
+
+
+                        layout.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+
+                                String username = sharedPreferences.getString("username", "");
+                                String password = sharedPreferences.getString("password", "");
+                                String description = infoHolder.get(getAdapterPosition()).getEvent_description();
+                                String event_date = infoHolder.get(getAdapterPosition()).getEvent_location_and_date();
+                                String name = infoHolder.get(getAdapterPosition()).getEvent_name();
+
+
+//                                Log.i("TEST", "name: " + name);
+//                                Log.i("TEST", " description: " + description );
+//                                Log.i("TEST", " date/place: " + event_date );
+//                                Log.i("TEST", " position: " + String.valueOf(getAdapterPosition()) );
+
+                                if(!CheckingUtils.isNetworkConnected(context)){
+                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalinga interneto ryšys", context);
+                                    return false;
+                                }
+
+                                delete_event(context,username,password,name,description, getAdapterPosition());
+                                return true;
+                            }
+                        });
+
+                    }
+
 
 
                     break;
@@ -339,6 +396,9 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
                         }
                     });
+
+
+
 
 
                     map = (MapView) itemView.findViewById(R.id.map_container);

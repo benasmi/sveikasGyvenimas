@@ -53,6 +53,7 @@ public class CheckingUtils {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(Color.parseColor(color));
         }
+
     }
 
 }

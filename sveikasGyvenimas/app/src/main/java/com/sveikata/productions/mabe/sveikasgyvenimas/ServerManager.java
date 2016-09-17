@@ -14,7 +14,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +45,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_event.php";
     public static String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
     public static String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
+    public static String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
+
 
 
     public ServerManager(Context context){
@@ -106,6 +111,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String description = params[2];
 
             sendNotifcation(message,description);
+        }
+        if(method_type.equals("DELETE_EVENT")){
+            String username = params[1];
+            String password = params[2];
+            String name = params[3];
+            String description = params[4];
+
+            delete_event(username,password,name,description);
+
         }
 
         return null;
@@ -290,8 +304,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
 
-        EntityBuilder entity = EntityBuilder.create();
-        entity.setText(jsonObject.toString());
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
         httpPost.setEntity(entity.build());
 
         JSONObject responseObject = null;
@@ -303,6 +318,38 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+    public void delete_event(String username, String password, String name, String description){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_DELETE_EVENT);
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("name", name);
+            jsonObject.putOpt("description", description);
+
+        }catch (Exception e){
+
+        }
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -376,12 +423,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("latitude", latitude);
             jsonObject.putOpt("longtitude", longtitude);
 
-            EntityBuilder entity = EntityBuilder.create();
-            entity.setText(jsonObject.toString());
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+            ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+            entity.addTextBody("json", jsonObject.toString(), type);
             httpPost.setEntity(entity.build());
 
             response = httpClient.execute(httpPost);
-
 
 
         } catch (IOException e) {
