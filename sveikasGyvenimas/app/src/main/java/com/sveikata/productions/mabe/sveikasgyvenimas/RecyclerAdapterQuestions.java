@@ -3,6 +3,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,11 +23,13 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     private Context context;
     private ArrayList<QuestionsDataHolder> questionsDataHolder;
     private SharedPreferences sharedPreferences;
+    private LayoutInflater layoutInflater;
 
     public RecyclerAdapterQuestions(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder) {
         this.context = context;
         this.questionsDataHolder = questionsDataHolder;
 
+        layoutInflater = LayoutInflater.from(context);
 
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
@@ -47,7 +50,9 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
     @Override
     public RecyclerAdapterQuestions.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View ask_question = layoutInflater.inflate(R.layout.faq_layout, parent, false);
+        RecyclerAdapterQuestions.ViewHolder viewHolder = new ViewHolder(ask_question);
+        return viewHolder;
     }
 
     @Override
