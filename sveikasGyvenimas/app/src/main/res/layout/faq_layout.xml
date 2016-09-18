@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="35dp"
+    android:layout_height="27dp"
     android:id="@+id/text_wrap"
     android:background="#fbf5fe"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,9 +21,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:paddingLeft="5dp"
-            android:paddingTop="5dp"
             android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="20dp" />
 
         <ImageView
             android:layout_width="fill_parent"
@@ -46,10 +45,10 @@
             android:layout_height="wrap_content"
             android:text=" Vadovaujantis Lietuvos Respsudaryti as visais su darbu susijusiais aspektais.  as visais su darbu susijusiais aspektais"
             android:id="@+id/question_body"
+            android:textSize="16dp"
+            android:paddingLeft="5dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5dp" />
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 </RelativeLayout>

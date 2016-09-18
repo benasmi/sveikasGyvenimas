@@ -89,13 +89,17 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
             question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
             layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
 
+            float extraHeight = CheckingUtils.convertPixelsToDp(5, context);
+            final float expandedHeight = question_title.getLayout().getHeight() + question_body.getLayout().getHeight() + extraHeight;
+            final float collapsedHeight = question_title.getLayout().getHeight() + expandedHeight;
+
+            layout.getLayoutParams().height = (int) collapsedHeight;
+
             //Expansion on click
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    float expandedHeight = question_title.getLayout().getHeight() + question_body.getLayout().getHeight();
-                    float collapsedHeight = question_title.getLayout().getHeight();
 
                     ResizeAnimation expand = new ResizeAnimation(layout, (int) collapsedHeight, (int) expandedHeight);
                     expand.setDuration(200);
