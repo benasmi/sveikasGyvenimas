@@ -49,15 +49,15 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
         }
 
 
-        if(is_administrator.equals("1")){
-
-        }else{
-
-        }
-
-
-
         View rootView = inflater.inflate(R.layout.activity_ask_questions,container,false);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_recycler);
+        adapter = new RecyclerAdapterQuestions(getActivity(),data);
+
+        initializeData(adapter);
+
+        recyclerView.setAdapter(adapter);
+
         return rootView;
     }
 
@@ -74,7 +74,7 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
                 JSONObject scheduleData = scheduleDataArray.getJSONObject(i);
 
 
-                adapter.add(new QuestionsDataHolder(), 0);
+
             }
 
 

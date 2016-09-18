@@ -23,9 +23,10 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     private ArrayList<QuestionsDataHolder> questionsDataHolder;
     private SharedPreferences sharedPreferences;
 
-    public RecyclerAdapterQuestions(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder, String is_administrator) {
+    public RecyclerAdapterQuestions(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder) {
         this.context = context;
         this.questionsDataHolder = questionsDataHolder;
+
 
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
@@ -81,7 +82,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
             question_title = (TextView) itemView.findViewById(R.id.question_title);
             question_title_layout = (RelativeLayout) itemView.findViewById(R.id.question_title_layout);
             question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
-            layout = (RelativeLayout) itemView.findViewById(R.id.faq_layout);
+            layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
 
             //Expansion on click
             layout.setOnClickListener(new View.OnClickListener() {
