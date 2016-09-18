@@ -130,7 +130,6 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
     }
 
-
     public void initializeData(RecyclerAdapter adapter){
         //Preferences to fetch all schedule data
         SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
