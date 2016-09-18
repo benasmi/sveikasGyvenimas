@@ -81,7 +81,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
             question_title = (TextView) itemView.findViewById(R.id.question_title);
             question_title_layout = (RelativeLayout) itemView.findViewById(R.id.question_title_layout);
             question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
-            layout = (RelativeLayout) itemView.findViewById(R.id.faq_layout);
+            layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
 
             //Expansion on click
             layout.setOnClickListener(new View.OnClickListener() {
@@ -100,15 +100,6 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     isClicked = !isClicked;
                 }
             });
-
-
-
         }
-
     }
-
-
-
-
-
 }
