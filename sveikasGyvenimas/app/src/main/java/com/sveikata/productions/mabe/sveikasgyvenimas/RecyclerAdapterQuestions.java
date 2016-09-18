@@ -1,12 +1,22 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.service.chooser.ChooserTarget;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +44,6 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
     }
-
 
     public void remove(int position) {
         questionsDataHolder.remove(position);
@@ -73,9 +82,12 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         //Views
         private TextView question_title;
         private TextView question_body;
+
         private RelativeLayout layout;
         private RelativeLayout question_title_layout;
         private RelativeLayout question_body_layout;
+        private ImageView arrow;
+
 
         private boolean isClicked = false;
 
@@ -85,16 +97,21 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
             //View init
             question_body = (TextView) itemView.findViewById(R.id.question_body);
             question_title = (TextView) itemView.findViewById(R.id.question_title);
+
             question_title_layout = (RelativeLayout) itemView.findViewById(R.id.question_title_layout);
             question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
             layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
+            arrow = (ImageView) itemView.findViewById(R.id.arrow_image);
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+
+            question_title.setTypeface(tf);
 
             //Expansion on click
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    float extraHeight = CheckingUtils.convertPixelsToDp(20, context);
+                    float extraHeight = CheckingUtils.convertPixelsToDp(22, context);
                     float extraHeightCollapsed = CheckingUtils.convertPixelsToDp(10, context);
                     final float expandedHeight = question_title.getLayout().getHeight() + question_body.getLayout().getHeight() + extraHeight;
                     final float collapsedHeight = question_title.getLayout().getHeight() + extraHeightCollapsed;
@@ -105,9 +122,34 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     shrink.setDuration(200);
                     layout.startAnimation(isClicked ? expand : shrink);
 
+                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.flip);
+                    arrow.startAnimation(animation);
+
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            arrow.setImageResource(isClicked ?  R.drawable.arrow_up : R.drawable.arrow_down);
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+
+
+
                     isClicked = !isClicked;
                 }
             });
+
+
         }
     }
 }

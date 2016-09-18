@@ -207,6 +207,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             editor.putString("password", "");
             editor.commit();
             HealthyLifeActivity.addData=true;
+            AskQuestionsActivity.addFAQData = true;
 
             Intent intent = new Intent(context, LoginActivity.class);
             intent.putExtra("isAnimDisabled", true);

@@ -1,15 +1,23 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,14 +27,26 @@ import java.util.ArrayList;
 
 public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
+    public static String specialist_BEN = "Benas. M";
+    public static String specialist_MARTIN = "Martynas. D";
+    public static boolean addFAQData = true;
+
     private ArrayList<QuestionsDataHolder> data = new ArrayList<QuestionsDataHolder>();
     private RecyclerView recyclerView;
     private RecyclerAdapterQuestions adapter;
+    private AppCompatButton ask_button;
+    private EditText message;
+    private EditText subject;
+    private Spinner spinner;
+
+
+
 
     //OBJECTS for checking if user is admin
     private JSONArray jsonArray;
     private JSONObject userData;
-
+    private TextView faq_txt;
+    private TextView ask_question_txt;
     private String is_administrator;
     private View rootView;
 
@@ -37,6 +57,8 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
         //Preferences to check if user is admin
         SharedPreferences userPrefs = getActivity().getSharedPreferences("UserData", getActivity().MODE_PRIVATE);
         String user_data = userPrefs.getString("user_data", "");
+
+
 
         try {
             jsonArray = new JSONArray(user_data);
@@ -52,10 +74,57 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
         View rootView = inflater.inflate(R.layout.activity_ask_questions,container,false);
 
+        //TEXTVIEWS
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comforta.ttf");
+        faq_txt = (TextView) rootView.findViewById(R.id.faq_txt);
+        ask_question_txt = (TextView) rootView.findViewById(R.id.ask_new_question_txt);
+        faq_txt.setTypeface(tf);
+        ask_question_txt.setTypeface(tf);
+
+        //Setting up spinner
+        spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        ArrayAdapter spinner_adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.specialists, R.layout.spinner_item);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinner_adapter);
+
+
+        //Sending email
+        message = (EditText) rootView.findViewById(R.id.email_message);
+        subject = (EditText) rootView.findViewById(R.id.subject_email);
+        ask_button = (AppCompatButton) rootView.findViewById(R.id.ask);
+
+        ask_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message_value = message.getText().toString().trim();
+                String subject_value = subject.getText().toString().trim();
+
+                String specialist = spinner.getSelectedItem().toString();
+
+                if(specialist.equals("Pasirink specialistą")){
+                    CheckingUtils.createErrorBox("Pasirinkimas negalimas", getActivity());
+                    return;
+                }
+                else if(specialist.equals(specialist_BEN)){
+                    String to [] = {"benasmiliunas@gmail.com"};
+                    sendEmail(to,subject_value,message_value);
+                }else if(specialist.equals(specialist_MARTIN)){
+                    String to [] = {"dargis.martynas@gmail.com"};
+                    sendEmail(to,subject_value,message_value);
+                }
+
+            }
+        });
+
+
         recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_recycler);
         adapter = new RecyclerAdapterQuestions(getActivity(),data);
 
-        initializeData(adapter);
+        if(addFAQData){
+            addFAQData=false;
+            initializeData(adapter);
+        }
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -69,13 +138,25 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
         SharedPreferences dataPrefs = getActivity().getSharedPreferences("QuestionsData", getActivity().MODE_PRIVATE);
         String schedule = dataPrefs.getString("questions_data", "");
 
-
-
-
         adapter.add(new QuestionsDataHolder("Ar galima vairuoti išgėrus?", "Taip, tai yra patartina. Taip pat parūkykite prieš vairuodami."), 0);
         adapter.add(new QuestionsDataHolder("Ar man eiti miegoti?", "Ne, geriau taip nedaryti. Nors px man, daryk jei nori."), 0);
         adapter.add(new QuestionsDataHolder("Kokias kojines mautis?", "Nesimauk. Patartina vaikščioti be kojinių."), 0);
 
     }
+    public void sendEmail(String[] to, String subject, String message){
+
+
+
+        Intent intent =new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, to);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        intent.setType("message/rfc822");
+
+        Intent email = Intent.createChooser(intent,"Email");
+        getActivity().startActivity(email);
+
+    }
+
 
 }

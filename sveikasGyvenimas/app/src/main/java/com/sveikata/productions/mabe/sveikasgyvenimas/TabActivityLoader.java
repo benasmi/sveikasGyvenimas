@@ -36,7 +36,7 @@ public class TabActivityLoader extends AppCompatActivity {
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
         myToolbar.setBackgroundColor(Color.parseColor("#009688"));
-        myToolbar.setTitle("Aktyvuokis  - keisk save!");
+        myToolbar.setTitle("Tvarkaraštis");
         setSupportActionBar(myToolbar);
 
         tabLayout = (TabLayout) findViewById(R.id.my_tab_layout);
@@ -145,21 +145,30 @@ public class TabActivityLoader extends AppCompatActivity {
             tabLayout.getTabAt(1).setIcon(R.drawable.play_unactive);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
+            myToolbar.setTitle("Eh..Tvarkaraštis");
+
         }else if(position==1){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_active);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
+            myToolbar.setTitle("Skaičiuok ir žaisk");
+
         }else if(position==2){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_unactive);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_active);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
+            myToolbar.setTitle("Ar gali patikėti?");
+
         }else if(position==3){
+
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_unactive);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_active);
+            myToolbar.setTitle("Klausk..Klausk..!");
+
         }
 
 

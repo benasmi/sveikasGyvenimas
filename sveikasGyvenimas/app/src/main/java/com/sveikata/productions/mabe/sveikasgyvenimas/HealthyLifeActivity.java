@@ -40,6 +40,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+
         //Preferences to check if user is admin
         SharedPreferences userPrefs = getActivity().getSharedPreferences("UserData", getActivity().MODE_PRIVATE);
         String user_data = userPrefs.getString("user_data", "");
