@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="40dp"
     android:id="@+id/text_wrap"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="29dp"
         android:id="@+id/question_title_layout"
         android:background="#e7e7e7">
 
@@ -36,7 +36,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/question_title_layout"
         android:layout_centerHorizontal="true"
         android:id="@+id/question_body_layout"
