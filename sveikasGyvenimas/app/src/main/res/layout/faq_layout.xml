@@ -21,8 +21,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:paddingLeft="5dp"
+            android:paddingTop="5dp"
             android:textStyle="bold"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <ImageView
             android:layout_width="fill_parent"
@@ -45,10 +46,10 @@
             android:layout_height="wrap_content"
             android:text=" Vadovaujantis Lietuvos Respsudaryti as visais su darbu susijusiais aspektais.  as visais su darbu susijusiais aspektais"
             android:id="@+id/question_body"
-            android:textSize="16dp"
-            android:paddingLeft="5dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="5dp" />
     </RelativeLayout>
 </RelativeLayout>
