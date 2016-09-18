@@ -440,33 +440,16 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
                                         });
                                 builder.show();
                                 builder.create();
-
                             }
-
                         }
                     });
 
-
-
-
-
                     map = (MapView) itemView.findViewById(R.id.map_container);
-
                     break;
-
-
                 case 2:
                     map = (MapView) itemView.findViewById(R.id.map_container_client);
-
                     break;
-
             }
-
         }
-
     }
-
-
-
 }
-
