@@ -68,20 +68,12 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
         SharedPreferences dataPrefs = getActivity().getSharedPreferences("QuestionsData", getActivity().MODE_PRIVATE);
         String schedule = dataPrefs.getString("questions_data", "");
 
-        try {
-            JSONArray scheduleDataArray = new JSONArray(schedule);
-            for (int i = 0; i<scheduleDataArray.length(); i++){
-                JSONObject scheduleData = scheduleDataArray.getJSONObject(i);
 
 
 
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        adapter.add(new QuestionsDataHolder("Ar galima vairuoti išgėrus?", "Taip, tai yra patartina. Taip pat parūkykite prieš vairuodami."), 0);
+        adapter.add(new QuestionsDataHolder("Ar man eiti miegoti?", "Ne, geriau taip nedaryti. Nors px man, daryk jei nori."), 0);
+        adapter.add(new QuestionsDataHolder("Kokias kojines mautis?", "Nesimauk. Patartina vaikščioti be kojinių."), 0);
 
     }
 
