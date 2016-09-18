@@ -23,9 +23,6 @@ import java.util.ArrayList;
 
 public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
-    private GoogleMap googleMaps;
-    private SupportMapFragment mapfragment;
-
     private ArrayList<InfoHolder> data = new ArrayList<InfoHolder>();
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
@@ -33,8 +30,6 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     //OBJECTS for checking if user is admin
     private JSONArray jsonArray;
     private JSONObject userData;
-
-
 
     private String is_administrator;
     private View rootView;
