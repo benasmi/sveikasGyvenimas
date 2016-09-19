@@ -31,9 +31,12 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:textSize="18dp"
+            android:text="Kiek išgersi, tiek nepragersi. Kas čia išvis per klausimas. Dar reikia užpildyti teksto šiek tiek. Ok, užteks."
             android:textColor="#000000"
-            android:text="Kiek išgersi, tiek nepragersi. Kas čia išvis per klausimas. Dar reikia užpildyti teksto šiek tiek. Ok, užteks."/>
-            android:id="fact_text"
+            android:id="@+id/fact_text"
+            />
+
+
 
         <ImageView
             android:layout_width="match_parent"

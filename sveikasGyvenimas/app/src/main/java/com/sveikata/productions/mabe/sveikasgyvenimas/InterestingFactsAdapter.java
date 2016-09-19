@@ -28,13 +28,13 @@ import java.util.List;
 public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFactsAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<QuestionsDataHolder> questionsDataHolder;
+    private ArrayList<FactInfoHolder> factDataHolder;
     private SharedPreferences sharedPreferences;
     private LayoutInflater layoutInflater;
 
-    public InterestingFactsAdapter(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder) {
+    public InterestingFactsAdapter(Context context, ArrayList<FactInfoHolder> factHolder) {
         this.context = context;
-        this.questionsDataHolder = questionsDataHolder;
+        this.factDataHolder = factHolder;
 
         layoutInflater = LayoutInflater.from(context);
 
@@ -43,13 +43,13 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     }
 
     public void remove(int position) {
-        questionsDataHolder.remove(position);
+        factDataHolder.remove(position);
         notifyItemRemoved(position);
 
     }
 
-    public void add(QuestionsDataHolder info, int position) {
-        questionsDataHolder.add(position,info);
+    public void add(FactInfoHolder info, int position) {
+        factDataHolder.add(position,info);
         notifyDataSetChanged();
     }
 
@@ -58,41 +58,58 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     public InterestingFactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //TODO: inflate layout
 
+        View view;
+        ViewHolder holder;
 
         switch (viewType){
 
             //Regular fact
             case 0:
-                View view = View.inflate(context, R.layout.facts_item, parent);
-                ViewHolder holder = new ViewHolder(view);
+                view = View.inflate(context, R.layout.facts_item, parent);
+                holder = new ViewHolder(view);
                 return holder;
 
             //Add fact button (for admin)
             case 1:
-                
-                break;
+                view = View.inflate(context, R.layout.add_fact_button_layout, parent);
+                holder = new ViewHolder(view);
+                return holder;
         }
+
+        return null;
 
 
     }
 
     @Override
     public void onBindViewHolder(InterestingFactsAdapter.ViewHolder holder, int position) {
-        QuestionsDataHolder data = questionsDataHolder.get(position);
+        FactInfoHolder data = factDataHolder.get(position);
 
-        //ToDo: initialize
+        holder.fact_title.setText(data.getFactTitle());
+        holder.fact_source.setText(data.getFactSource());
+        holder.fact_body.setText(data.getFactBody());
     }
 
     @Override
     public int getItemCount() {
-        return questionsDataHolder.size();
+        return factDataHolder.size();
     }
 
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView fact_title;
+        private TextView fact_body;
+        private ImageView fact_image;
+        private TextView fact_source;
+
         public ViewHolder(View itemView) {
             super(itemView);
+
+            fact_title = (TextView) itemView.findViewById(R.id.fact_title);
+            fact_body = (TextView) itemView.findViewById(R.id.fact_text);
+            fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
+            fact_source = (TextView) itemView.findViewById(R.id.fact_source);
         }
     }
 }
