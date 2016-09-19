@@ -96,7 +96,11 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 holder.fact_title.setText(data.getFactTitle());
                 holder.fact_source.setText(data.getFactSource());
                 holder.fact_body.setText(data.getFactBody());
-                new bitmapDownloadTask(holder.fact_image, data.getFactImageUrl()).execute();
+
+                if(!data.getFactImageUrl().isEmpty()) {
+                    new bitmapDownloadTask(holder.fact_image, data.getFactImageUrl()).execute();
+                }
+
                 break;
 
             //Button (for admin)
