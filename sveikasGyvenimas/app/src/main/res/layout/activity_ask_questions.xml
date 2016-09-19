@@ -25,7 +25,7 @@
 
         <EditText
             android:layout_width="375dp"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:id="@+id/email_message"
 
             android:background="@drawable/borders_question_email"
@@ -36,7 +36,7 @@
             android:textColor="#ffffff"
             android:gravity="top|left"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:layout_below="@+id/linearlayout" />
 
         <android.support.v7.widget.AppCompatButton
@@ -93,7 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DUK"
+            android:text="D.U.K"
             android:id="@+id/faq_txt"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"

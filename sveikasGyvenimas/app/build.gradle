@@ -19,9 +19,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
     }
+    dexOptions{
+        javaMaxHeapSize "4g"
+    }
+
     useLibrary 'org.apache.http.legacy'
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
