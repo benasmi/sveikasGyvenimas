@@ -111,10 +111,9 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                 @Override
                 public void onClick(View view) {
 
-                    float extraHeight = CheckingUtils.convertPixelsToDp(22, context);
-                    float extraHeightCollapsed = CheckingUtils.convertPixelsToDp(10, context);
+                    float extraHeight = CheckingUtils.convertPixelsToDp(18, context);
                     final float expandedHeight = question_title.getLayout().getHeight() + question_body.getLayout().getHeight() + extraHeight;
-                    final float collapsedHeight = question_title.getLayout().getHeight() + extraHeightCollapsed;
+                    final float collapsedHeight = CheckingUtils.convertPixelsToDp(42, context);
 
                     ResizeAnimation expand = new ResizeAnimation(layout, (int) collapsedHeight, (int) expandedHeight);
                     expand.setDuration(200);
@@ -136,7 +135,6 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                             arrow.setImageResource(isClicked ?  R.drawable.arrow_up : R.drawable.arrow_down);
 
                         }
-
                         @Override
                         public void onAnimationRepeat(Animation animation) {
 
@@ -153,5 +151,3 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         }
     }
 }
-
-

@@ -1,5 +1,6 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -92,8 +93,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             response = register(name,last_name,username,password,mail,gender,years,type, token);
 
-            if(!type.equals("regular"))
+            if(!type.equals("regular")) {
                 context.startActivity(new Intent(context, TabActivityLoader.class));
+                ((Activity) context).finish();
+            }
 
         }
         if(method_type.equals("LOGIN")) {
@@ -575,6 +578,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
             context.startActivity(new Intent(context, TabActivityLoader.class));
+            ((Activity) context).finish();
 
             super.onPostExecute(aVoid);
         }
