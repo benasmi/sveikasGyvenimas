@@ -111,7 +111,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                 @Override
                 public void onClick(View view) {
 
-                    float extraHeight = CheckingUtils.convertPixelsToDp(18, context);
+                    float extraHeight = CheckingUtils.convertPixelsToDp(7, context);
                     final float expandedHeight = question_title.getLayout().getHeight() + question_body.getLayout().getHeight() + extraHeight;
                     final float collapsedHeight = CheckingUtils.convertPixelsToDp(42, context);
 
