@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
 
-    private ArrayList<FactInfoHolder> data = new ArrayList<InfoHolder>();
+    private ArrayList<FactInfoHolder> data = new ArrayList<FactInfoHolder>();
     private RecyclerView recyclerView;
     private InterestingFactsAdapter adapter;
 
@@ -64,8 +64,6 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
         if (addFactsFirstTime) {
             addFactsFirstTime = false;
-            initializeData(adapter);
-            initializeDataFirstTime(adapter, "1");
 
             if (is_administrator.equals("1")) {
                     initializeData(adapter);
@@ -74,8 +72,10 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
                     initializeData(adapter);
             }
 
-            return rootView;
         }
+
+        return rootView;
+
 
     }
         public void initializeData(InterestingFactsAdapter adapter){
@@ -94,7 +94,7 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
                     String source = factsDataValue.getString("location_name");
 
 
-                    adapter.add(new FactInfoHolder(title,body,url,source), 0);
+                    adapter.add(new FactInfoHolder(title,body,url,source, 0), 0);
                 }
 
 
@@ -106,7 +106,7 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
         }
 
         public void initializeDataFirstTime(InterestingFactsAdapter adapter, String type){
-            adapter.add(new FactInfoHolder("", "","",type, 123, 123), 0);
+            adapter.add(new FactInfoHolder("", "","", "", Integer.parseInt(type)), 0);
         }
 
 }
