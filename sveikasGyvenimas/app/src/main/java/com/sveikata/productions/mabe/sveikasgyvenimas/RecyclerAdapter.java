@@ -45,7 +45,7 @@ import java.util.HashMap;
 /**
  * Created by Martyno on 2016.09.10.
  */
-class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
 
     public Context context;
