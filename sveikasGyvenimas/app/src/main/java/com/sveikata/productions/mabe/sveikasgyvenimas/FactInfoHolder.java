@@ -10,12 +10,21 @@ public class FactInfoHolder {
     private String fact_body;
     private String fact_image_url;
     private String fact_source;
+    private int type;
 
-    public FactInfoHolder(String title, String body, String image_URL, String source){
+    public FactInfoHolder(String title, String body, String image_URL, String source, int type){
         this.fact_title = title;
         this.fact_body = body;
         this.fact_image_url = image_URL;
         this.fact_source = source;
+        this.type = type;
+    }
+
+    public int getViewType(){
+        return type;
+    }
+    public void setViewType(int type){
+        this.type = type;
     }
 
     public String getFactTitle() {

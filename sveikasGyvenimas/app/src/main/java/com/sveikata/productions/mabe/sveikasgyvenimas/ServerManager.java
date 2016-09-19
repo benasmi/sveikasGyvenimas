@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.android.internal.http.multipart.MultipartEntity;
 import com.facebook.TestUserManager;
 
 import org.apache.http.HttpResponse;
@@ -17,7 +18,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.CharsetUtils;
@@ -26,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -53,6 +58,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
     public static String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
     public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
+    public static String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
 
 
 
@@ -144,6 +150,16 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             logout(username, password);
 
+        }
+        if(method_type.equals("ADD_FACT")){
+            String fact_title = params[1];
+            String fact_body = params[2];
+            String fact_source = params[3];
+            String fact_image_path = params[4];
+            String fact_image_url = params[5];
+
+
+            insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path);
         }
 
         return null;
@@ -281,6 +297,47 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     public void startFetchingData(){
         new fetchData().execute();
+    }
+
+    private int insertFact(String title, String body, String source, String url, String path){
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpPost httpPost = new HttpPost( ServerManager.SERVER_ADDRESS_ADD_FACT);
+
+            String username = sharedPreferences.getString("username", "");
+            String password = sharedPreferences.getString("username", "");
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("title", title);
+            jsonObject.putOpt("body", body);
+            jsonObject.putOpt("source", source);
+
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+
+            if(url.isEmpty()) {
+                entity.addPart("picture", new FileBody(new File(path)));
+            }else{
+                jsonObject.putOpt("url", url);
+            }
+
+            entity.addPart("json", new StringBody(jsonObject.toString()));
+
+            httpPost.setEntity(entity.build());
+
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONObject responseObject = new JSONObject(responseBody);
+
+            return responseObject.getInt("code");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 

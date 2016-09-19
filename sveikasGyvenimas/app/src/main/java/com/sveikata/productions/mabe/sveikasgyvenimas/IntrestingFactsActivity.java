@@ -74,7 +74,11 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
             }
 
         }
+
+
         return rootView;
+
+
     }
 
 
@@ -94,7 +98,7 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
                     String source = factsDataValue.getString("location_name");
 
 
-                    adapter.add(new FactInfoHolder(title,body,url,source), 0);
+                    adapter.add(new FactInfoHolder(title,body,url,source, 0), 0);
                 }
 
 
@@ -106,7 +110,9 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
         }
 
         public void initializeDataFirstTime(InterestingFactsAdapter adapter, String type){
-            adapter.add(new FactInfoHolder("","","",""), 0);
+
+            adapter.add(new FactInfoHolder("", "","", "", Integer.parseInt(type)), 0);
+
         }
 
 }

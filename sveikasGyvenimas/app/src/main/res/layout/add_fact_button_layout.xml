@@ -3,11 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:text="Pridėti faktą!"
-        android:id="@+id/button3"
+        android:id="@+id/add_fact_button"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/add_fact_admin_button"
         android:textColor="#ffffff" />
