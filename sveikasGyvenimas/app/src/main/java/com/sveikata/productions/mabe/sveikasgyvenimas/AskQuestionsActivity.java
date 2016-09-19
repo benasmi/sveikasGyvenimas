@@ -150,7 +150,7 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
         adapter.add(new QuestionsDataHolder("Kas yra Sveikos gyvensenos ambasadorius?", "Sveikos gyvensenos ambasadorius – tai asmuo, kuris rūpinsis projekto renginių ir konsultacijų organizavimu bei padės kiekvienam Projekto dalyviui suvokti savo asmenines galimybes, padės išlikti ryžtingam ugdant sveikos gyvensenos įpročius. "), 0);
         adapter.add(new QuestionsDataHolder("Kas įgyvendina projektą?", "Projektą įgyvendina Viešoji įstaiga „Darnaus vystymo projektai“ kartu su partneriais.."), 0);
         adapter.add(new QuestionsDataHolder("Kaip galėčiau sužinoti apie mano mieste vykstančius renginius?", "Daugiau apie renginius tavo mieste žiūrėti 'Tvarkaraštis' skiltyje."), 0);
-        adapter.add(new QuestionsDataHolder("Kaip galėčiau prisidėti prie projekto įgyvendinimo?", "Tapk projekto socialiniu partneriu, tapk projekto dalyviu.\n" + "Parašyk mums: info@dvp.lt ir tap mūsų komandos nariu.\n"), 0);
+        adapter.add(new QuestionsDataHolder("Kaip galėčiau prisidėti prie projekto įgyvendinimo?", "Tapk projekto socialiniu partneriu, tapk projekto dalyviu. Parašyk mums: info@dvp.lt ir tap mūsų komandos nariu."), 0);
 
     }
     public void sendEmail(String[] to, String subject, String message){
