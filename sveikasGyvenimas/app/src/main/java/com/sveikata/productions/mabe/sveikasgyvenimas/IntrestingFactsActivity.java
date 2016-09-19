@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
 
-    private ArrayList<FactInfoHolder> data = new ArrayList<InfoHolder>();
+    private ArrayList<FactInfoHolder> data = new ArrayList<FactInfoHolder>();
     private RecyclerView recyclerView;
     private InterestingFactsAdapter adapter;
 
@@ -64,20 +64,20 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
         if (addFactsFirstTime) {
             addFactsFirstTime = false;
-            initializeData(adapter);
-            initializeDataFirstTime(adapter, "1");
+
 
             if (is_administrator.equals("1")) {
-                    initializeData(adapter);
-                initializeDataFirstTime(adapter,"0");
-            }else{
-                    initializeData(adapter);
+                initializeData(adapter);
+                initializeDataFirstTime(adapter, "0");
+            } else {
+                initializeData(adapter);
             }
 
-            return rootView;
         }
-
+        return rootView;
     }
+
+
         public void initializeData(InterestingFactsAdapter adapter){
             //Preferences to fetch all schedule data
             SharedPreferences factsData = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
@@ -106,7 +106,7 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
         }
 
         public void initializeDataFirstTime(InterestingFactsAdapter adapter, String type){
-            adapter.add(new FactInfoHolder("", "","",type, 123, 123), 0);
+            adapter.add(new FactInfoHolder("","","",""), 0);
         }
 
 }

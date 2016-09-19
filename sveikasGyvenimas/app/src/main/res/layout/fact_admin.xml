@@ -8,7 +8,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="35dp"
-        android:id="@+id/editText"
+        android:id="@+id/title_fact_admin"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:hint="Antraštė/klausimas"
@@ -19,8 +19,8 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="35dp"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/body_fact_admin"
+        android:layout_below="@+id/title_fact_admin"
         android:layout_centerHorizontal="true"
         android:hint="Faktas/Informacija"
         android:textSize="15dp"
@@ -31,8 +31,8 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="35dp"
-        android:id="@+id/editText3"
-        android:layout_below="@+id/editText2"
+        android:id="@+id/source_fact_admin"
+        android:layout_below="@+id/body_fact_admin"
         android:layout_centerHorizontal="true"
         android:hint="Šaltinio nuoroda. pvz. straipsnio link"
         android:textSize="15dp"
@@ -43,8 +43,8 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="35dp"
-        android:id="@+id/editText4"
-        android:layout_below="@+id/editText3"
+        android:id="@+id/url_fact_admin"
+        android:layout_below="@+id/source_fact_admin"
         android:layout_centerHorizontal="true"
         android:textSize="15dp"
         android:hint="Paveiksliuko/grafiko nuoroda iš interneto"
@@ -55,26 +55,28 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:layout_below="@+id/editText4"
+        android:id="@+id/image_fact_admin"
+        android:layout_below="@+id/url_fact_admin"
         android:layout_centerHorizontal="true" />
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:text="Įkelti nuotrauka iš atminties"
-        android:id="@+id/button"
-        android:layout_below="@+id/imageView3"
+        android:onClick="add_photo"
+        android:id="@+id/uploud_photo_from_phone"
+        android:layout_below="@+id/image_fact_admin"
         android:layout_centerHorizontal="true" />
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Pridėti faktą naudotojams"
-        android:id="@+id/button2"
+        android:id="@+id/add_fact"
+        android:onClick="add_fact"
         android:background="#95a5a6"
         android:layout_marginTop="28dp"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/uploud_photo_from_phone"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
