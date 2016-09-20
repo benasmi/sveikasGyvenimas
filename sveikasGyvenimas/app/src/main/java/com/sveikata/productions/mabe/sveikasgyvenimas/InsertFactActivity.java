@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -72,6 +73,7 @@ public class InsertFactActivity extends Activity {
                     Uri selectedImage = data.getData();
                     filePath = getPath(selectedImage);
 
+                    Log.i("TEST", filePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     image_fact_admin.setImageBitmap(bitmap);
 
