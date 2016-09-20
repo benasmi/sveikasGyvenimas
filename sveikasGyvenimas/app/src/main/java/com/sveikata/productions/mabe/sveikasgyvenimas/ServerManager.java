@@ -42,6 +42,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     private String dialogType;
     private int response;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences userData;
     private Context context;
 
     private String username_login;
@@ -65,7 +66,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public ServerManager(Context context, String dialogType){
         this.context=context;
         this.dialogType = dialogType;
-
+        this.userData = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
 
     }
@@ -154,12 +155,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(method_type.equals("ADD_FACT")){
             String fact_title = params[1];
             String fact_body = params[2];
-            String fact_source = params[3];
-            String fact_image_path = params[4];
-            String fact_image_url = params[5];
+            String fact_image_url = params[3];
+            String fact_source = params[4];
+            String fact_image_path = params[5];
+
+            String username = userData.getString("username", "");
+            String password = userData.getString("username", "");
 
 
-            insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path);
+            insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path, username, password);
         }
 
         return null;
@@ -299,14 +303,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         new fetchData().execute();
     }
 
-    private int insertFact(String title, String body, String source, String url, String path){
+    private int insertFact(String title, String body, String source, String url, String path, String username, String password){
         try {
             HttpClient httpClient = new DefaultHttpClient();
 
             HttpPost httpPost = new HttpPost( ServerManager.SERVER_ADDRESS_ADD_FACT);
-
-            String username = sharedPreferences.getString("username", "");
-            String password = sharedPreferences.getString("username", "");
 
             //JSON object.
             JSONObject jsonObject = new JSONObject();
@@ -319,9 +320,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
             MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 
-            if(url.isEmpty()) {
+            if(url == null && path != null) {
                 entity.addPart("picture", new FileBody(new File(path)));
-            }else{
+            }
+            if(path == null && url != null){
                 jsonObject.putOpt("url", url);
             }
 
@@ -332,9 +334,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             //Getting response
             HttpResponse response = httpClient.execute(httpPost);
             String responseBody = EntityUtils.toString(response.getEntity());
-            JSONObject responseObject = new JSONObject(responseBody);
 
-            return responseObject.getInt("code");
+
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;

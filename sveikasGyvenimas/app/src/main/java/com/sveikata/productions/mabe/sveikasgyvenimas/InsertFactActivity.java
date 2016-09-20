@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -37,6 +38,16 @@ public class InsertFactActivity extends Activity {
         url_fact_admin = (EditText) findViewById(R.id.url_fact_admin);
         image_fact_admin = (ImageView) findViewById(R.id.image_fact_admin);
 
+        image_fact_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+            }
+        });
+
+
     }
 
 
@@ -57,11 +68,6 @@ public class InsertFactActivity extends Activity {
 
     }
 
-    public void add_photo(View view) {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, 1);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -69,6 +75,7 @@ public class InsertFactActivity extends Activity {
         if(requestCode==1){
             switch (resultCode){
                 case Activity.RESULT_OK:
+                    url_fact_admin.setTextColor(Color.parseColor("#bdc3c7"));
 
                     Uri selectedImage = data.getData();
                     filePath = getPath(selectedImage);

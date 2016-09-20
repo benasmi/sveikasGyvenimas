@@ -79,7 +79,6 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     }
 
 
-
     @Override
     public void onBindViewHolder(InterestingFactsAdapter.ViewHolder holder, int position) {
         FactInfoHolder data = factDataHolder.get(position);
