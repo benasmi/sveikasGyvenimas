@@ -316,6 +316,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("body", body);
             jsonObject.putOpt("source", source);
 
+            ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
             MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 
             if(url.isEmpty()) {
@@ -324,7 +325,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                 jsonObject.putOpt("url", url);
             }
 
-            entity.addPart("json", new StringBody(jsonObject.toString()));
+            entity.addPart("json", new StringBody(jsonObject.toString(), type));
 
             httpPost.setEntity(entity.build());
 

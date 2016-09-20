@@ -47,6 +47,10 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         notifyDataSetChanged();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return factDataHolder.get(position).getViewType();
+    }
 
     @Override
     public InterestingFactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
