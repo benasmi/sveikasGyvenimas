@@ -15,7 +15,7 @@ import android.widget.ImageView;
 /**
  * Created by Benas on 9/19/2016.
  */
-public class InsertFactActiivty extends Activity {
+public class InsertFactActivity extends Activity {
 
 
     private EditText title_fact_admin;
