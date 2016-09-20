@@ -77,12 +77,6 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
 
     }
-    @Override
-    public int getItemViewType(int position) {
-        FactInfoHolder data = factDataHolder.get(position);
-        int type = Integer.valueOf(data.getViewType());
-        return type;
-    }
 
 
     @Override
