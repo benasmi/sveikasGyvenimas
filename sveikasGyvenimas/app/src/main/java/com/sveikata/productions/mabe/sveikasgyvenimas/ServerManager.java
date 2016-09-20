@@ -59,7 +59,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
     public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
     public static String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
-
+    public static String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
 
 
     public ServerManager(Context context, String dialogType){
@@ -486,9 +486,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     public void fetchScheduleData(){
 
-
-
-
             SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
             String username =loginPrefs.getString("username","");
             String password = loginPrefs.getString("password","");
@@ -530,6 +527,50 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
     }
+
+    public void fetchFactData(){
+
+        SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+        String username =loginPrefs.getString("username","");
+        String password = loginPrefs.getString("password","");
+
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_FETCH_FACTS);
+
+
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+
+            EntityBuilder entity = EntityBuilder.create();
+            entity.setText(jsonObject.toString());
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("FactData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("fact_data", jsonArray.toString()).commit();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void insert_event_data(String username, String password, String location, String date, double latitude, double longtitude, String name, String description){
 
@@ -626,7 +667,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         protected Void doInBackground(Void... voids) {
             fetchScheduleData();
             fetchUserData();
-
+            fetchFactData();
             return null;
         }
 

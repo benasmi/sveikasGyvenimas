@@ -84,8 +84,8 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
         public void initializeData(InterestingFactsAdapter adapter){
             //Preferences to fetch all schedule data
-            SharedPreferences factsData = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
-            String facts = factsData.getString("schedule_data", "");
+            SharedPreferences factsData = getActivity().getSharedPreferences("FactData", getActivity().MODE_PRIVATE);
+            String facts = factsData.getString("fact_data", "");
 
             try {
                 JSONArray scheduleDataArray = new JSONArray(facts);
@@ -95,12 +95,10 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
                     String title = factsDataValue.getString("title");
                     String body = factsDataValue.getString("body");
                     String url = factsDataValue.getString("url");
-                    String source = factsDataValue.getString("location_name");
-
+                    String source = factsDataValue.getString("source");
 
                     adapter.add(new FactInfoHolder(title,body,url,source, 0), 0);
                 }
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
