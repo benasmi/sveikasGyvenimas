@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,8 +59,9 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_facts);
         adapter = new InterestingFactsAdapter(getActivity(), data);
 
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
 
 
         if (addFactsFirstTime) {
@@ -67,8 +69,9 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
 
             if (is_administrator.equals("1")) {
+                initializeDataFirstTime(adapter, 1);
                 initializeData(adapter);
-                initializeDataFirstTime(adapter, "0");
+
             } else {
                 initializeData(adapter);
             }
@@ -92,12 +95,13 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
                 for (int i = 0; i<scheduleDataArray.length(); i++){
                     JSONObject factsDataValue = scheduleDataArray.getJSONObject(i);
 
+                    Log.i("TEST", factsDataValue.toString());
                     String title = factsDataValue.getString("title");
                     String body = factsDataValue.getString("body");
                     String url = factsDataValue.getString("url");
                     String source = factsDataValue.getString("source");
 
-                    adapter.add(new FactInfoHolder(title,body,url,source, 0), 0);
+                    adapter.add(new FactInfoHolder(title,body,url,source, 0), 1);
                 }
 
             } catch (JSONException e) {
@@ -107,9 +111,9 @@ public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
 
         }
 
-        public void initializeDataFirstTime(InterestingFactsAdapter adapter, String type){
+        public void initializeDataFirstTime(InterestingFactsAdapter adapter, int type){
 
-            adapter.add(new FactInfoHolder("", "","", "", Integer.parseInt(type)), 0);
+            adapter.add(new FactInfoHolder("", "","", "", type), 0);
 
         }
 

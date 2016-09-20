@@ -64,19 +64,19 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     public InterestingFactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view;
-        ViewHolder holder;
+        InterestingFactsAdapter.ViewHolder holder;
 
         switch (viewType){
 
             //Regular fact
             case 0:
-                view = View.inflate(context, R.layout.facts_item, parent);
+                view = layoutInflater.inflate(R.layout.facts_item, parent, false);
                 holder = new ViewHolder(view, viewType);
                 return holder;
 
             //Add fact button (for admin)
             case 1:
-                view = View.inflate(context, R.layout.add_fact_button_layout, parent);
+                view = layoutInflater.inflate(R.layout.add_fact_button_layout, parent, false);
                 holder = new ViewHolder(view, viewType);
                 return holder;
         }
