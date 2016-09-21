@@ -162,7 +162,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String fact_image_path = params[5];
 
             String username = userData.getString("username", "");
-            String password = userData.getString("username", "");
+            String password = userData.getString("password", "");
 
 
             insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path, username, password);
