@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
@@ -117,6 +118,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         private ImageView fact_image;
         private TextView fact_source;
 
+
         //Button layout
         private AppCompatButton add_fact_button;
 
@@ -131,7 +133,12 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_body = (TextView) itemView.findViewById(R.id.fact_text);
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
+
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    fact_title.setTypeface(tf);
+
                     break;
+
 
                 //Button layout (admin)
                 case 1:
