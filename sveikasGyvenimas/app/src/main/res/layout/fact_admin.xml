@@ -3,7 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="7dp"
-    android:background="#bdc3c7">
+    android:paddingRight="7dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true">
 
     <EditText
         android:layout_width="fill_parent"
@@ -18,7 +24,7 @@
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="35dp"
+        android:layout_height="100dp"
         android:id="@+id/body_fact_admin"
         android:layout_below="@+id/title_fact_admin"
         android:layout_centerHorizontal="true"
@@ -34,7 +40,7 @@
         android:id="@+id/source_fact_admin"
         android:layout_below="@+id/body_fact_admin"
         android:layout_centerHorizontal="true"
-        android:hint="Šaltinio nuoroda. pvz. straipsnio link"
+        android:hint="Youtube/Straipsnio nuoroda"
         android:textSize="15dp"
         android:background="@drawable/button_borders_different_color"
         android:layout_marginTop="5dp"
@@ -53,31 +59,33 @@
         android:paddingLeft="10dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
         android:id="@+id/image_fact_admin"
-        android:layout_below="@+id/url_fact_admin"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp" />
 
-    <android.support.v7.widget.AppCompatButton
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:text="Įkelti nuotrauka iš atminties"
-        android:onClick="add_photo"
-        android:id="@+id/uploud_photo_from_phone"
-        android:layout_below="@+id/image_fact_admin"
-        android:layout_centerHorizontal="true" />
-
-    <android.support.v7.widget.AppCompatButton
+        <android.support.v7.widget.AppCompatButton
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Pridėti faktą naudotojams"
         android:id="@+id/add_fact"
         android:onClick="add_fact"
-        android:background="#95a5a6"
-        android:layout_marginTop="28dp"
-        android:layout_below="@+id/uploud_photo_from_phone"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:background="#34495e"
+            android:layout_below="@+id/image_fact_admin"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ARBA"
+            android:id="@+id/textView5"
+            android:layout_below="@+id/url_fact_admin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
