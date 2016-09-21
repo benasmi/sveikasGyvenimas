@@ -111,6 +111,12 @@ public class TabActivityLoader extends AppCompatActivity {
             }
         });
 
+        try{
+            viewPager.setCurrentItem(getIntent().getExtras().getInt("Tab"));
+        }catch(Exception e){
+            e.printStackTrace(); //TODO: remove stack trace printing
+        }
+
     }
 
     @Override

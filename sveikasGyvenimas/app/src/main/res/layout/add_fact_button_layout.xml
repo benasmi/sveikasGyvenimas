@@ -10,5 +10,6 @@
         android:id="@+id/add_fact_button"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/add_fact_admin_button"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp" />
 </LinearLayout>

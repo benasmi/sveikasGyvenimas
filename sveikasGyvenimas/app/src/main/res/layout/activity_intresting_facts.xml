@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IntrestingFactsActivity">
+    tools:context=".InterestingFactsActivity">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
+        android:background="#efefef"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/recycler_view_facts"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

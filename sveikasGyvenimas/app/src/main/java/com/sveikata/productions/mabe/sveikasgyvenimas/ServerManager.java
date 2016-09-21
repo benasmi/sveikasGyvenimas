@@ -78,6 +78,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(dialogType.equals("REGISTRATION")){
             progressDialog = CheckingUtils.progressDialog(context, "Duomenys perkeliami į serverį");
         }
+        if(dialogType.equals("ADD_FACT")){
+            progressDialog = CheckingUtils.progressDialog(context, "Siunčiamas faktas...");
+        }
         super.onPreExecute();
     }
 
@@ -102,7 +105,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             if(!type.equals("regular")) {
                 context.startActivity(new Intent(context, TabActivityLoader.class));
-                ((Activity) context).finish();
             }
 
         }
@@ -207,7 +209,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     editor.putString("username", username_login);
                     editor.putString("password", password_login);
                     editor.commit();
-                    new fetchData().execute();
+                    new fetchData(0).execute();
                     break;
                 case 1:
                     CheckingUtils.createErrorBox("Wrong username or password", context);
@@ -238,6 +240,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
         if(method_type.equals("SEND_NOTIFICATION")){
             CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context);
+        }
+        if(method_type.equals("ADD_FACT")){
+            startFetchingData(2);
+//            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 2));
         }
         super.onPostExecute(aVoid);
         }
@@ -299,8 +305,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
-    public void startFetchingData(){
-        new fetchData().execute();
+    public void startFetchingData(int tabAfterwards){
+        new fetchData(tabAfterwards).execute();
     }
 
     private int insertFact(String title, String body, String source, String url, String path, String username, String password){
@@ -320,10 +326,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
             MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 
-            if(url == null && path != null) {
+            if(url.isEmpty() && !path.isEmpty()) {
                 entity.addPart("picture", new FileBody(new File(path)));
             }
-            if(path == null && url != null){
+            if(path.isEmpty() && !url.isEmpty()){
                 jsonObject.putOpt("url", url);
             }
 
@@ -661,6 +667,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
     class fetchData extends AsyncTask<Void,Void,Void>{
 
+        int tabAfterwards = 0;
+
+        public fetchData(int tabAfterwards) {
+            this.tabAfterwards = tabAfterwards;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -678,8 +690,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         protected void onPostExecute(Void aVoid) {
 
 
-            context.startActivity(new Intent(context, TabActivityLoader.class));
-            ((Activity) context).finish();
+            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
+
 
             super.onPostExecute(aVoid);
         }

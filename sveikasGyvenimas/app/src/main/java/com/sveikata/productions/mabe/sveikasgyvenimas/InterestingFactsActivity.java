@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class IntrestingFactsActivity extends android.support.v4.app.Fragment {
+public class InterestingFactsActivity extends android.support.v4.app.Fragment {
 
 
     private ArrayList<FactInfoHolder> data = new ArrayList<FactInfoHolder>();

@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(!loginPrefs.getString("password", "").isEmpty())
-            new ServerManager(this, "LOGIN").startFetchingData();
+            new ServerManager(this, "LOGIN").startFetchingData(0);
 
     }
     public void onfbClick(View view) {

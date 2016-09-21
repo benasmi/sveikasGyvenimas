@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -135,7 +136,9 @@ public class RegisterActivity extends AppCompatActivity {
             CheckingUtils.createErrorBox("Norėdami prisijungti, turite įjungti internetą",this);
             return;
         }
-        new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular");
+        SharedPreferences sharedPrefs = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String token = sharedPrefs.getString("device_id", "");
+        new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token);
 
     }
 }

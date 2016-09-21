@@ -25,9 +25,9 @@ public class InsertFactActivity extends Activity {
     private ImageView image_fact_admin;
     private String filePath;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        filePath = "";
         setContentView(R.layout.fact_admin);
         super.onCreate(savedInstanceState);
         title_fact_admin = (EditText) findViewById(R.id.title_fact_admin);
@@ -42,7 +42,9 @@ public class InsertFactActivity extends Activity {
     public void add_fact(View view) {
         String title = title_fact_admin.getText().toString();
         String body = body_fact_admin.getText().toString();
-        String url = url_fact_admin.getText().toString();
+
+        String url = "";
+        url = url_fact_admin.getText().toString();
         String source = source_fact_admin.getText().toString();
 
         if(!CheckingUtils.isNetworkConnected(this)){
@@ -50,6 +52,8 @@ public class InsertFactActivity extends Activity {
             return;
         }else{
 
+            InterestingFactsActivity.addFactsFirstTime = true;
+            HealthyLifeActivity.addData = true;
             new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath);
 
         }

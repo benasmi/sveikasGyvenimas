@@ -24,7 +24,7 @@ public class ViewPagerAdapter extends android.support.v4.app.FragmentPagerAdapte
                 return new PlayActivity();
 
             case 2:
-                return new IntrestingFactsActivity();
+                return new InterestingFactsActivity();
 
             case 3:
                 return new AskQuestionsActivity();
