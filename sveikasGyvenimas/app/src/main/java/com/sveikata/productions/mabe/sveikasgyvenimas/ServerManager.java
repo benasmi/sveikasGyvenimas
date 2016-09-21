@@ -253,7 +253,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 //            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 2));
         }
 
-        onfinishlistener.onFinish();
+        if(onfinishlistener!=null){
+            onfinishlistener.onFinish();
+
+        }
+
 
 
         super.onPostExecute(aVoid);

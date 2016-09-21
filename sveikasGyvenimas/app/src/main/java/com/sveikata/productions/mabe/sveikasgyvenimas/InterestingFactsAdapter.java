@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.share.widget.ShareButton;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -111,6 +113,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 }
 
 
+
                 break;
 
             //Button (for admin)
@@ -133,7 +136,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         private TextView fact_body;
         private ImageView fact_image;
         private TextView fact_source;
-
+        private ShareButton fb_share;
 
         //Button layout
         private AppCompatButton add_fact_button;
@@ -150,8 +153,25 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
 
+                    fb_share = (ShareButton) itemView.findViewById(R.id.facebook_share_fact);
+
+                    fb_share.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Įjunkite internetą", context);
+                                return;
+                            }else{
+                                CheckingUtils.shareFact(factDataHolder.get(getAdapterPosition()).getImage(),factDataHolder.get(getAdapterPosition()).getFactTitle());
+
+                            }
+                        }
+                    });
+
                     Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Verdana.ttf");
                     fact_title.setTypeface(tf);
+
+
 
                     break;
 

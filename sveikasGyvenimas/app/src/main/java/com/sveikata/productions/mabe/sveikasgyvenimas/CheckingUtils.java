@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -12,6 +13,10 @@ import android.os.Build;
 import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 
 /**
  * Created by Benas on 9/7/2016.
@@ -63,6 +68,19 @@ public class CheckingUtils {
             window.setStatusBarColor(Color.parseColor(color));
         }
 
+    }
+    public static void shareFact(Bitmap bitmap, String title){
+
+        SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(bitmap)
+                .setCaption(title)
+                .build();
+
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        ShareApi.share(content,null);
     }
 
 }
