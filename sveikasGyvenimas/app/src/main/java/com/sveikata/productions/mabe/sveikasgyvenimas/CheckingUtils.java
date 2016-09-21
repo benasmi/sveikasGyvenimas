@@ -1,5 +1,6 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,14 +10,23 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.facebook.share.ShareApi;
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.ShareOpenGraphAction;
+import com.facebook.share.model.ShareOpenGraphContent;
+import com.facebook.share.model.ShareOpenGraphObject;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 
 /**
  * Created by Benas on 9/7/2016.
@@ -69,18 +79,35 @@ public class CheckingUtils {
         }
 
     }
-    public static void shareFact(Bitmap bitmap, String title){
+    public static void shareFact(String title, Context context, String source, Bitmap bitmap, String body){
+// Create an object
+        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
+                .putString("og:type", "article")
+                .putString("og:title", title)
+                .putString("og:description", body)
+                .build();
 
         SharePhoto photo = new SharePhoto.Builder()
                 .setBitmap(bitmap)
-                .setCaption(title)
                 .build();
 
-        SharePhotoContent content = new SharePhotoContent.Builder()
-                .addPhoto(photo)
+
+
+        // Create an action
+        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
+                .setActionType("news.publishes")
+                .putObject("article", object)
+                //.putPhoto("photo", photo)
                 .build();
 
-        ShareApi.share(content,null);
+        // Create the content
+        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
+                .setPreviewPropertyName("article")
+                .setAction(action)
+                .build();
+
+        ShareDialog.show(((Activity)context), content);
+        Log.i("TEST", "SSS");
     }
 
 }

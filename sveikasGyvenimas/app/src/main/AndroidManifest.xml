@@ -3,10 +3,15 @@
     package="com.sveikata.productions.mabe.sveikasgyvenimas">
 
 
+
+
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version"/>
 
+    <provider android:authorities="com.facebook.app.FacebookContentProvider758055920999143"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>

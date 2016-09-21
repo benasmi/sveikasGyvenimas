@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -89,7 +90,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
     @Override
     public void onBindViewHolder(InterestingFactsAdapter.ViewHolder holder, int position) {
-        FactInfoHolder data = factDataHolder.get(position);
+        final FactInfoHolder data = factDataHolder.get(position);
 
         switch(data.getViewType()){
             //Fact layout
@@ -97,6 +98,14 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 holder.fact_title.setText(data.getFactTitle());
                 holder.fact_source.setText(data.getFactSource());
                 holder.fact_body.setText(data.getFactBody());
+
+                holder.fb_share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckingUtils.shareFact(data.getFactTitle(),context,data.getFactSource(),data.getImage(), data.getFactBody());
+                    }
+                });
+
 
                 //Loading cached image
                 if(data.getImage() != null){
@@ -133,7 +142,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         private TextView fact_body;
         private ImageView fact_image;
         private TextView fact_source;
-        private ShareButton fb_share;
+        private AppCompatButton fb_share;
 
         //Button layout
         private AppCompatButton add_fact_button;
@@ -150,20 +159,9 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
 
-                    fb_share = (ShareButton) itemView.findViewById(R.id.facebook_share_fact);
+                    fb_share = (AppCompatButton) itemView.findViewById(R.id.facebook_share_fact);
 
-                    fb_share.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("Įjunkite internetą", context);
-                                return;
-                            }else{
-                                CheckingUtils.shareFact(factDataHolder.get(getAdapterPosition()).getImage(),factDataHolder.get(getAdapterPosition()).getFactTitle());
 
-                            }
-                        }
-                    });
 
                     Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Verdana.ttf");
                     fact_title.setTypeface(tf);
@@ -182,6 +180,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                             context.startActivity(new Intent(context, InsertFactActivity.class));
                         }
                     });
+
                     break;
             }
 
