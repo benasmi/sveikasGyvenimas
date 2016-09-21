@@ -2,6 +2,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,6 +78,31 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
             }
 
         }
+
+        final SwipeRefreshLayout refresh_layout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout_facts);
+        refresh_layout.setEnabled(true);
+        refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ServerManager manager = new ServerManager(getActivity(), "");
+                manager.setOnFinishListener(new OnFinishListener() {
+                    @Override
+                    public void onFinish() {
+                        adapter.clear();
+
+                        if(is_administrator.equals("1")){
+                            initializeDataFirstTime(adapter, 1);
+                            initializeData(adapter);
+                        }else{
+                            initializeData(adapter);
+                        }
+                        refresh_layout.setRefreshing(false);
+                    }
+                });
+                manager.startFetchingData(0);
+
+            }
+        });
 
 
         return rootView;

@@ -1,5 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Martyno on 2016.09.19.
  */
@@ -10,6 +12,7 @@ public class FactInfoHolder {
     private String fact_body;
     private String fact_image_url;
     private String fact_source;
+    private Bitmap image;
     private int type;
 
     public FactInfoHolder(String title, String body, String image_URL, String source, int type){
@@ -18,6 +21,15 @@ public class FactInfoHolder {
         this.fact_image_url = image_URL;
         this.fact_source = source;
         this.type = type;
+        this.image = image;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 
     public int getViewType(){

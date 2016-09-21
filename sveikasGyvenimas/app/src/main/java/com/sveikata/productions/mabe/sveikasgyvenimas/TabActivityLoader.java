@@ -78,7 +78,6 @@ public class TabActivityLoader extends AppCompatActivity {
                         CheckingUtils.changeNotifBarColor("#d35400", window);
                         myToolbar.setBackgroundColor(Color.parseColor("#e67e22"));
                         tabLayout.setBackgroundColor(Color.parseColor("#e67e22"));
-
                         break;
 
                     case 2:
@@ -114,7 +113,6 @@ public class TabActivityLoader extends AppCompatActivity {
         try{
             viewPager.setCurrentItem(getIntent().getExtras().getInt("Tab"));
         }catch(Exception e){
-            e.printStackTrace(); //TODO: remove stack trace printing
         }
 
     }
