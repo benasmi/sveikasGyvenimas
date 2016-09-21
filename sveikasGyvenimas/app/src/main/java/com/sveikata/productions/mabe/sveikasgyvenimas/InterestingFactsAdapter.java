@@ -37,6 +37,14 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
     }
 
+    public void clear(){
+        for(int i = 0; i < getItemCount(); i++){
+            remove(i);
+        }
+        factDataHolder.clear();
+        notifyDataSetChanged();
+    }
+
     public void remove(int position) {
         factDataHolder.remove(position);
         notifyItemRemoved(position);
@@ -91,9 +99,17 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 holder.fact_source.setText(data.getFactSource());
                 holder.fact_body.setText(data.getFactBody());
 
-                if(!data.getFactImageUrl().isEmpty()) {
-                    new bitmapDownloadTask(holder.fact_image, data.getFactImageUrl()).execute();
+                //Loading cached image
+                if(data.getImage() != null){
+                    holder.fact_image.setImageBitmap(data.getImage());
+                    return;
                 }
+
+                //Caching an image
+                if(!data.getFactImageUrl().isEmpty() && data.getImage() == null) {
+                    new bitmapDownloadTask(holder.fact_image, data.getFactImageUrl(), data).execute();
+                }
+
 
                 break;
 
@@ -159,10 +175,12 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         ImageView image;
         String url;
         Bitmap bitmap;
+        private FactInfoHolder holder;
 
-        public bitmapDownloadTask(ImageView image, String url){
+        public bitmapDownloadTask(ImageView image, String url, FactInfoHolder holder){
             this.image = image;
             this.url = url;
+            this.holder = holder;
         }
 
         @Override
@@ -175,6 +193,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             try {
+                holder.setImage(bitmap);
                 image.setImageBitmap(bitmap);
             }catch(Exception e){
             }

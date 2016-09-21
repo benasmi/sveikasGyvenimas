@@ -48,6 +48,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     private String username_login;
     private String password_login;
 
+    private OnFinishListener onfinishlistener;
+
     private ProgressDialog progressDialog = null;
 
     public static String SERVER_ADRESS_REGISTER = "http://dvp.lt/android/register.php";
@@ -82,6 +84,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             progressDialog = CheckingUtils.progressDialog(context, "Siunčiamas faktas...");
         }
         super.onPreExecute();
+    }
+
+    public void setOnFinishListener(OnFinishListener listener){
+        this.onfinishlistener = listener;
     }
 
     @Override
@@ -175,6 +181,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
 
 
+
         if (method_type.equals("REGISTRATION")) {
             progressDialog.cancel();
             switch (response) {
@@ -245,6 +252,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             startFetchingData(2);
 //            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 2));
         }
+
+        onfinishlistener.onFinish();
+
+
         super.onPostExecute(aVoid);
         }
 
@@ -689,8 +700,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-
-            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
+            if(onfinishlistener == null){
+                context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
+            }else{
+                onfinishlistener.onFinish();
+            }
 
 
             super.onPostExecute(aVoid);
