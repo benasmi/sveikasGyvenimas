@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
@@ -131,6 +132,9 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_body = (TextView) itemView.findViewById(R.id.fact_text);
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
+
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    fact_title.setTypeface(tf);
                     break;
 
                 //Button layout (admin)
@@ -170,7 +174,10 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            image.setImageBitmap(bitmap);
+            try {
+                image.setImageBitmap(bitmap);
+            }catch(Exception e){
+            }
         }
 
         private Bitmap getBitmapFromURL(String src) {
