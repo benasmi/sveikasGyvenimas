@@ -134,7 +134,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
 
-                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Verdana.ttf");
                     fact_title.setTypeface(tf);
 
                     break;
@@ -177,7 +177,10 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            image.setImageBitmap(bitmap);
+            try {
+                image.setImageBitmap(bitmap);
+            }catch(Exception e){
+            }
         }
 
         private Bitmap getBitmapFromURL(String src) {

@@ -16,20 +16,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:textSize="21dp"
             android:layout_marginLeft="5dp"
             android:textColor="#000000"
-            android:textStyle="bold"
             android:layout_marginRight="5dp"
             android:text="Kiek alkoholio tave nužudo?"
             android:id="@+id/fact_title"/>
 
-        <TextView
+            <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
+            android:linksClickable="true"
             android:layout_marginLeft="5dp"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:text="Kiek išgersi, tiek nepragersi. Kas čia išvis per klausimas. Dar reikia užpildyti teksto šiek tiek. Ok, užteks."
             android:textColor="#000000"
             android:id="@+id/fact_text"
@@ -39,8 +39,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:id="@+id/fact_image"/>
 
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
+            android:linksClickable="true"
             android:layout_marginLeft="3dp"
             android:text="Šaltinis: www.google.com"
             android:gravity="left"
