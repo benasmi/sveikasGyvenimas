@@ -38,9 +38,6 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     }
 
     public void clear(){
-        for(int i = 0; i < getItemCount(); i++){
-            remove(i);
-        }
         factDataHolder.clear();
         notifyDataSetChanged();
     }
