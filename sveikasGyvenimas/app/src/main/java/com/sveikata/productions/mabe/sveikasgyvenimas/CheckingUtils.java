@@ -79,35 +79,15 @@ public class CheckingUtils {
         }
 
     }
-    public static void shareFact(String title, Context context, String source, Bitmap bitmap, String body){
-// Create an object
-        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
-                .putString("og:type", "article")
-                .putString("og:title", title)
-                .putString("og:description", body)
+    public static void shareFact(String title, Context context, String source, String url, String body){
+
+        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                .setContentTitle(title)
+                .setContentDescription(body)
+                .setContentUrl(Uri.parse("http://www.play.google.com"))
+                .setImageUrl(Uri.parse(url))
                 .build();
-
-        SharePhoto photo = new SharePhoto.Builder()
-                .setBitmap(bitmap)
-                .build();
-
-
-
-        // Create an action
-        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
-                .setActionType("news.publishes")
-                .putObject("article", object)
-                //.putPhoto("photo", photo)
-                .build();
-
-        // Create the content
-        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
-                .setPreviewPropertyName("article")
-                .setAction(action)
-                .build();
-
-        ShareDialog.show(((Activity)context), content);
-        Log.i("TEST", "SSS");
+        ShareDialog.show((Activity) context, linkContent);
     }
 
 }

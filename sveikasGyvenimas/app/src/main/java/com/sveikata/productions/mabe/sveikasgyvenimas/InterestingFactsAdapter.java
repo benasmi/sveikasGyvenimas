@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.share.widget.ShareButton;
 
 import java.io.IOException;
@@ -43,6 +46,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     public void clear(){
         factDataHolder.clear();
         notifyDataSetChanged();
+
     }
 
     public void remove(int position) {
@@ -89,7 +93,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
 
     @Override
-    public void onBindViewHolder(InterestingFactsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final InterestingFactsAdapter.ViewHolder holder, int position) {
         final FactInfoHolder data = factDataHolder.get(position);
 
         switch(data.getViewType()){
@@ -99,26 +103,28 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 holder.fact_source.setText(data.getFactSource());
                 holder.fact_body.setText(data.getFactBody());
 
+
+
                 holder.fb_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CheckingUtils.shareFact(data.getFactTitle(),context,data.getFactSource(),data.getImage(), data.getFactBody());
+
+                        if(holder.fact_image!=null) {
+                           CheckingUtils.shareFact(data.getFactTitle(), context, data.getFactSource(), data.getFactImageUrl(), data.getFactBody());
+                        }
                     }
                 });
 
-
-                //Loading cached image
-                if(data.getImage() != null){
-                    holder.fact_image.setImageBitmap(data.getImage());
-                    return;
+                if(!data.getFactImageUrl().isEmpty()){
+                Glide
+                        .with(context)
+                        .load(data.getFactImageUrl())
+                        .fitCenter()
+                        .crossFade()
+                        .into(holder.fact_image);
+                }else{
+                    Glide.clear(holder.fact_image);
                 }
-
-                //Caching an image
-                if(!data.getFactImageUrl().isEmpty() && data.getImage() == null) {
-                    new bitmapDownloadTask(holder.fact_image, data.getFactImageUrl(), data).execute();
-                }
-
-
 
                 break;
 
@@ -159,6 +165,23 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
 
+                    fact_source.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!factDataHolder.get(getAdapterPosition()).getFactSource().isEmpty()){
+                                try{
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse(factDataHolder.get(getAdapterPosition()).getFactSource()));
+                                    context.startActivity(intent);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                        }
+                    });
+
                     fb_share = (AppCompatButton) itemView.findViewById(R.id.facebook_share_fact);
 
 
@@ -189,50 +212,5 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
 
 
-    class bitmapDownloadTask extends AsyncTask<String, Void, Void>{
 
-        ImageView image;
-        String url;
-        Bitmap bitmap;
-        private FactInfoHolder holder;
-
-        public bitmapDownloadTask(ImageView image, String url, FactInfoHolder holder){
-            this.image = image;
-            this.url = url;
-            this.holder = holder;
-        }
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            bitmap = getBitmapFromURL(url);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            try {
-                holder.setImage(bitmap);
-                image.setImageBitmap(bitmap);
-            }catch(Exception e){
-            }
-        }
-
-        private Bitmap getBitmapFromURL(String src) {
-            try {
-                java.net.URL url = new java.net.URL(src);
-                HttpURLConnection connection = (HttpURLConnection) url
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-    }
 }
