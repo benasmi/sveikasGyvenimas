@@ -26,6 +26,7 @@ public class InsertFactActivity extends Activity {
     private EditText url_fact_admin;
     private ImageView image_fact_admin;
     private String filePath;
+    private String img_height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class InsertFactActivity extends Activity {
 
             InterestingFactsActivity.addFactsFirstTime = true;
             HealthyLifeActivity.addData = true;
-            new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath);
+            new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath, img_height);
 
         }
 
@@ -87,6 +88,9 @@ public class InsertFactActivity extends Activity {
                     Log.i("TEST", filePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     image_fact_admin.setImageBitmap(bitmap);
+                    Log.i("TEST", "From bitmap: " + bitmap.getHeight());
+                    img_height = String.valueOf(bitmap.getHeight());
+
 
                 case Activity.RESULT_CANCELED:
 

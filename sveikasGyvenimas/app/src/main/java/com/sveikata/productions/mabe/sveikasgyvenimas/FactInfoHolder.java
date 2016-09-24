@@ -12,24 +12,24 @@ public class FactInfoHolder {
     private String fact_body;
     private String fact_image_url;
     private String fact_source;
-    private Bitmap image;
+    private String height;
     private int type;
 
-    public FactInfoHolder(String title, String body, String image_URL, String source, int type){
+    public FactInfoHolder(String title, String body, String image_URL, String source, int type, String height){
         this.fact_title = title;
         this.fact_body = body;
         this.fact_image_url = image_URL;
         this.fact_source = source;
         this.type = type;
-        this.image = image;
+        this.height = height;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getHeight() {
+        return height;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setHeight(String height) {
+        this.height = height;
     }
 
     public int getViewType(){

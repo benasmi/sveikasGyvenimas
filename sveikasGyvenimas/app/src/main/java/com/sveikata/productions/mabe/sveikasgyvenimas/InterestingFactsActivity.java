@@ -126,8 +126,9 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                     String body = factsDataValue.getString("body");
                     String url = factsDataValue.getString("url");
                     String source = factsDataValue.getString("source");
+                    String height = factsDataValue.getString("height");
 
-                    adapter.add(new FactInfoHolder(title,body,url,source, 0), 1);
+                    adapter.add(new FactInfoHolder(title,body,url,source, 0, height), 1);
                 }
 
             } catch (JSONException e) {
@@ -139,7 +140,7 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
 
         public void initializeDataFirstTime(InterestingFactsAdapter adapter, int type){
 
-            adapter.add(new FactInfoHolder("", "","", "", type), 0);
+            adapter.add(new FactInfoHolder("", "","", "", type, ""), 0);
 
         }
 

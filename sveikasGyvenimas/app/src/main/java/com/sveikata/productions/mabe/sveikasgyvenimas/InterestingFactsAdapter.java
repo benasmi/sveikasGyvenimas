@@ -103,8 +103,6 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 holder.fact_source.setText(data.getFactSource());
                 holder.fact_body.setText(data.getFactBody());
 
-
-
                 holder.fb_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -121,6 +119,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                         .load(data.getFactImageUrl())
                         .fitCenter()
                         .crossFade()
+                        .override(1024,Integer.parseInt(data.getHeight()))
                         .into(holder.fact_image);
                 }else{
                     Glide.clear(holder.fact_image);
@@ -164,6 +163,8 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_body = (TextView) itemView.findViewById(R.id.fact_text);
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
+
+
 
                     fact_source.setOnClickListener(new View.OnClickListener() {
                         @Override
