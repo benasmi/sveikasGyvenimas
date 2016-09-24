@@ -7,11 +7,21 @@ public class QuestionsDataHolder {
 
     private String question_title;
     private String question_body;
+    private int type;
 
-
-    public QuestionsDataHolder(String question_title, String question_body){
+    public QuestionsDataHolder(String question_title, String question_body, int type){
         this.question_title = question_title;
         this.question_body = question_body;
+        this.type = type;
+    }
+
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getQuestionTitle() {

@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -30,6 +32,10 @@ import java.util.List;
  */
 public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdapterQuestions.ViewHolder> {
 
+
+
+    public static String specialist_BEN = "Benas. M";
+    public static String specialist_MARTIN = "Martynas. D";
     private Context context;
     private ArrayList<QuestionsDataHolder> questionsDataHolder;
     private SharedPreferences sharedPreferences;
@@ -56,11 +62,40 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         notifyDataSetChanged();
     }
 
+    public void sendEmail(String[] to, String subject, String message){
+
+        Intent intent =new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, to);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        intent.setType("message/rfc822");
+
+        Intent email = Intent.createChooser(intent,"Email");
+        context.startActivity(email);
+
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        return questionsDataHolder.get(position).getType();
+    }
 
     @Override
     public RecyclerAdapterQuestions.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View ask_question = layoutInflater.inflate(R.layout.faq_layout, parent, false);
-        RecyclerAdapterQuestions.ViewHolder viewHolder = new ViewHolder(ask_question);
+        RecyclerAdapterQuestions.ViewHolder viewHolder = null;
+
+        switch (viewType){
+            case 0:
+                View ask_question = layoutInflater.inflate(R.layout.faq_layout, parent, false);
+                 viewHolder = new ViewHolder(ask_question, 0);
+                return viewHolder;
+            case 1:
+                View ask_question_admin = layoutInflater.inflate(R.layout.faq_layout_ask_question, parent, false);
+                viewHolder = new ViewHolder(ask_question_admin, 1);
+                return viewHolder;
+        }
+
         return viewHolder;
     }
 
@@ -68,8 +103,14 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     public void onBindViewHolder(RecyclerAdapterQuestions.ViewHolder holder, int position) {
         QuestionsDataHolder data = questionsDataHolder.get(position);
 
-        holder.question_title.setText(data.getQuestionTitle());
-        holder.question_body.setText(data.getQuestionBody());
+        switch (data.getType()){
+            case 0:
+                holder.question_title.setText(data.getQuestionTitle());
+                holder.question_body.setText(data.getQuestionBody());
+            case 1:
+        }
+
+
     }
 
     @Override
@@ -88,63 +129,122 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         private RelativeLayout question_body_layout;
         private ImageView arrow;
 
+        //Button for user
+        private AppCompatButton ask_button;
+        private EditText message;
+        private EditText subject;
+        private Spinner spinner;
+        private TextView faq_txt;
+        private TextView ask_question_txt;
+
+
 
         private boolean isClicked = false;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, int type) {
             super(itemView);
 
-            //View init
-            question_body = (TextView) itemView.findViewById(R.id.question_body);
-            question_title = (TextView) itemView.findViewById(R.id.question_title);
+            switch (type){
 
-            question_title_layout = (RelativeLayout) itemView.findViewById(R.id.question_title_layout);
-            question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
-            layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
-            arrow = (ImageView) itemView.findViewById(R.id.arrow_image);
-            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                case 0:
+                    //View init
+                    question_body = (TextView) itemView.findViewById(R.id.question_body);
+                    question_title = (TextView) itemView.findViewById(R.id.question_title);
 
-            question_title.setTypeface(tf);
+                    question_title_layout = (RelativeLayout) itemView.findViewById(R.id.question_title_layout);
+                    question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
+                    layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
+                    arrow = (ImageView) itemView.findViewById(R.id.arrow_image);
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
 
-            //Expansion on click
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    question_title.setTypeface(tf);
 
-                    float collapsedHeight = CheckingUtils.convertPixelsToDp(38, context);
-                    float expandedHeight =question_body.getLayout().getHeight() + collapsedHeight;
-
-                    ResizeAnimation expand = new ResizeAnimation(layout, (int) collapsedHeight, (int) expandedHeight);
-                    expand.setDuration(200);
-                    ResizeAnimation shrink = new ResizeAnimation(layout, (int) expandedHeight, (int) collapsedHeight);
-                    shrink.setDuration(200);
-                    layout.startAnimation(isClicked ? expand : shrink);
-
-                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.flip);
-                    arrow.startAnimation(animation);
-
-                    animation.setAnimationListener(new Animation.AnimationListener() {
+                    //Expansion on click
+                    layout.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) {
+                        public void onClick(View view) {
 
+                            float collapsedHeight = CheckingUtils.convertPixelsToDp(38, context);
+                            float expandedHeight =question_body.getLayout().getHeight() + collapsedHeight;
+
+                            ResizeAnimation expand = new ResizeAnimation(layout, (int) collapsedHeight, (int) expandedHeight);
+                            expand.setDuration(200);
+                            ResizeAnimation shrink = new ResizeAnimation(layout, (int) expandedHeight, (int) collapsedHeight);
+                            shrink.setDuration(200);
+                            layout.startAnimation(isClicked ? expand : shrink);
+
+                            Animation animation = AnimationUtils.loadAnimation(context, R.anim.flip);
+                            arrow.startAnimation(animation);
+
+                            animation.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    arrow.setImageResource(isClicked ?  R.drawable.arrow_up : R.drawable.arrow_down);
+
+                                }
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+
+                            isClicked = !isClicked;
                         }
+                    });
+                    break;
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            arrow.setImageResource(isClicked ?  R.drawable.arrow_up : R.drawable.arrow_down);
+                case 1:
 
-                        }
+                    //TEXTVIEWS
+                    Typeface tf_txt = Typeface.createFromAsset(context.getAssets(), "fonts/comforta.ttf");
+                    faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
+                    ask_question_txt = (TextView) itemView.findViewById(R.id.ask_new_question_txt);
+                    faq_txt.setTypeface(tf_txt);
+                    ask_question_txt.setTypeface(tf_txt);
+
+                    //Setting up spinner
+                    spinner = (Spinner) itemView.findViewById(R.id.spinner);
+                    ArrayAdapter spinner_adapter = ArrayAdapter.createFromResource(context,
+                            R.array.specialists, R.layout.spinner_item);
+                    spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(spinner_adapter);
+
+
+                    //Sending email
+                    message = (EditText) itemView.findViewById(R.id.email_message);
+                    subject = (EditText) itemView.findViewById(R.id.subject_email);
+                    ask_button = (AppCompatButton) itemView.findViewById(R.id.ask);
+
+                    ask_button.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onAnimationRepeat(Animation animation) {
+                        public void onClick(View v) {
+                            String message_value = message.getText().toString().trim();
+                            String subject_value = subject.getText().toString().trim();
+
+                            String specialist = spinner.getSelectedItem().toString();
+
+                            if(specialist.equals("Pasirink specialistą")){
+                                CheckingUtils.createErrorBox("Pasirinkimas negalimas", context);
+                                return;
+                            }
+                            else if(specialist.equals(specialist_BEN)){
+                                String to [] = {"benasmiliunas@gmail.com"};
+                                sendEmail(to,subject_value,message_value);
+                            }else if(specialist.equals(specialist_MARTIN)){
+                                String to [] = {"dargis.martynas@gmail.com"};
+                                sendEmail(to,subject_value,message_value);
+                            }
 
                         }
                     });
+                    break;
+            }
 
-
-
-                    isClicked = !isClicked;
-                }
-            });
 
 
         }
