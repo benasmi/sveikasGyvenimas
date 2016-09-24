@@ -12,10 +12,10 @@ public class FactInfoHolder {
     private String fact_body;
     private String fact_image_url;
     private String fact_source;
-    private String height;
+    private int height;
     private int type;
 
-    public FactInfoHolder(String title, String body, String image_URL, String source, int type, String height){
+    public FactInfoHolder(String title, String body, String image_URL, String source, int type, int height){
         this.fact_title = title;
         this.fact_body = body;
         this.fact_image_url = image_URL;
@@ -24,11 +24,11 @@ public class FactInfoHolder {
         this.height = height;
     }
 
-    public String getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

@@ -119,7 +119,8 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                         .load(data.getFactImageUrl())
                         .fitCenter()
                         .crossFade()
-                        .override(1024,Integer.parseInt(data.getHeight()))
+                        .animate(R.anim.slide_in_left)
+                        .override(400,data.getHeight())
                         .into(holder.fact_image);
                 }else{
                     Glide.clear(holder.fact_image);

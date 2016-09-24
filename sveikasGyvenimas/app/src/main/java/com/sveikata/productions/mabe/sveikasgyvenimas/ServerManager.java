@@ -166,12 +166,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String fact_image_url = params[3];
             String fact_source = params[4];
             String fact_image_path = params[5];
-            String height = params[6];
+
             String username = userData.getString("username", "");
             String password = userData.getString("password", "");
 
 
-            insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path, username, password, height);
+            insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path, username, password);
         }
 
         return null;
@@ -325,7 +325,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         new fetchData(tabAfterwards).execute();
     }
 
-    private int insertFact(String title, String body, String source, String url, String path, String username, String password, String height){
+    private int insertFact(String title, String body, String source, String url, String path, String username, String password){
         try {
             HttpClient httpClient = new DefaultHttpClient();
 
@@ -338,7 +338,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("title", title);
             jsonObject.putOpt("body", body);
             jsonObject.putOpt("source", source);
-            jsonObject.putOpt("height", height);
+
 
             ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
             MultipartEntityBuilder entity = MultipartEntityBuilder.create();

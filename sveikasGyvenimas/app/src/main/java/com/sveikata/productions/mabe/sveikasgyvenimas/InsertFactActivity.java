@@ -88,8 +88,7 @@ public class InsertFactActivity extends Activity {
                     Log.i("TEST", filePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     image_fact_admin.setImageBitmap(bitmap);
-                    Log.i("TEST", "From bitmap: " + bitmap.getHeight());
-                    img_height = String.valueOf(bitmap.getHeight());
+
 
 
                 case Activity.RESULT_CANCELED:
