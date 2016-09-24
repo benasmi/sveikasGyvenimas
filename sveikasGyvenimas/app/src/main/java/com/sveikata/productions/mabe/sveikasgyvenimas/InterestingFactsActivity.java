@@ -58,7 +58,7 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
         rootView = inflater.inflate(R.layout.activity_intresting_facts, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_facts);
-        adapter = new InterestingFactsAdapter(getActivity(), data);
+        adapter = new InterestingFactsAdapter(getActivity(), data, is_administrator);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
@@ -73,8 +73,10 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                 initializeDataFirstTime(adapter, 1);
                 initializeData(adapter);
 
+
             } else {
                 initializeData(adapter);
+
             }
 
         }

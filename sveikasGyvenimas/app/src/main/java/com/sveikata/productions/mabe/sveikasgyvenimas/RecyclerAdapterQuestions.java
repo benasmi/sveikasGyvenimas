@@ -3,11 +3,13 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.service.chooser.ChooserTarget;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,6 +42,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     private ArrayList<QuestionsDataHolder> questionsDataHolder;
     private SharedPreferences sharedPreferences;
     private LayoutInflater layoutInflater;
+
 
     public RecyclerAdapterQuestions(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder) {
         this.context = context;
@@ -249,4 +252,5 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
         }
     }
+
 }

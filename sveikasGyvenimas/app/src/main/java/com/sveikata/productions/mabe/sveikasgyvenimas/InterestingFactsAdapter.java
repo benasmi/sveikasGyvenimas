@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,11 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.share.widget.ShareButton;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -32,13 +34,14 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     private ArrayList<FactInfoHolder> factDataHolder;
     private SharedPreferences sharedPreferences;
     private LayoutInflater layoutInflater;
+    private String is_administrator;
 
-    public InterestingFactsAdapter(Context context, ArrayList<FactInfoHolder> factHolder) {
+    public InterestingFactsAdapter(Context context, ArrayList<FactInfoHolder> factHolder, String is_administrator) {
         this.context = context;
         this.factDataHolder = factHolder;
+        this.is_administrator = is_administrator;
 
         layoutInflater = LayoutInflater.from(context);
-
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
     }
@@ -99,6 +102,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         switch(data.getViewType()){
             //Fact layout
             case 0:
+
                 holder.fact_title.setText(data.getFactTitle());
                 holder.fact_source.setText(data.getFactSource());
                 holder.fact_body.setText(data.getFactBody());
@@ -149,6 +153,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         private ImageView fact_image;
         private TextView fact_source;
         private AppCompatButton fb_share;
+        private LinearLayout layout;
 
         //Button layout
         private AppCompatButton add_fact_button;
@@ -165,6 +170,38 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                     fact_image = (ImageView) itemView.findViewById(R.id.fact_image);
                     fact_source = (TextView) itemView.findViewById(R.id.fact_source);
 
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Verdana.ttf");
+                    fact_title.setTypeface(tf);
+
+                    if(is_administrator.equals("1")){
+
+                        layout = (LinearLayout) itemView.findViewById(R.id.facts_item_layout);
+
+                        layout.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View v) {
+
+                                String username = sharedPreferences.getString("username", "");
+                                String password = sharedPreferences.getString("password", "");
+
+                                String url = factDataHolder.get(getAdapterPosition()).getFactImageUrl();
+                                String title = factDataHolder.get(getAdapterPosition()).getFactTitle();
+                                String body = factDataHolder.get(getAdapterPosition()).getFactBody();
+                                String source = factDataHolder.get(getAdapterPosition()).getFactSource();
+
+
+                                if(!CheckingUtils.isNetworkConnected(context)){
+                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalinga interneto ryšys", context);
+                                    return false;
+                                }
+
+                                delete_fact(context,url,password,username,title,body,source,getAdapterPosition());
+
+                                return true;
+                            }
+                        });
+
+                    }
 
 
                     fact_source.setOnClickListener(new View.OnClickListener() {
@@ -188,8 +225,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
 
 
-                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Verdana.ttf");
-                    fact_title.setTypeface(tf);
+
 
 
 
@@ -212,7 +248,25 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
         }
     }
 
-
+    public void delete_fact(final Context context, final String url, final String password,final String username, final String title, final String body, final String source , final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Ar tikrai norite pašalinti faktą ?")
+                .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new ServerManager(context, "DELETE_FACT").execute("DELETE_FACT",username, password,title,url, source, body);
+                        remove(position);
+                    }
+                })
+                .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        builder.show();
+        builder.create();
+    }
 
 
 }

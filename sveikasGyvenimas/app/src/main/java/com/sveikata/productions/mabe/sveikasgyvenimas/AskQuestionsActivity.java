@@ -34,6 +34,10 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
     private RecyclerView recyclerView;
     private RecyclerAdapterQuestions adapter;
 
+    //OBJECTS for checking if user is admin
+    private JSONArray jsonArray;
+    private JSONObject userData;
+    private String is_administrator;
 
 
     @Nullable

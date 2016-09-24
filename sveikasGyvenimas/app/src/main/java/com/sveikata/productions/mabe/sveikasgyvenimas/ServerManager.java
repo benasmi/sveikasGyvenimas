@@ -60,6 +60,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
     public static String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
     public static String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
+    public static String SERVER_ADRESS_DELETE_FACT ="http://dvp.lt/android/delete_fact.php";
     public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
     public static String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
     public static String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
@@ -151,6 +152,17 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String description = params[4];
 
             delete_event(username,password,name,description);
+
+        }
+        if(method_type.equals("DELETE_FACT")){
+            String username = params[1];
+            String password = params[2];
+            String title = params[3];
+            String url = params[4];
+            String source = params[5];
+            String body = params[6];
+
+            delete_fact(username, password, title,url, source, body);
 
         }
         if(method_type.equals("LOGOUT")){
@@ -457,6 +469,40 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("password", password);
             jsonObject.putOpt("name", name);
             jsonObject.putOpt("description", description);
+
+        }catch (Exception e){
+
+        }
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void delete_fact(String username, String password, String title, String url, String source, String body){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_DELETE_FACT);
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("title", title);
+            jsonObject.putOpt("url", url);
+            jsonObject.putOpt("source", source);
+            jsonObject.putOpt("body", body);
 
         }catch (Exception e){
 
