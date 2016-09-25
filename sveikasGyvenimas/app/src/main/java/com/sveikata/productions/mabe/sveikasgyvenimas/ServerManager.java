@@ -252,6 +252,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             editor.commit();
             HealthyLifeActivity.addData=true;
             AskQuestionsActivity.addFAQData = true;
+            InterestingFactsActivity.addFactsFirstTime = true;
 
             Intent intent = new Intent(context, LoginActivity.class);
             intent.putExtra("isAnimDisabled", true);
