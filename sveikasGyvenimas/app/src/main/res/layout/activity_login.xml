@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:plus="http://schemas.android.com/apk/res-auto"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.LoginActivity"
     android:background="#009688">
 
@@ -97,13 +98,12 @@
         android:id="@+id/login_button"
         android:textColor="#FFFFFF"
         android:drawableLeft="@drawable/fb_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_width="265dp"
+        android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="15dp"
         android:background="@drawable/blue_borders"
-        android:textSize="13dp"
-
+        android:textSize="11dp"
         android:onClick="onfbClick"
         android:text="Prisijunkite su Facebook"
         android:paddingRight="30dp"
@@ -111,6 +111,23 @@
         android:layout_marginTop="5dp"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true" />
+
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="265dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/login_button"
+        android:layout_centerHorizontal="true"
+        android:onClick="googleSignIn"
+        android:background="@drawable/google_plus_button"
+        android:paddingLeft="15dp"
+        android:id="@+id/google_login_button"
+        android:text="Prisijunkite su google"
+        android:textColor="#FFFFFF"
+        android:textSize="11dp"
+        android:drawableLeft="@drawable/google_plus"
+        android:layout_marginTop="5dp"></android.support.v7.widget.AppCompatButton>
 
     <Button
         android:layout_width="300dp"

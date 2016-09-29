@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +51,16 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             jsonArray = new JSONArray(user_data);
             userData = jsonArray.getJSONObject(0);
 
+            Log.i("TEST", jsonArray.toString());
+            if(!userData.getString("is_admin").isEmpty()) {
+                is_administrator = userData.getString("is_admin");
+            }
 
-            is_administrator = userData.getString("is_admin");
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         if(is_administrator.equals("1")){
             rootView = inflater.inflate(R.layout.activity_schedule_layout_admin,container,false);
@@ -81,7 +85,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             swipeRefreshLayout.setEnabled(true);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onRefresh() { //TODO: fix swipe spam glitch
+                public void onRefresh() {
                     adapter.currentPos = new LatLng(55.3, 23.7);
                     adapter.mapZoom = 5.8f;
                     adapter.notifyDataSetChanged();

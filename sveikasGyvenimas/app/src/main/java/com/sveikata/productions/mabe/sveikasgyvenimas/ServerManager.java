@@ -48,6 +48,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     private String username_login;
     private String password_login;
 
+    private String username_register;
+    private String password_register;
+
     private OnFinishListener onfinishlistener;
 
     private ProgressDialog progressDialog = null;
@@ -99,8 +102,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             String name = params[1];
             String last_name = params[2];
-            String username = params[3];
-            String password = params[4];
+            username_register = params[3];
+            password_register = params[4];
             String mail = params[5];
             String gender = params[6];
             String years = params[7];
@@ -108,11 +111,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String token = params[9];
 
 
-            response = register(name,last_name,username,password,mail,gender,years,type, token);
+            response = register(name,last_name,username_register,password_register,mail,gender,years,type, token);
 
-            if(!type.equals("regular")) {
-                context.startActivity(new Intent(context, TabActivityLoader.class));
-            }
+
 
         }
         if(method_type.equals("LOGIN")) {
@@ -193,7 +194,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
 
 
-
         if (method_type.equals("REGISTRATION")) {
             progressDialog.cancel();
             switch (response) {
@@ -216,6 +216,18 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                 case 3:
                     CheckingUtils.createErrorBox("Norint prisijungti, reikia interneto", context);
                     break;
+                case 4:
+
+                        sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", username_register);
+                        editor.putString("password", password_register);
+                        editor.commit();
+                        new fetchData(0).execute();
+                        break;
+
+
             }
         }
 
@@ -244,19 +256,25 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             }
 
          }
+
         if(method_type.equals("LOGOUT")){
             sharedPreferences = context.getSharedPreferences("DataPrefs", context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("username", "");
             editor.putString("password", "");
+            editor.putBoolean("revoke", true);
             editor.commit();
+
+
             HealthyLifeActivity.addData=true;
             AskQuestionsActivity.addFAQData = true;
             InterestingFactsActivity.addFactsFirstTime = true;
 
+
             Intent intent = new Intent(context, LoginActivity.class);
             intent.putExtra("isAnimDisabled", true);
             context.startActivity(intent);
+
         }
         if(method_type.equals("SEND_NOTIFICATION")){
             CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context);
@@ -299,12 +317,14 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("age", age);
             jsonObject.putOpt("type", type);
             jsonObject.putOpt("device_id", token);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        EntityBuilder entity = EntityBuilder.create();
-        entity.setText(jsonObject.toString());
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type_content = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type_content);
         httpPost.setEntity(entity.build());
 
         JSONObject responseObject = null;
@@ -399,8 +419,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
 
-        EntityBuilder entity = EntityBuilder.create();
-        entity.setText(jsonObject.toString());
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
         httpPost.setEntity(entity.build());
 
         JSONObject responseObject = null;
@@ -631,7 +652,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String responseBody = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = new JSONArray(responseBody);
 
-
+            Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("FactData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("fact_data", jsonArray.toString()).commit();
@@ -707,16 +728,17 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
 
-            EntityBuilder entity = EntityBuilder.create();
-            entity.setText(jsonObject.toString());
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+            ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+            entity.addTextBody("json", jsonObject.toString(), type);
             httpPost.setEntity(entity.build());
 
             response = httpClient.execute(httpPost);
             String responseBody = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = new JSONArray(responseBody);
 
-            System.out.println("async" + jsonArray.toString());
 
+            Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("user_data", jsonArray.toString()).commit();

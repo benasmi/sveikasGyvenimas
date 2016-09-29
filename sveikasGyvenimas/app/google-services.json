@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "1045622228487",
-    "firebase_url": "https://healthylife-aac10.firebaseio.com",
-    "project_id": "healthylife-aac10",
-    "storage_bucket": "healthylife-aac10.appspot.com"
+    "project_number": "114370283840",
+    "firebase_url": "https://aktyvuokis.firebaseio.com",
+    "project_id": "aktyvuokis",
+    "storage_bucket": "aktyvuokis.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1045622228487:android:a814f492128f1acc",
+        "mobilesdk_app_id": "1:114370283840:android:a814f492128f1acc",
         "android_client_info": {
           "package_name": "com.sveikata.productions.mabe.sveikasgyvenimas"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1045622228487-gnp5mctrev569umt3f38975e96j7rv7i.apps.googleusercontent.com",
+          "client_id": "114370283840-0hlgkti6qa3q94t71ijtlj69v5jpo386.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sveikata.productions.mabe.sveikasgyvenimas",
+            "certificate_hash": "42A5F9A0132F4A90EA30C15BB114BFE266AF3F47"
+          }
+        },
+        {
+          "client_id": "114370283840-o01isjdaocl481asuauj6sstr52revg1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDo_VAcKn43urrUy7kVbazxiz0T-MJGkEE"
+          "current_key": "AIzaSyAthvWbtKGQWx-OvLBMO6KXt-h5DuNCwus"
         }
       ],
       "services": {
