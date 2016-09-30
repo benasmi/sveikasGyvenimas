@@ -253,12 +253,18 @@ public class LoginActivity extends AppCompatActivity {
         String password = password_ET.getText().toString().trim();
         String device_id = sharedPrefs.getString("device_id", "");
 
+
+        if(!CheckingUtils.isNetworkConnected(this)){
+            CheckingUtils.createErrorBox("Nejaugi gaila mobilių?...", this);
+            return;
+        }
+
         if(username.isEmpty()){
-            username_ET.setError("Juk be nick'name nesiregistruosi !");
+            username_ET.setError("Noooope!");
             return;
         }
         if(password.isEmpty()){
-            password_ET.setError("Reikia slapto slaptažodžio slaptam naudojimui.");
+            password_ET.setError("Dar didesnis nope!");
             return;
         }
 
