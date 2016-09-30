@@ -2,33 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="35dp"
-    android:id="@+id/text_wrap">
+    android:layout_height="60dp"
+    android:id="@+id/text_wrap_two">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:id="@+id/question_title_layout">>
+        android:layout_height="60dp"
+        android:id="@+id/question_title_layout_two"><![CDATA[>
 
 
-        <TextView
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:text="Kaip galėčiau prisidėti?"
-            android:id="@+id/question_title"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            android:textColor="#666666" />
+        ]]>
 
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:id="@+id/arrow_image"
+            android:id="@+id/arrow_image_two"
             android:src="@drawable/arrow_down"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -39,12 +27,26 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView2_two"
             android:background="#adadad"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="2dp" />
+
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="Kaip galėčiau sužinoti apie mano mieste vykstančius renginius?"
+            android:id="@+id/question_title_two"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="#666666"
+            android:layout_alignTop="@+id/imageView2_two"
+            android:layout_toLeftOf="@+id/arrow_image_two"
+            android:layout_toStartOf="@+id/arrow_image_two" />
 
 
     </RelativeLayout>
@@ -52,21 +54,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/question_title_layout"
+        android:layout_below="@+id/question_title_layout_two"
         android:layout_centerHorizontal="true"
-        android:id="@+id/question_body_layout">
+        android:id="@+id/question_body_layout_two">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Vadovaujantis Lietuvos Respsudaryti as visais su darbu susijusiais aspektais.  as visais su darbu susijusiais aspektais"
-            android:id="@+id/question_body"
+            android:id="@+id/question_body_two"
+            android:paddingLeft="5dp"
+            android:textSize="15dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="5dp"
-            android:textSize="15dp" />
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
 

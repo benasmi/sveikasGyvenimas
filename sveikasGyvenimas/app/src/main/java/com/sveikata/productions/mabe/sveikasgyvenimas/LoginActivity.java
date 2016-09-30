@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private final int REQUEST_CODE_FOR_GOOGLE = 1;
-    private boolean mSignInClicked = true;
+
 
     private SharedPreferences sharedPrefs;
     private SharedPreferences loginPrefs;
@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        CheckingUtils.createErrorBox("Nepavyko prisijungti", LoginActivity.this);
+                        CheckingUtils.createErrorBox("Oooops! Bandyk dar kartą.", LoginActivity.this);
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
@@ -96,11 +96,9 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    mSignInClicked=true;
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
-                    mSignInClicked=true;
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
@@ -133,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.i("TEST",loginPrefs.getString("username", "") );
 
-        if(!loginPrefs.getString("username", "").isEmpty())
+        if(!loginPrefs.getString("username", "").isEmpty() && CheckingUtils.isNetworkConnected(this))
             new ServerManager(this, "LOGIN").startFetchingData(0);
 
     }
@@ -192,6 +190,8 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
+
 
                 request.setParameters(parameters);
                 request.executeAsync();
@@ -254,18 +254,18 @@ public class LoginActivity extends AppCompatActivity {
         String device_id = sharedPrefs.getString("device_id", "");
 
         if(username.isEmpty()){
-            username_ET.setError("Įveskite vartotojo vardą");
+            username_ET.setError("Juk be nick'name nesiregistruosi !");
             return;
         }
         if(password.isEmpty()){
-            password_ET.setError("Įveskite slaptažodį");
+            password_ET.setError("Reikia slapto slaptažodžio slaptam naudojimui.");
             return;
         }
+
 
         new ServerManager(this, "LOGIN").execute("LOGIN", username,password, device_id);
 
     }
-
 
 
 

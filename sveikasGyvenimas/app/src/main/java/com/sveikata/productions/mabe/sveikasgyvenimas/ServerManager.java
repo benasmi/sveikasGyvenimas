@@ -79,13 +79,13 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         if(dialogType.equals("LOGIN")){
-            progressDialog = CheckingUtils.progressDialog(context,"Jungiamasi...Palaukite kelias sekundes");
+            progressDialog = CheckingUtils.progressDialog(context,"1...2...3... Net nespėjai perskaityti, kad čia parašyta");
         }
         if(dialogType.equals("REGISTRATION")){
-            progressDialog = CheckingUtils.progressDialog(context, "Duomenys perkeliami į serverį");
+            progressDialog = CheckingUtils.progressDialog(context, "Tik išsaugom tavo duomenis");
         }
         if(dialogType.equals("ADD_FACT")){
-            progressDialog = CheckingUtils.progressDialog(context, "Siunčiamas faktas...");
+            progressDialog = CheckingUtils.progressDialog(context, "Pridedame faktą");
         }
         super.onPreExecute();
     }
@@ -199,7 +199,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             switch (response) {
                 case 0:
                     new AlertDialog.Builder(context)
-                            .setMessage("Toks vartotojo vardas arba paštas jau egzistuoja")
+                            .setMessage("Sugalvok kažką kitą :/")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -214,7 +214,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 3:
-                    CheckingUtils.createErrorBox("Norint prisijungti, reikia interneto", context);
+                    CheckingUtils.createErrorBox("Nejaugi gaila mobilių?", context);
                     break;
                 case 4:
 
@@ -243,7 +243,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     new fetchData(0).execute();
                     break;
                 case 1:
-                    CheckingUtils.createErrorBox("Wrong username or password", context);
+                    CheckingUtils.createErrorBox("Uhhh...Leisiu pabandyti dar kartą", context);
                     break;
 
                 case 2:
@@ -251,7 +251,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 3:
-                    CheckingUtils.createErrorBox("You need internet connection to do that", context);
+                    CheckingUtils.createErrorBox("Pamaitink mūsų serverį WIFI arba mobiliais", context);
                     break;
             }
 
@@ -754,6 +754,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     class fetchData extends AsyncTask<Void,Void,Void>{
 
         int tabAfterwards = 0;
+        private ProgressDialog progressDialog;
 
         public fetchData(int tabAfterwards) {
             this.tabAfterwards = tabAfterwards;
@@ -761,6 +762,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
+            progressDialog = CheckingUtils.progressDialog(context, "Sshhh...Tuoj užkrausim");
             super.onPreExecute();
         }
 
@@ -774,6 +776,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            progressDialog.cancel();
 
             if(onfinishlistener == null){
                 context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));

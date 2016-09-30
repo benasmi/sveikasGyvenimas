@@ -97,6 +97,12 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                 View ask_question_admin = layoutInflater.inflate(R.layout.faq_layout_ask_question, parent, false);
                 viewHolder = new ViewHolder(ask_question_admin, 1);
                 return viewHolder;
+
+            case 2:
+                View faq_two_lines = layoutInflater.inflate(R.layout.faq_layout_two_lines, parent, false);
+                viewHolder = new ViewHolder(faq_two_lines, 2);
+                return viewHolder;
+
         }
 
         return viewHolder;
@@ -110,7 +116,12 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
             case 0:
                 holder.question_title.setText(data.getQuestionTitle());
                 holder.question_body.setText(data.getQuestionBody());
-            case 1:
+                break;
+            case 2:
+                holder.question_title_two.setText(data.getQuestionTitle());
+                holder.question_body_two.setText(data.getQuestionBody());
+                break;
+
         }
 
 
@@ -123,14 +134,22 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        //Views
+        //Views for one line faq
         private TextView question_title;
         private TextView question_body;
-
         private RelativeLayout layout;
         private RelativeLayout question_title_layout;
         private RelativeLayout question_body_layout;
         private ImageView arrow;
+
+        //Views for two line faq
+        private TextView question_title_two;
+        private TextView question_body_two;
+        private RelativeLayout layout_two;
+        private RelativeLayout question_title_layout_two;
+        private RelativeLayout question_body_layout_two;
+        private ImageView arrow_two;
+
 
         //Button for user
         private AppCompatButton ask_button;
@@ -147,7 +166,10 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         public ViewHolder(View itemView, int type) {
             super(itemView);
 
+            Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
             switch (type){
+
+
 
                 case 0:
                     //View init
@@ -158,7 +180,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     question_body_layout = (RelativeLayout) itemView.findViewById(R.id.question_body_layout);
                     layout = (RelativeLayout) itemView.findViewById(R.id.text_wrap);
                     arrow = (ImageView) itemView.findViewById(R.id.arrow_image);
-                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+
 
                     question_title.setTypeface(tf);
 
@@ -166,9 +188,9 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     layout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            float collapsedHeight = CheckingUtils.convertPixelsToDp(38, context);
-                            float expandedHeight =question_body.getLayout().getHeight() + collapsedHeight;
+                            float additionalHeight = CheckingUtils.convertPixelsToDp(5, context);
+                            float collapsedHeight = CheckingUtils.convertPixelsToDp(35, context);
+                            float expandedHeight =question_body.getLayout().getHeight() + collapsedHeight + additionalHeight;
 
                             ResizeAnimation expand = new ResizeAnimation(layout, (int) collapsedHeight, (int) expandedHeight);
                             expand.setDuration(200);
@@ -246,6 +268,60 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                         }
                     });
                     break;
+
+
+                case 2:
+                    //View init
+                    question_body_two = (TextView) itemView.findViewById(R.id.question_body_two);
+                    question_title_two = (TextView) itemView.findViewById(R.id.question_title_two);
+
+                    question_title_layout_two = (RelativeLayout) itemView.findViewById(R.id.question_title_layout_two);
+                    question_body_layout_two = (RelativeLayout) itemView.findViewById(R.id.question_body_layout_two);
+                    layout_two = (RelativeLayout) itemView.findViewById(R.id.text_wrap_two);
+                    arrow_two = (ImageView) itemView.findViewById(R.id.arrow_image_two);
+
+                    question_title_two.setTypeface(tf);
+
+                    //Expansion on click
+                    layout_two.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            float additionalHeight = CheckingUtils.convertPixelsToDp(5, context);
+                            float collapsedHeight = CheckingUtils.convertPixelsToDp(60, context);
+                            float expandedHeight =question_body_two.getLayout().getHeight() + collapsedHeight + additionalHeight;
+
+                            ResizeAnimation expand = new ResizeAnimation(layout_two, (int) collapsedHeight, (int) expandedHeight);
+                            expand.setDuration(200);
+                            ResizeAnimation shrink = new ResizeAnimation(layout_two, (int) expandedHeight, (int) collapsedHeight);
+                            shrink.setDuration(200);
+                            layout_two.startAnimation(isClicked ? expand : shrink);
+
+                            Animation animation = AnimationUtils.loadAnimation(context, R.anim.flip);
+                            arrow_two.startAnimation(animation);
+
+                            animation.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    arrow_two.setImageResource(isClicked ?  R.drawable.arrow_up : R.drawable.arrow_down);
+
+                                }
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+
+                            isClicked = !isClicked;
+                        }
+                    });
+                    break;
+
             }
 
 
