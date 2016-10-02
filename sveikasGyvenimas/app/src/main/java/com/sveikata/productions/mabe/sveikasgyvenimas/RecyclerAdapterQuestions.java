@@ -111,15 +111,27 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     @Override
     public void onBindViewHolder(RecyclerAdapterQuestions.ViewHolder holder, int position) {
         QuestionsDataHolder data = questionsDataHolder.get(position);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_left);
+        Animation animation_right = AnimationUtils.loadAnimation(context,R.anim.slide_in_right);
 
         switch (data.getType()){
             case 0:
                 holder.question_title.setText(data.getQuestionTitle());
                 holder.question_body.setText(data.getQuestionBody());
+                if(position%2==0){
+                    holder.layout.startAnimation(animation);
+                }else{
+                    holder.layout.startAnimation(animation_right);
+                }
                 break;
             case 2:
                 holder.question_title_two.setText(data.getQuestionTitle());
                 holder.question_body_two.setText(data.getQuestionBody());
+                if(position%2==0){
+                    holder.layout_two.startAnimation(animation);
+                }else{
+                    holder.layout_two.startAnimation(animation_right);
+                }
                 break;
 
         }
