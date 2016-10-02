@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -137,6 +139,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.event_date_and_place.setText(data.getEvent_location_and_date());
             holder.event_name.setText(data.getEvent_name());
             holder.event_description.setText(data.getEvent_description());
+
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_schedule);
+            holder.layout.startAnimation(animation);
 
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
