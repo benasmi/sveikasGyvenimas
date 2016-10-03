@@ -5,8 +5,8 @@
     android:paddingLeft="5dp">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="380dp"
+        android:layout_height="200dp"
         android:id="@+id/calculator_preview_image"/>
 
     <ImageView
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/left_arrow"
         android:alpha="0.3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/right_arrow"
         android:alpha="0.3"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
