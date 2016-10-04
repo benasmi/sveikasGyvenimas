@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class PlayActivity extends android.support.v4.app.Fragment {
 
+    public static boolean shouldAddInfo = true;
     private RecyclerView recyclerView;
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
 
@@ -27,7 +28,10 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        addCalculatorPreview();
+        //Adding hardcoded views
+        if(shouldAddInfo){
+            addCalculatorPreview();
+        }
 
         recyclerView.setAdapter(adapter);
 

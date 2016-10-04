@@ -67,6 +67,7 @@ public class InsertFactActivity extends Activity {
 
             InterestingFactsActivity.addFactsFirstTime = true;
             HealthyLifeActivity.addData = true;
+            PlayActivity.shouldAddInfo = true;
             new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath, img_height);
 
         }
