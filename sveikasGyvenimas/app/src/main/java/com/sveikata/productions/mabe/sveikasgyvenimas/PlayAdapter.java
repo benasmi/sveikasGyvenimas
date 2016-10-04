@@ -206,19 +206,19 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         Uri uri = null;
         switch (which_img){
             case 0:
-                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
                 break;
             case 1:
-                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
                 break;
             case 2:
-                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
                 break;
             case 3:
-                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
                 break;
             case 4:
-                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
                 break;
 
         }
