@@ -125,7 +125,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_left = (ImageView) itemView.findViewById(R.id.arrow_left);
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
-
                     arrow_left.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
