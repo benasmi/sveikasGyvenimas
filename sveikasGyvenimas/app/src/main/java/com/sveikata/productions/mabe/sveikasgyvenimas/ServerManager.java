@@ -269,6 +269,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             HealthyLifeActivity.addData=true;
             AskQuestionsActivity.addFAQData = true;
             InterestingFactsActivity.addFactsFirstTime = true;
+            PlayActivity.shouldAddInfo = true;
 
 
             Intent intent = new Intent(context, LoginActivity.class);

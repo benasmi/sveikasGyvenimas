@@ -38,7 +38,6 @@ import java.util.List;
 public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
 
-
     private Context context;
     private ArrayList<PlayInfoHolder> play_info_holder;
     private SharedPreferences sharedPreferences;
@@ -132,14 +131,12 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     switch (which_image){
                         case 0:
                             calculator_preview_image.setImageResource(R.drawable.calories_calculator);
-                            calculator_preview_image.startAnimation(top_down_anim);
                             break;
                         case 1:
                             calculator_preview_image.setImageResource(R.drawable.water_calculator);
-                            calculator_preview_image.startAnimation(top_down_anim);
                             break;
                         case 2:
-                            //calculator_preview_image.setImageResource();
+                            calculator_preview_image.setImageResource(R.drawable.your_drink);
                             break;
                         case 3:
                             //calculator_preview_image.setImageResource();
@@ -151,6 +148,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             //calculator_preview_image.setImageResource();
                             break;
                     }
+                    calculator_preview_image.startAnimation(top_down_anim);
+
                 }
 
                 @Override
@@ -169,7 +168,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_left.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(isAnimRunning){
+                            if(!isAnimRunning){
                                 which_image--;
                                 if(which_image<0){
                                     which_image=5;
@@ -182,7 +181,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_right.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(isAnimRunning){
+                            if(!isAnimRunning){
                                 which_image++;
                                 if(which_image>=5){
                                     which_image=0;
