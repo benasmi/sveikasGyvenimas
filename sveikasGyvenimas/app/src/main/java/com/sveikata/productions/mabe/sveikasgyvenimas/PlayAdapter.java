@@ -108,6 +108,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder{
 
 
+        private TextView calculator_text;
         private ImageView arrow_left;
         private ImageView arrow_right;
         private ImageView calculator_preview_image;
@@ -162,6 +163,11 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
                     calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+                    calculator_text = (TextView) itemView.findViewById(R.id.calculator_text);
+
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
+                    calculator_text.setTypeface(tf);
+
                     arrow_left.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
