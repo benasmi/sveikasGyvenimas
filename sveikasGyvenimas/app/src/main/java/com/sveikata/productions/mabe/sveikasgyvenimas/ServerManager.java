@@ -247,6 +247,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                 case 1:
                     CheckingUtils.createErrorBox("Toks naudotojas neegzistuoja, pasiūlyk draugui parsisiųsti aplikacija ", context);
                     break;
+
+                case 2:
+                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context);
+
             }
         }
 
