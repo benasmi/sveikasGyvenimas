@@ -139,7 +139,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             calculator_preview_image.setImageResource(R.drawable.your_drink);
                             break;
                         case 3:
-                            //calculator_preview_image.setImageResource();
+                            calculator_preview_image.setImageResource(R.drawable.info_sheet);
                             break;
                         case 4:
                             //calculator_preview_image.setImageResource();
