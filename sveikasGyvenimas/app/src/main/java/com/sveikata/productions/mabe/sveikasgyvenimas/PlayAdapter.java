@@ -112,12 +112,52 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private ImageView arrow_left;
         private ImageView arrow_right;
         private ImageView calculator_preview_image;
-        private Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left);
+        private Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+        private Animation top_down_anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
         private int which_image;
+        boolean isAnimRunning = false;
 
         public ViewHolder(View itemView, int type) {
             super(itemView);
 
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    isAnimRunning = true;
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    isAnimRunning = false;
+                    switch (which_image){
+                        case 0:
+                            calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+                            calculator_preview_image.startAnimation(top_down_anim);
+                            break;
+                        case 1:
+                            calculator_preview_image.setImageResource(R.drawable.water_calculator);
+                            calculator_preview_image.startAnimation(top_down_anim);
+                            break;
+                        case 2:
+                            //calculator_preview_image.setImageResource();
+                            break;
+                        case 3:
+                            //calculator_preview_image.setImageResource();
+                            break;
+                        case 4:
+                            //calculator_preview_image.setImageResource();
+                            break;
+                        case 5:
+                            //calculator_preview_image.setImageResource();
+                            break;
+                    }
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
 
             switch (type) {
 
@@ -125,98 +165,31 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_left = (ImageView) itemView.findViewById(R.id.arrow_left);
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
+                    calculator_preview_image.setImageResource(R.drawable.calories_calculator);
                     arrow_left.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            which_image--;
-                            if(which_image<=0){
-                                which_image=0;
+                            if(isAnimRunning){
+                                which_image--;
+                                if(which_image<0){
+                                    which_image=5;
+                                }
+                                calculator_preview_image.startAnimation(animation);
                             }
-
-                            calculator_preview_image.startAnimation(animation);
-                            animation.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    switch (which_image){
-                                        case 0:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 1:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 2:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 3:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 4:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 5:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                    }
-
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-                            });
                         }
                     });
 
                     arrow_right.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            which_image++;
-                            if(which_image>=5){
-                                which_image=5;
+                            if(isAnimRunning){
+                                which_image++;
+                                if(which_image>=5){
+                                    which_image=0;
+                                }
+
+                                calculator_preview_image.startAnimation(animation);
                             }
-                            calculator_preview_image.startAnimation(animation);
-                            animation.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    switch (which_image){
-                                        case 0:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 1:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 2:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 3:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 4:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                        case 5:
-                                            //calculator_preview_image.setImageResource();
-                                            break;
-                                    }
-
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-                            });
                         }
                     });
 

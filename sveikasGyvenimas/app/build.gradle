@@ -50,8 +50,5 @@ dependencies {
         exclude module: "httpclient-4.3.jar"
     }
 
-
-    compile "com.badlogicgames.gdx:gdx:0.13.3"
-
 }
 apply plugin: 'com.google.gms.google-services'

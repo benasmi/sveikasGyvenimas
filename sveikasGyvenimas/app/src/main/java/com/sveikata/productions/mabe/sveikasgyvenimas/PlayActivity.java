@@ -21,7 +21,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_play,container,false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.play_recycler_view);
 
         PlayAdapter adapter = new PlayAdapter(getActivity(), info);
 
