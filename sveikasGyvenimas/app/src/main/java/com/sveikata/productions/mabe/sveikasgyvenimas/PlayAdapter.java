@@ -142,10 +142,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             calculator_preview_image.setImageResource(R.drawable.info_sheet);
                             break;
                         case 4:
-                            //calculator_preview_image.setImageResource();
-                            break;
-                        case 5:
-                            //calculator_preview_image.setImageResource();
+                            calculator_preview_image.setImageResource(R.drawable.limit_calculator);
                             break;
                     }
                     calculator_preview_image.startAnimation(top_down_anim);
@@ -171,7 +168,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             if(!isAnimRunning){
                                 which_image--;
                                 if(which_image<0){
-                                    which_image=5;
+                                    which_image=4;
                                 }
                                 calculator_preview_image.startAnimation(animation);
                             }
@@ -183,7 +180,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View view) {
                             if(!isAnimRunning){
                                 which_image++;
-                                if(which_image>=5){
+                                if(which_image>=4){
                                     which_image=0;
                                 }
 
