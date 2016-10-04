@@ -193,10 +193,42 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         }
                     });
 
+                    calculator_preview_image.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            launchCalculator(which_image);
+                        }
+                    });
+
 
             }
 
         }
     }
 
+    private void launchCalculator(int which_img){
+        Uri uri = null;
+        switch (which_img){
+            case 0:
+                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                break;
+            case 1:
+                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                break;
+            case 2:
+                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                break;
+            case 3:
+                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                break;
+            case 4:
+                uri = Uri.parse("https://www.google.lt/?gfe_rd=cr&ei=OtvzV_-rGO2v8wej-pagCQ");
+                break;
+
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
+
+    }
 }

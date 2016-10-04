@@ -1,3 +1,4 @@
+
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.app.Activity;
@@ -67,7 +68,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
     public static String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
     public static String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
-
+    public static String SERVER_ADDRESS_SEND_CHALLENGE= "http://dvp.lt/android/send_challenge.php";
 
     public ServerManager(Context context, String dialogType){
         this.context=context;
@@ -179,12 +180,18 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String fact_image_url = params[3];
             String fact_source = params[4];
             String fact_image_path = params[5];
-
             String username = userData.getString("username", "");
             String password = userData.getString("password", "");
 
-
             insertFact(fact_title, fact_body, fact_source, fact_image_url, fact_image_path, username, password);
+        }
+        if(method_type.equals("SEND_CHALLENGE")){
+            String challenge = params[1];
+            String mail = params[2];
+            String username = params[3];
+            String password = params[4];
+
+            response = send_challenge(username, password,challenge,mail);
         }
 
         return null;
@@ -218,16 +225,28 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
                 case 4:
 
-                        sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+                    sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username", username_register);
-                        editor.putString("password", password_register);
-                        editor.commit();
-                        new fetchData(0).execute();
-                        break;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username_register);
+                    editor.putString("password", password_register);
+                    editor.commit();
+                    new fetchData(0).execute();
+                    break;
 
 
+            }
+        }
+        if(method_type.equals("SEND_CHALLENGE")){
+            switch (response){
+
+                case 0:
+                    CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context);
+                    break;
+
+                case 1:
+                    CheckingUtils.createErrorBox("Toks naudotojas neegzistuoja, pasiūlyk draugui parsisiųsti aplikacija ", context);
+                    break;
             }
         }
 
@@ -255,7 +274,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
             }
 
-         }
+        }
 
         if(method_type.equals("LOGOUT")){
             sharedPreferences = context.getSharedPreferences("DataPrefs", context.MODE_PRIVATE);
@@ -293,7 +312,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
         super.onPostExecute(aVoid);
-        }
+    }
 
 
 
@@ -414,6 +433,52 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
             jsonObject.putOpt("device_id", device_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            return responseObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+    }
+    private int send_challenge(String username, String password, String challenge, String mail) {
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGIN);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("challenge", challenge);
+            jsonObject.putOpt("mail", mail);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -580,9 +645,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     public void fetchScheduleData(){
 
-            SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-            String username =loginPrefs.getString("username","");
-            String password = loginPrefs.getString("password","");
+        SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+        String username =loginPrefs.getString("username","");
+        String password = loginPrefs.getString("password","");
 
 
         //Connect to mysql.
@@ -709,9 +774,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
 
-            SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-            String username =loginPrefs.getString("username","");
-            String password = loginPrefs.getString("password","");
+        SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+        String username =loginPrefs.getString("username","");
+        String password = loginPrefs.getString("password","");
 
 
 
@@ -790,4 +855,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
 }
+
+
 
