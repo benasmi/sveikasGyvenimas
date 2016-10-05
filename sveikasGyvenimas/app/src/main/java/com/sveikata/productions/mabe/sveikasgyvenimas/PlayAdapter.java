@@ -3,18 +3,14 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 /**
  * Created by Martyno on 2016.10.03.
  */
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.service.chooser.ChooserTarget;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +19,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Benas on 9/18/2016.
@@ -76,12 +69,22 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
     public PlayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        PlayAdapter.ViewHolder viewHolder = null;
 
+        Log.i("type", String.valueOf(viewType));
+
         switch (viewType){
             case 0:
                 View ask_question = layoutInflater.inflate(R.layout.calculator_preview, parent, false);
                 viewHolder = new ViewHolder(ask_question, 0);
                 return viewHolder;
 
+            case 1:
+
+                break;
+
+            case 2:
+                View send_challenge = layoutInflater.inflate(R.layout.send_challenge, parent,false);
+                viewHolder = new ViewHolder(send_challenge,2);
+                return viewHolder;
         }
 
         return viewHolder;
@@ -96,8 +99,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         }
 
-
-
     }
 
     @Override
@@ -107,15 +108,24 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-
+        //Calculators
         private TextView calculator_text;
         private ImageView arrow_left;
         private ImageView arrow_right;
         private ImageView calculator_preview_image;
         private Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         private Animation top_down_anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+        Typeface tf = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
         private int which_image;
         boolean isAnimRunning = false;
+
+
+        //Send challenge
+
+        private Spinner challenges_spinner;
+        private TextView create_challenge_manually;
+        private EditText mail_receiver;
+        private AppCompatButton send_challenge;
 
         public ViewHolder(View itemView, int type) {
             super(itemView);
@@ -165,7 +175,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     calculator_preview_image.setImageResource(R.drawable.calories_calculator);
                     calculator_text = (TextView) itemView.findViewById(R.id.calculator_text);
 
-                    Typeface tf = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
+
                     calculator_text.setTypeface(tf);
 
                     arrow_left.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +212,65 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         }
                     });
 
+
+                case 1:
+
+                    break;
+
+                case 2:
+                    TextView textView = (TextView) itemView.findViewById(R.id.textView6);
+                    textView.setTypeface(tf);
+
+                    challenges_spinner = (Spinner) itemView.findViewById(R.id.challenges_created);
+                    final ArrayAdapter<CharSequence> gender_adapter = ArrayAdapter.createFromResource(context,
+                            R.array.challenges, R.layout.spinner_item_challenge);
+                    gender_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    challenges_spinner.setAdapter(gender_adapter);
+
+
+
+                    create_challenge_manually = (TextView) itemView.findViewById(R.id.create_challenge_manually);
+                    mail_receiver = (EditText) itemView.findViewById(R.id.mail_receiver);
+                    create_challenge_manually.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            context.startActivity(new Intent(context, CreateChallengeManually.class));
+                        }
+                    });
+
+                    send_challenge = (AppCompatButton) itemView.findViewById(R.id.send_challenge);
+                    send_challenge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
+                                return;
+                            }
+
+                            String challenge = challenges_spinner.getSelectedItem().toString();
+                            String mail = mail_receiver.getText().toString();
+                            String username = sharedPreferences.getString("username", "");
+                            String password = sharedPreferences.getString("password", "");
+                            String title =null;
+                            String time =null;
+
+                            if(challenge.equals("Nevartoti alkoholio 7 dienas")){
+                                 title = "Nevartoju alkoholio";
+                                 time = "7";
+                            }
+
+                            if(challenge.equals("Gerti bent penkias stiklines vandens per dieną(21diena)")){
+                                title = "Gerti vandenį";
+                                time = "21";
+                            }
+
+                            if(mail.isEmpty()){
+                                mail_receiver.setError("Kam nusiųsti?");
+                                return;
+                            }
+                            new ServerManager(context,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password);
+                        }
+                    });
 
             }
 

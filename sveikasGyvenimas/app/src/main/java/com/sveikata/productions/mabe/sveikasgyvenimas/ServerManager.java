@@ -70,6 +70,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
     public static String SERVER_ADDRESS_SEND_CHALLENGE= "http://dvp.lt/android/insert_challenge.php";
 
+
     public ServerManager(Context context, String dialogType){
         this.context=context;
         this.dialogType = dialogType;
@@ -196,6 +197,17 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             response = send_challenge(username, password,challenge, title, time, mail);
         }
 
+        if(method_type.equals("SEND_CHALLENGE_MANUALLY")){
+            String challenge = params[1];
+            String mail = params[2];
+            String time = params[3];
+            String title = params[4];
+            String username = params[5];
+            String password = params[6];
+
+            response = send_challenge(username, password,challenge, title, time, mail);
+        }
+
         return null;
     }
 
@@ -255,6 +267,33 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             }
         }
+
+        if(method_type.equals("SEND_CHALLENGE_MANUALLY")){
+            switch (response){
+
+                case 0:
+                    CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context);
+                    PlayActivity.shouldAddInfo=true;
+                    startFetchingData(1);
+                    break;
+
+                case 1:
+                    CheckingUtils.createErrorBox("Toks naudotojas neegzistuoja, pasiūlyk draugui parsisiųsti aplikacija ", context);
+                    PlayActivity.shouldAddInfo=true;
+                    startFetchingData(1);
+
+                    break;
+
+                case 2:
+                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context);
+                    PlayActivity.shouldAddInfo=true;
+                    startFetchingData(1);
+                    break;
+
+
+            }
+        }
+
 
         if(method_type.equals("LOGIN")){
             progressDialog.cancel();
@@ -475,7 +514,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGIN);
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_SEND_CHALLENGE);
 
 
         //JSON object.

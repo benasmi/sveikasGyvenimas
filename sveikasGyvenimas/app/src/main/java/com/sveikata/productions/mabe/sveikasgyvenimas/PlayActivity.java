@@ -18,7 +18,6 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,7 +31,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
         //Adding hardcoded views
         if(shouldAddInfo){
+            shouldAddInfo=false;
             addCalculatorPreview();
+            addSendChallenge();
         }
 
         recyclerView.setAdapter(adapter);
@@ -45,4 +46,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     public void addCalculatorPreview(){
         info.add(0, new PlayInfoHolder(0));
     }
+
+    public void addSendChallenge(){
+        info.add(1, new PlayInfoHolder(2));
+    }
+
 }
