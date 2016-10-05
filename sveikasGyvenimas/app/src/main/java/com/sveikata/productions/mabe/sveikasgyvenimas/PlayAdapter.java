@@ -93,6 +93,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 View completed_challenge = layoutInflater.inflate(R.layout.challenge_icon, parent, false);
                 viewHolder = new ViewHolder(completed_challenge, 3);
                 return viewHolder;
+            case 4:
+                View challenge_in_progress = layoutInflater.inflate(R.layout.challenge_in_progress, parent, false);
+                viewHolder = new ViewHolder(challenge_in_progress, 4);
+                return viewHolder;
 
         }
 
@@ -117,6 +121,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 3: //Completed challenges
                 holder.completed_challenge_description.setText(data.getChallengeDescription());
                 holder.completed_challenge_title.setText(data.getChallengeTitle());
+                break;
+            case 4: //Completed challenges
+                holder.challenge_in_progress_description.setText(data.getChallengeDescription());
+                holder.challenge_in_progress_title.setText(data.getChallengeTitle());
                 break;
 
         }
@@ -152,6 +160,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private ImageButton decline_challenge;
 
         //Completed challenge layout
+        private TextView challenge_in_progress_title;
+        private TextView challenge_in_progress_description;
+
+        //Challenge in progress layout
         private TextView completed_challenge_title;
         private TextView completed_challenge_description;
 
@@ -203,11 +215,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
                     calculator_preview_image.setImageResource(R.drawable.calories_calculator);
-                    calculator_text = (TextView) itemView.findViewById(R.id.calculator_text);
                     challenge_text = (TextView) itemView.findViewById(R.id.chellanges_text);
 
-
-                    calculator_text.setTypeface(verdanaFont);
                     challenge_text.setTypeface(verdanaFont);
 
                     arrow_left.setOnClickListener(new View.OnClickListener() {
@@ -273,12 +282,17 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                     break;
 
-                case 2:
+                case 2: //Add challenge layout
                     break;
 
-                case 3:
+                case 3: //Trophy layout
                     completed_challenge_title = (TextView) itemView.findViewById(R.id.trophy_title);
                     completed_challenge_description = (TextView) itemView.findViewById(R.id.trophy_description);
+                    break;
+
+                case 4: //Challenge in progress layout
+                    challenge_in_progress_description = (TextView) itemView.findViewById(R.id.challenge_in_progress_description);
+                    challenge_in_progress_title = (TextView) itemView.findViewById(R.id.challenge_in_progress_title);
                     break;
 
             }

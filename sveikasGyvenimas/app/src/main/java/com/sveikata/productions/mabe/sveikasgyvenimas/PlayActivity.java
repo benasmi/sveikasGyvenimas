@@ -85,6 +85,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
             if(challenge.getString("challenge_state").equals("0")){
                 info.add(new PlayInfoHolder(1, description, time, title));
             }
+            if(challenge.getString("challenge_state").equals("2")){
+                info.add(new PlayInfoHolder(4, description, time, title));
+            }
         }
     }
 
