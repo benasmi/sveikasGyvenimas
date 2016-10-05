@@ -56,19 +56,22 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     private ProgressDialog progressDialog = null;
 
-    public static String SERVER_ADRESS_REGISTER = "http://dvp.lt/android/register.php";
-    public static String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
-    public static String SERVER_ADRESS_FETCH_SCHEDULE = "http://dvp.lt/android/fetch_schedule.php";
-    public static String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
-    public static String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_event.php";
-    public static String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
-    public static String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
-    public static String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
-    public static String SERVER_ADRESS_DELETE_FACT ="http://dvp.lt/android/delete_fact.php";
-    public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
-    public static String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
-    public static String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
-    public static String SERVER_ADDRESS_SEND_CHALLENGE= "http://dvp.lt/android/insert_challenge.php";
+    public static final String SERVER_ADRESS_REGISTER = "http://dvp.lt/android/register.php";
+    public static final String SERVER_ADRESS_LOGIN = "http://dvp.lt/android/login.php";
+    public static final String SERVER_ADRESS_FETCH_SCHEDULE = "http://dvp.lt/android/fetch_schedule.php";
+    public static final String SERVER_ADRESS_FETCH_USER_DATA = "http://dvp.lt/android/fetch_user_data.php";
+    public static final String SERVER_ADRESS_INSERT_EVENT_DATA = "http://dvp.lt/android/insert_event.php";
+    public static final String SERVER_ADRESS_NOTIFICATION = "http://dvp.lt/android/notification.php";
+    public static final String SERVER_ADRESS_UPDATE_TOKEN = "http://dvp.lt/android/update_token.php";
+    public static final String SERVER_ADRESS_DELETE_EVENT ="http://dvp.lt/android/delete_event.php";
+    public static final String SERVER_ADRESS_DELETE_FACT ="http://dvp.lt/android/delete_fact.php";
+    public static final String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
+    public static final String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
+    public static final String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
+    public static final String SERVER_ADDRESS_SEND_CHALLENGE= "http://dvp.lt/android/insert_challenge.php";
+    public static final String SERVER_ADDRESS_ACCEPT_CHALLENGE= "http://dvp.lt/android/accept_challenge.php";
+    public static final String SERVER_ADDRESS_DECLINE_CHALLENGE= "http://dvp.lt/android/decline_challenge.php";
+    public static final String SERVER_ADRESS_FETCH_CHALLENGES = "http://dvp.lt/android/fetch_challenges.php";
 
     public ServerManager(Context context, String dialogType){
         this.context=context;
@@ -125,6 +128,23 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             response = login(username_login,password_login, device_id);
         }
+
+        if(method_type.equals("ACCEPT_CHALLENGE")) {
+
+            username_login = params[1];
+            password_login = params[2];
+
+            response = accept_challenge(username_login, password_login);
+        }
+
+        if(method_type.equals("DECLINE_CHALLENGE")) {
+
+            username_login = params[1];
+            password_login = params[2];
+
+            response = decline_challenge(username_login, password_login);
+        }
+
         if(method_type.equals("INSERT_EVENT")){
 
             String username = params[1];
@@ -252,6 +272,13 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             }
         }
 
+        if(method_type.equals("ACCEPT_CHALLENGE")){
+            CheckingUtils.createErrorBox("Iššūkis priimtas!", context);
+        }
+        if(method_type.equals("DECLINE_CHALLENGE")){
+            CheckingUtils.createErrorBox("Iššūkis atmestas :(", context);
+        }
+
         if(method_type.equals("LOGIN")){
             progressDialog.cancel();
             switch (response) {
@@ -376,6 +403,82 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
+    public int accept_challenge(String username, String password){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_ACCEPT_CHALLENGE);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+
+
+
+    }
+
+    public int decline_challenge(String username, String password){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_DECLINE_CHALLENGE);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+
+
+
+    }
+
     public void startFetchingData(int tabAfterwards){
         new fetchData(tabAfterwards).execute();
     }
@@ -471,7 +574,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGIN);
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_SEND_CHALLENGE);
 
 
         //JSON object.
@@ -821,6 +924,52 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+
+    public void fetchChallenges(){
+
+
+
+
+        SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+        String username =loginPrefs.getString("username","");
+
+
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_FETCH_CHALLENGES);
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+            ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+            entity.addTextBody("json", jsonObject.toString(), type);
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+
+            Log.i("TEST", responseBody);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("challenge_data", jsonArray.toString()).commit();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
     class fetchData extends AsyncTask<Void,Void,Void>{
 
         int tabAfterwards = 0;
@@ -841,6 +990,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             fetchScheduleData();
             fetchUserData();
             fetchFactData();
+            fetchChallenges();
             return null;
         }
 

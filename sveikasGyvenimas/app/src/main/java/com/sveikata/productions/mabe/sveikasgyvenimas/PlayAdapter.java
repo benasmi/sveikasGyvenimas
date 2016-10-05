@@ -22,6 +22,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -78,8 +79,19 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         switch (viewType){
             case 0:
-                View ask_question = layoutInflater.inflate(R.layout.calculator_preview, parent, false);
-                viewHolder = new ViewHolder(ask_question, 0);
+                View layout_preview = layoutInflater.inflate(R.layout.calculator_preview, parent, false);
+                viewHolder = new ViewHolder(layout_preview, 0);
+                return viewHolder;
+            case 1:
+                View new_challenge = layoutInflater.inflate(R.layout.new_challenge_layout, parent, false);
+                viewHolder = new ViewHolder(new_challenge, 1);
+                return viewHolder;
+            case 2:
+                break;
+
+            case 3:
+                View completed_challenge = layoutInflater.inflate(R.layout.challenge_icon, parent, false);
+                viewHolder = new ViewHolder(completed_challenge, 3);
                 return viewHolder;
 
         }
@@ -91,12 +103,23 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
     public void onBindViewHolder(PlayAdapter.ViewHolder holder, int position) {
         PlayInfoHolder data = play_info_holder.get(position);
 
-
         switch (data.getType()){
 
+            case 0: //Preview calculators
+                break;
+            case 1: //current challenge layout
+                holder.challenge_title.setText(data.getChallengeTitle());
+                holder.challenge_description.setText(data.getChallengeDescription());
+                holder.timer.setText(data.getChallengeTime());
+                break;
+            case 2: //Send challenge layout
+                break;
+            case 3: //Completed challenges
+                holder.completed_challenge_description.setText(data.getChallengeDescription());
+                holder.completed_challenge_title.setText(data.getChallengeTitle());
+                break;
+
         }
-
-
 
     }
 
@@ -107,8 +130,12 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        private Typeface verdanaFont;
 
+
+        //Calculator preview layout
         private TextView calculator_text;
+        private TextView challenge_text;
         private ImageView arrow_left;
         private ImageView arrow_right;
         private ImageView calculator_preview_image;
@@ -117,8 +144,21 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private int which_image;
         boolean isAnimRunning = false;
 
+        //New challenge layout
+        private TextView timer;
+        private TextView challenge_title;
+        private TextView challenge_description;
+        private ImageButton accept_challenge;
+        private ImageButton decline_challenge;
+
+        //Completed challenge layout
+        private TextView completed_challenge_title;
+        private TextView completed_challenge_description;
+
         public ViewHolder(View itemView, int type) {
             super(itemView);
+
+            verdanaFont = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
 
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -158,15 +198,17 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
             switch (type) {
 
-                case 0:
+                case 0: //Calculator previews
                     arrow_left = (ImageView) itemView.findViewById(R.id.arrow_left);
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
                     calculator_preview_image.setImageResource(R.drawable.calories_calculator);
                     calculator_text = (TextView) itemView.findViewById(R.id.calculator_text);
+                    challenge_text = (TextView) itemView.findViewById(R.id.chellanges_text);
 
-                    Typeface tf = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
-                    calculator_text.setTypeface(tf);
+
+                    calculator_text.setTypeface(verdanaFont);
+                    challenge_text.setTypeface(verdanaFont);
 
                     arrow_left.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -202,6 +244,42 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         }
                     });
 
+                    break;
+
+                case 1: //New challenge layout
+
+                    timer = (TextView) itemView.findViewById(R.id.timer);
+                    challenge_description = (TextView) itemView.findViewById(R.id.new_challenge_description);
+                    challenge_title = (TextView) itemView.findViewById(R.id.new_challenge_title);
+                    accept_challenge = (ImageButton) itemView.findViewById(R.id.accept_button);
+                    decline_challenge = (ImageButton) itemView.findViewById(R.id.decline_button);
+
+                    timer.setTypeface(verdanaFont);
+
+                    //Accepting challenge
+                    accept_challenge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new ServerManager(context, "").execute("ACCEPT_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                        }
+                    });
+                    decline_challenge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new ServerManager(context, "").execute("DECLINE_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                        }
+                    });
+
+
+                    break;
+
+                case 2:
+                    break;
+
+                case 3:
+                    completed_challenge_title = (TextView) itemView.findViewById(R.id.trophy_title);
+                    completed_challenge_description = (TextView) itemView.findViewById(R.id.trophy_description);
+                    break;
 
             }
 
