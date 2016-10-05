@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,8 +25,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.Date;
+
 
 /**
  * Created by Benas on 9/18/2016.
@@ -104,6 +110,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         return viewHolder;
     }
 
+
+
     @Override
     public void onBindViewHolder(PlayAdapter.ViewHolder holder, int position) {
         PlayInfoHolder data = play_info_holder.get(position);
@@ -115,7 +123,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 1: //current challenge layout
                 holder.challenge_title.setText(data.getChallengeTitle());
                 holder.challenge_description.setText(data.getChallengeDescription());
-                holder.timer.setText(data.getChallengeTime());
                 break;
             case 2: //Send challenge layout
                 break;
@@ -126,11 +133,59 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 4: //Completed challenges
                 holder.challenge_in_progress_description.setText(data.getChallengeDescription());
                 holder.challenge_in_progress_title.setText(data.getChallengeTitle());
+
+                countDownStart(holder.days_proggress, holder.hours_progress, holder.minutes_progress, holder.seconds_progress, data.getChallengeTime());
+
                 break;
 
 
         }
 
+    }
+
+
+    public void countDownStart(final TextView dayView, final TextView hoursView, final TextView minutesView, final TextView secondsView, final String data) {
+
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(this, 1000);
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            "yyyy-MM-dd");
+                    // Here Set your Event Date
+                    Date futureDate = dateFormat.parse(data);
+                    Date currentDate = new Date();
+                    if (!currentDate.after(futureDate)) {
+                        long diff = futureDate.getTime()
+                                - currentDate.getTime();
+                        long days = diff / (24 * 60 * 60 * 1000);
+                        diff -= days * (24 * 60 * 60 * 1000);
+                        long hours = diff / (60 * 60 * 1000);
+                        diff -= hours * (60 * 60 * 1000);
+                        long minutes = diff / (60 * 1000);
+                        diff -= minutes * (60 * 1000);
+                        long seconds = diff / 1000;
+                        dayView.setText("" + String.format("%02d", days));
+                        hoursView.setText("" + String.format("%02d", hours));
+                        minutesView.setText("" + String.format("%02d", minutes));
+                        secondsView.setText("" + String.format("%02d", seconds));
+                    } else {
+                        String username = sharedPreferences.getString("username", "");
+                        String password = sharedPreferences.getString("password", "");
+                        handler.removeCallbacks(this);
+
+                        new ServerManager(context, "COMPLETE_CHALLENGE").execute("COMPLETE_CHALLENGE", username, password);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        handler.postDelayed(runnable, 0);
     }
 
     @Override
@@ -158,7 +213,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
 
         //Send challenge
-
         private Spinner challenges_spinner;
         private TextView create_challenge_manually;
         private EditText mail_receiver;
@@ -166,6 +220,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         //New challenge layout
         private TextView timer;
+
         private TextView challenge_title;
         private TextView challenge_description;
         private ImageButton accept_challenge;
@@ -179,6 +234,12 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private TextView completed_challenge_title;
         private TextView completed_challenge_description;
 
+        public TextView days_proggress;
+        public TextView hours_progress;
+        public TextView minutes_progress;
+        public TextView seconds_progress;
+
+        private ImageButton failed;
 
         public ViewHolder(View itemView, int type) {
             super(itemView);
@@ -271,25 +332,48 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                 case 1: //New challenge layout
 
-                    timer = (TextView) itemView.findViewById(R.id.timer);
+
                     challenge_description = (TextView) itemView.findViewById(R.id.new_challenge_description);
                     challenge_title = (TextView) itemView.findViewById(R.id.new_challenge_title);
                     accept_challenge = (ImageButton) itemView.findViewById(R.id.accept_button);
                     decline_challenge = (ImageButton) itemView.findViewById(R.id.decline_button);
-
-                    timer.setTypeface(verdanaFont);
+                    timer = (TextView) itemView.findViewById(R.id.days);
+                    timer.setTypeface(tf);
 
                     //Accepting challenge
                     accept_challenge.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new ServerManager(context, "").execute("ACCEPT_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
+                                return;
+                            }else{
+                                PlayActivity.shouldAddInfo=true;
+                                HealthyLifeActivity.addData=true;
+                                InterestingFactsActivity.addFactsFirstTime=true;
+                                AskQuestionsActivity.addFAQData=true;
+                                new ServerManager(context, "").execute("ACCEPT_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                                new ServerManager(context, "").startFetchingData(1);
+                            }
+
                         }
                     });
                     decline_challenge.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new ServerManager(context, "").execute("DECLINE_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
+                                return;
+                            }else{
+                                PlayActivity.shouldAddInfo=true;
+                                HealthyLifeActivity.addData=true;
+                                InterestingFactsActivity.addFactsFirstTime=true;
+                                AskQuestionsActivity.addFAQData=true;
+                                new ServerManager(context, "").execute("DECLINE_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
+                                new ServerManager(context, "").startFetchingData(1);
+                            }
+
+
                         }
                     });
 
@@ -363,6 +447,37 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 case 4: //Challenge in progress layout
                     challenge_in_progress_description = (TextView) itemView.findViewById(R.id.challenge_in_progress_description);
                     challenge_in_progress_title = (TextView) itemView.findViewById(R.id.challenge_in_progress_title);
+
+                    days_proggress = (TextView) itemView.findViewById(R.id.days);
+                    hours_progress = (TextView) itemView.findViewById(R.id.hours );
+                    minutes_progress = (TextView) itemView.findViewById(R.id.minutes);
+                    seconds_progress = (TextView) itemView.findViewById(R.id.seconds);
+
+                    days_proggress.setTypeface(verdanaFont);
+                    hours_progress.setTypeface(verdanaFont);
+                    minutes_progress.setTypeface(verdanaFont);
+                    seconds_progress.setTypeface(verdanaFont);
+
+                    failed = (ImageButton) itemView.findViewById(R.id.failed_button);
+                    failed.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("FAIL", context);
+                                return;
+                            }else{
+
+                                String username = sharedPreferences.getString("username", "");
+                                String password = sharedPreferences.getString("password", "");
+
+                                remove(getAdapterPosition());
+
+                                new ServerManager(context, "I_FAILED_CHALLENGE").execute("I_FAILED_CHALLENGE", username, password);
+
+
+                            }
+                        }
+                    });
                     break;
 
 
@@ -371,7 +486,12 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         }
     }
 
-    private void launchCalculator(int which_img){
+    // //////////////COUNT DOWN START/////////////////////////
+
+    // //////////////COUNT DOWN END/////////////////////////
+
+    private void launchCalculator(int which_img)
+    {
         Uri uri = null;
         switch (which_img){
             case 0:

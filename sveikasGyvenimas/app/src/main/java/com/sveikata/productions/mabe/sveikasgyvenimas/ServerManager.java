@@ -72,6 +72,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADDRESS_ACCEPT_CHALLENGE= "http://dvp.lt/android/accept_challenge.php";
     public static final String SERVER_ADDRESS_DECLINE_CHALLENGE= "http://dvp.lt/android/decline_challenge.php";
     public static final String SERVER_ADRESS_FETCH_CHALLENGES = "http://dvp.lt/android/fetch_challenges.php";
+    public static final String SERVER_ADRESS_I_FAILED_CHALLENGE = "http://dvp.lt/android/failed_challenge.php";
 
 
     public ServerManager(Context context, String dialogType){
@@ -226,6 +227,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String password = params[6];
 
             response = send_challenge(username, password,challenge, title, time, mail);
+        }
+        if(method_type.equals("I_FAILED_CHALLENGE")){
+            String username = params[1];
+            String password = params[2];
+
+            failed_challenge(username, password);
         }
 
         return null;
@@ -761,6 +768,40 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+
+
+    public void failed_challenge(String username, String password){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_I_FAILED_CHALLENGE);
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+
+        }catch (Exception e){
+
+        }
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
     public void logout (String username, String password){
         HttpClient httpClient = new DefaultHttpClient();

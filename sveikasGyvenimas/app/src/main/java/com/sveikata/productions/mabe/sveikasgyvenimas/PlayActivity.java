@@ -3,6 +3,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
     private JSONArray challenges;
+
 
     @Nullable
     @Override
@@ -120,4 +122,8 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
         }
     }
+
+
+
+
 }
