@@ -68,7 +68,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static String SERVER_ADRESS_LOGOUT ="http://dvp.lt/android/delete_token.php";
     public static String SERVER_ADDRESS_ADD_FACT ="http://dvp.lt/android/add_fact.php";
     public static String SERVER_ADDRESS_FETCH_FACTS= "http://dvp.lt/android/fetch_facts.php";
-    public static String SERVER_ADDRESS_SEND_CHALLENGE= "http://dvp.lt/android/send_challenge.php";
+    public static String SERVER_ADDRESS_SEND_CHALLENGE= "http://dvp.lt/android/insert_challenge.php";
 
     public ServerManager(Context context, String dialogType){
         this.context=context;
@@ -188,10 +188,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(method_type.equals("SEND_CHALLENGE")){
             String challenge = params[1];
             String mail = params[2];
-            String username = params[3];
-            String password = params[4];
+            String time = params[3];
+            String title = params[4];
+            String username = params[5];
+            String password = params[6];
 
-            response = send_challenge(username, password,challenge,mail);
+            response = send_challenge(username, password,challenge, title, time, mail);
         }
 
         return null;
@@ -469,7 +471,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
-    private int send_challenge(String username, String password, String challenge, String mail) {
+    private int send_challenge(String username, String password, String challenge,String title, String time, String mail) {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -483,6 +485,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
             jsonObject.putOpt("challenge", challenge);
+            jsonObject.putOpt("time", time);
+            jsonObject.putOpt("title", title);
             jsonObject.putOpt("mail", mail);
         } catch (JSONException e) {
             e.printStackTrace();
