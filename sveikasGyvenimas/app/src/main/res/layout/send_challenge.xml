@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/select_challenge">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pasirink jau sukurtą"
+            android:id="@+id/textView6"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp" />
+
+        <Spinner
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:background="@drawable/borders_challenge"
+            android:id="@+id/challenges_created"
+            android:layout_below="@+id/textView6"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:text="Siųsti"
+        android:id="@+id/send_challenge"
+        android:background="@drawable/send_challenge_button"
+        android:layout_below="@+id/mail_receiver"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="...arba sukur naują pats..."
+        android:id="@+id/create_challenge_manually"
+        android:textSize="17dp"
+        android:layout_below="@+id/send_challenge"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="35dp"
+        android:background="@drawable/borders_challenge"
+        android:id="@+id/mail_receiver"
+        android:layout_below="@+id/select_challenge"
+        android:layout_centerHorizontal="true"
+        android:hint="Kam nori nusiūsti?(El.Paštas)"
+        android:layout_marginTop="2dp"
+        android:paddingLeft="7dp"
+        android:textSize="15dp" />
+
+
+</RelativeLayout>

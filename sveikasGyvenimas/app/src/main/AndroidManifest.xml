@@ -2,74 +2,76 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sveikata.productions.mabe.sveikasgyvenimas">
 
-
-
-
     <meta-data
         android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version"/>
+        android:value="@integer/google_play_services_version" />
 
-    <provider android:authorities="com.facebook.app.FacebookContentProvider758055920999143"
+    <provider
         android:name="com.facebook.FacebookContentProvider"
-        android:exported="true"/>
+        android:authorities="com.facebook.app.FacebookContentProvider758055920999143"
+        android:exported="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoBar">
-
-
-        <service
-            android:name=".GcmMessageReceiver">
+        <service android:name=".GcmMessageReceiver">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".GcmOnTokenRefresh">
+        <service android:name=".GcmOnTokenRefresh">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-
-        <activity android:name=".LoginActivity" android:screenOrientation="portrait"
-            />
-        <activity android:name=".TabActivityLoader" android:screenOrientation="portrait"/>
-        <activity android:name=".RegisterActivity" android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".InsertFactActivity" android:screenOrientation="portrait"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
-
-        <activity android:name=".StartingActivity" android:noHistory="true" android:screenOrientation="portrait">
-
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TabActivityLoader"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".InsertFactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".StartingActivity"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivateAccountActivity"></activity>
+        <activity android:name=".ActivateAccountActivity" />
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBGiAZ62W0aiWDFdoOot1MxKIjcdb81Ysk"></meta-data>
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBGiAZ62W0aiWDFdoOot1MxKIjcdb81Ysk" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         android:name="android.support.multidex.MultiDexApplication">
+        <activity android:name=".CreateChallengeManually"></activity>
     </application>
 
 </manifest>

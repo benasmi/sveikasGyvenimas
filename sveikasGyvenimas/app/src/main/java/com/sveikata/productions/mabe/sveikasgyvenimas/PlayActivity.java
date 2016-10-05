@@ -25,7 +25,6 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
     private JSONArray challenges;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,6 +46,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         if(shouldAddInfo){
             shouldAddInfo=false;
             addCalculatorPreview();
+            addSendChallenge();
 
             try {
                 addChallenge();
@@ -60,6 +60,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
                 e.printStackTrace();
             }
 
+
         }
 
         recyclerView.setAdapter(adapter);
@@ -72,6 +73,12 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     public void addCalculatorPreview(){
         info.add(0, new PlayInfoHolder(0));
     }
+
+
+    public void addSendChallenge(){
+        info.add(1, new PlayInfoHolder(2));
+    }
+
 
     public void addChallenge() throws JSONException {
 

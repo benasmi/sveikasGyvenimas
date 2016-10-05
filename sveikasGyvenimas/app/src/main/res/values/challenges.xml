@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="challenges">
+
+        <item>Nevartoti alkoholio 7 dienas</item>
+        <item>Gerti bent penkias stiklines vandens per dieną</item>
+    </string-array>
+
+
+</resources>

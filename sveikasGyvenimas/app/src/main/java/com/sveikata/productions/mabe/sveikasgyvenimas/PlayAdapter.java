@@ -3,18 +3,14 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 /**
  * Created by Martyno on 2016.10.03.
  */
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.service.chooser.ChooserTarget;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +20,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by Benas on 9/18/2016.
@@ -77,6 +70,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
     public PlayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        PlayAdapter.ViewHolder viewHolder = null;
 
+        Log.i("type", String.valueOf(viewType));
+
         switch (viewType){
             case 0:
                 View layout_preview = layoutInflater.inflate(R.layout.calculator_preview, parent, false);
@@ -86,8 +81,11 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 View new_challenge = layoutInflater.inflate(R.layout.new_challenge_layout, parent, false);
                 viewHolder = new ViewHolder(new_challenge, 1);
                 return viewHolder;
+
             case 2:
-                break;
+                View send_challenge = layoutInflater.inflate(R.layout.send_challenge, parent,false);
+                viewHolder = new ViewHolder(send_challenge,2);
+                return viewHolder;
 
             case 3:
                 View completed_challenge = layoutInflater.inflate(R.layout.challenge_icon, parent, false);
@@ -97,6 +95,9 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 View challenge_in_progress = layoutInflater.inflate(R.layout.challenge_in_progress, parent, false);
                 viewHolder = new ViewHolder(challenge_in_progress, 4);
                 return viewHolder;
+
+
+
 
         }
 
@@ -127,6 +128,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 holder.challenge_in_progress_title.setText(data.getChallengeTitle());
                 break;
 
+
         }
 
     }
@@ -149,8 +151,18 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private ImageView calculator_preview_image;
         private Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         private Animation top_down_anim = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+        Typeface tf = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
         private int which_image;
         boolean isAnimRunning = false;
+
+
+
+        //Send challenge
+
+        private Spinner challenges_spinner;
+        private TextView create_challenge_manually;
+        private EditText mail_receiver;
+        private AppCompatButton send_challenge;
 
         //New challenge layout
         private TextView timer;
@@ -166,6 +178,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         //Challenge in progress layout
         private TextView completed_challenge_title;
         private TextView completed_challenge_description;
+
 
         public ViewHolder(View itemView, int type) {
             super(itemView);
@@ -218,6 +231,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     challenge_text = (TextView) itemView.findViewById(R.id.chellanges_text);
 
                     challenge_text.setTypeface(verdanaFont);
+
 
                     arrow_left.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -282,18 +296,75 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                     break;
 
-                case 2: //Add challenge layout
+                case 2:
+                    TextView textView = (TextView) itemView.findViewById(R.id.textView6);
+                    textView.setTypeface(tf);
+
+                    challenges_spinner = (Spinner) itemView.findViewById(R.id.challenges_created);
+                    final ArrayAdapter<CharSequence> gender_adapter = ArrayAdapter.createFromResource(context,
+                            R.array.challenges, R.layout.spinner_item_challenge);
+                    gender_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    challenges_spinner.setAdapter(gender_adapter);
+
+
+
+                    create_challenge_manually = (TextView) itemView.findViewById(R.id.create_challenge_manually);
+                    mail_receiver = (EditText) itemView.findViewById(R.id.mail_receiver);
+                    create_challenge_manually.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            context.startActivity(new Intent(context, CreateChallengeManually.class));
+                        }
+                    });
+
+                    send_challenge = (AppCompatButton) itemView.findViewById(R.id.send_challenge);
+                    send_challenge.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
+                                return;
+                            }
+
+                            String challenge = challenges_spinner.getSelectedItem().toString();
+                            String mail = mail_receiver.getText().toString();
+                            String username = sharedPreferences.getString("username", "");
+                            String password = sharedPreferences.getString("password", "");
+                            String title =null;
+                            String time =null;
+
+                            if(challenge.equals("Nevartoti alkoholio 7 dienas")){
+                                title = "Nevartoju alkoholio";
+                                time = "7";
+                            }
+
+                            if(challenge.equals("Gerti bent penkias stiklines vandens per dieną(21diena)")){
+                                title = "Gerti vandenį";
+                                time = "21";
+                            }
+
+                            if(mail.isEmpty()){
+                                mail_receiver.setError("Kam nusiųsti?");
+                                return;
+                            }
+                            new ServerManager(context,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password);
+                        }
+                    });
+
                     break;
 
-                case 3: //Trophy layout
+
+                case 3:
                     completed_challenge_title = (TextView) itemView.findViewById(R.id.trophy_title);
                     completed_challenge_description = (TextView) itemView.findViewById(R.id.trophy_description);
                     break;
+
 
                 case 4: //Challenge in progress layout
                     challenge_in_progress_description = (TextView) itemView.findViewById(R.id.challenge_in_progress_description);
                     challenge_in_progress_title = (TextView) itemView.findViewById(R.id.challenge_in_progress_title);
                     break;
+
 
             }
 
