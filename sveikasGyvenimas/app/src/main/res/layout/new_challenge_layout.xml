@@ -37,12 +37,29 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp">
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nevalgyti kebabu"
-                android:id="@+id/new_challenge_title"
-                android:textSize="17dp"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nevalgyti kebabu 3-4 dienas"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toStartOf="@+id/challenge_sender"
+                    android:layout_toLeftOf="@+id/challenge_sender"
+                    android:id="@+id/new_challenge_title"
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nuo: martynux123"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/challenge_sender"
+                    android:textSize="13dp"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -60,10 +77,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:padding="5dp">
+            android:padding="0dp">
 
             <ImageButton
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -75,7 +92,6 @@
                 android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/accept_button"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/decline_challenge"
                 android:id="@+id/decline_button"/>

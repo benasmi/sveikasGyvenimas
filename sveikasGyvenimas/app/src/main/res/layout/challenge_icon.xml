@@ -32,12 +32,29 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nevalgyti kebabu"
-            android:id="@+id/trophy_title"
-            android:textSize="17dp"/>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nevalgyti kebabu 3-4 dienas"
+                android:layout_alignParentLeft="true"
+                android:layout_toStartOf="@+id/trophy_sender"
+                android:layout_toLeftOf="@+id/trophy_sender"
+                android:id="@+id/trophy_title"
+                android:textSize="17dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nuo: martynux123"
+                android:layout_alignParentRight="true"
+                android:id="@+id/trophy_sender"
+                android:textSize="13dp"/>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"

@@ -90,12 +90,13 @@ public class PlayActivity extends android.support.v4.app.Fragment {
             String description = challenge.getString("challenge");
             String time = challenge.getString("time");
             String title = challenge.getString("challenge_title");
+            String sender = challenge.getString("challenge_sender");
 
             if(challenge.getString("challenge_state").equals("0")){
-                info.add(new PlayInfoHolder(1, description, time, title));
+                info.add(new PlayInfoHolder(1, description, time, title, sender));
             }
             if(challenge.getString("challenge_state").equals("2")){
-                info.add(new PlayInfoHolder(4, description, time, title));
+                info.add(new PlayInfoHolder(4, description, time, title, sender));
             }
         }
     }
@@ -111,8 +112,10 @@ public class PlayActivity extends android.support.v4.app.Fragment {
                 String time = challenge.getString("time");
                 String title = challenge.getString("challenge_title");
                 String challenge_state = challenge.getString("challenge_state");
+                String sender = challenge.getString("challenge_sender");
+
                 if(challenge_state.equals("1")){
-                    info.add(new PlayInfoHolder(3, description, time, title));
+                    info.add(new PlayInfoHolder(3, description, time, title, sender));
                 }
 
 

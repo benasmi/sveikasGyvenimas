@@ -123,17 +123,20 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 1: //current challenge layout
                 holder.challenge_title.setText(data.getChallengeTitle());
                 holder.challenge_description.setText(data.getChallengeDescription());
+                holder.challenge_sender.setText(data.getChallengeSender());
+                holder.timer.setText("Iššūkis truks " + data.getChallengeTime() + " d.");
                 break;
             case 2: //Send challenge layout
                 break;
             case 3: //Completed challenges
                 holder.completed_challenge_description.setText(data.getChallengeDescription());
                 holder.completed_challenge_title.setText(data.getChallengeTitle());
+                holder.completed_challenge_sender.setText(data.getChallengeTitle());
                 break;
-            case 4: //Completed challenges
+            case 4: //Challenge in progress layout
                 holder.challenge_in_progress_description.setText(data.getChallengeDescription());
                 holder.challenge_in_progress_title.setText(data.getChallengeTitle());
-
+                holder.challenge_in_progress_sender.setText(data.getChallengeTitle());
                 countDownStart(holder.days_proggress, holder.hours_progress, holder.minutes_progress, holder.seconds_progress, data.getChallengeTime());
 
                 break;
@@ -220,19 +223,21 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         //New challenge layout
         private TextView timer;
-
         private TextView challenge_title;
         private TextView challenge_description;
         private ImageButton accept_challenge;
         private ImageButton decline_challenge;
-
-        //Completed challenge layout
-        private TextView challenge_in_progress_title;
-        private TextView challenge_in_progress_description;
+        private TextView challenge_sender;
 
         //Challenge in progress layout
+        private TextView challenge_in_progress_title;
+        private TextView challenge_in_progress_description;
+        private TextView challenge_in_progress_sender;
+
+        //Completed challenge layout
         private TextView completed_challenge_title;
         private TextView completed_challenge_description;
+        private TextView completed_challenge_sender;
 
         public TextView days_proggress;
         public TextView hours_progress;
@@ -285,6 +290,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             switch (type) {
 
                 case 0: //Calculator previews
+
                     arrow_left = (ImageView) itemView.findViewById(R.id.arrow_left);
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
@@ -337,6 +343,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     challenge_title = (TextView) itemView.findViewById(R.id.new_challenge_title);
                     accept_challenge = (ImageButton) itemView.findViewById(R.id.accept_button);
                     decline_challenge = (ImageButton) itemView.findViewById(R.id.decline_button);
+                    challenge_sender = (TextView) itemView.findViewById(R.id.challenge_sender);
                     timer = (TextView) itemView.findViewById(R.id.days);
                     timer.setTypeface(tf);
 
@@ -380,7 +387,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                     break;
 
-                case 2:
+                case 2: //Create new challenge layout
+
                     TextView textView = (TextView) itemView.findViewById(R.id.textView6);
                     textView.setTypeface(tf);
 
@@ -393,6 +401,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
 
                     create_challenge_manually = (TextView) itemView.findViewById(R.id.create_challenge_manually);
+
                     mail_receiver = (EditText) itemView.findViewById(R.id.mail_receiver);
                     create_challenge_manually.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -438,15 +447,17 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     break;
 
 
-                case 3:
+                case 3: //Trophy layout
                     completed_challenge_title = (TextView) itemView.findViewById(R.id.trophy_title);
                     completed_challenge_description = (TextView) itemView.findViewById(R.id.trophy_description);
+                    completed_challenge_sender = (TextView) itemView.findViewById(R.id.trophy_sender);
                     break;
 
 
                 case 4: //Challenge in progress layout
                     challenge_in_progress_description = (TextView) itemView.findViewById(R.id.challenge_in_progress_description);
                     challenge_in_progress_title = (TextView) itemView.findViewById(R.id.challenge_in_progress_title);
+                    challenge_in_progress_sender = (TextView) itemView.findViewById(R.id.challenge_in_progress_sender);
 
                     days_proggress = (TextView) itemView.findViewById(R.id.days);
                     hours_progress = (TextView) itemView.findViewById(R.id.hours );

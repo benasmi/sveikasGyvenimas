@@ -9,12 +9,22 @@ public class PlayInfoHolder {
     private String challenge_title;
     private String challenge_description;
     private String challenge_time;
+    private String challenge_sender;
 
-    public PlayInfoHolder(int type, String challenge_description, String challenge_time, String challenge_title){
+    public PlayInfoHolder(int type, String challenge_description, String challenge_time, String challenge_title, String challenge_sender){
         this.type = type;
         this.challenge_title = challenge_title;
         this.challenge_description = challenge_description;
         this.challenge_time = challenge_time;
+        this.challenge_sender = challenge_sender;
+    }
+
+    public String getChallengeSender() {
+        return challenge_sender;
+    }
+
+    public void setChallengeSender(String challenge_sender) {
+        this.challenge_sender = challenge_sender;
     }
 
     public PlayInfoHolder(int type){
