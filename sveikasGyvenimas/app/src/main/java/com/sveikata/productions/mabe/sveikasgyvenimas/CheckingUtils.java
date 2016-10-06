@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -61,6 +62,31 @@ public class CheckingUtils {
                 })
                 .show();
     }
+
+    public static void createBoxSuggestToFriend(final String message, final Context context) {
+        new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                .setMessage(message)
+                .setPositiveButton("Pasidalinti", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                "Sveikas, parsisųsk 'appsa' čia: https://www.google.com");
+                        sendIntent.setType("text/plain");
+                        context.startActivity(sendIntent);
+                    }
+                })
+                .setNegativeButton("Grižti", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
+    }
+
+
     public static ProgressDialog progressDialog(Context context, String message){
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage(message);
