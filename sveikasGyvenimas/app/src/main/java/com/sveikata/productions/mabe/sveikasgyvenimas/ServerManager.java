@@ -218,16 +218,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             response = send_challenge(username, password,challenge, title, time, mail);
         }
 
-        if(method_type.equals("SEND_CHALLENGE_MANUALLY")){
-            String challenge = params[1];
-            String mail = params[2];
-            String time = params[3];
-            String title = params[4];
-            String username = params[5];
-            String password = params[6];
-
-            response = send_challenge(username, password,challenge, title, time, mail);
-        }
         if(method_type.equals("I_FAILED_CHALLENGE")){
             String username = params[1];
             String password = params[2];
@@ -283,40 +273,25 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
                 case 0:
                     CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context);
-                    break;
-
-                case 1:
-                    CheckingUtils.createErrorBox("Toks naudotojas neegzistuoja, pasiūlyk draugui parsisiųsti aplikacija ", context);
-                    break;
-
-                case 2:
-                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context);
-
-            }
-        }
-
-        if(method_type.equals("SEND_CHALLENGE_MANUALLY")){
-            switch (response){
-
-                case 0:
-                    CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context);
                     PlayActivity.shouldAddInfo=true;
+                    AskQuestionsActivity.addFAQData=true;
+                    HealthyLifeActivity.addData=true;
+                    InterestingFactsActivity.addFactsFirstTime =true;
                     startFetchingData(1);
                     break;
 
                 case 1:
-                    CheckingUtils.createErrorBox("Toks naudotojas neegzistuoja, pasiūlyk draugui parsisiųsti aplikacija ", context);
-                    PlayActivity.shouldAddInfo=true;
-                    startFetchingData(1);
-
+                    CheckingUtils.createBoxSuggestToFriend("Toks vartotojas neegzistuoja, pasiūlyk draugui prisiregistruoti!", context);
                     break;
 
                 case 2:
                     CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context);
                     PlayActivity.shouldAddInfo=true;
+                    AskQuestionsActivity.addFAQData=true;
+                    HealthyLifeActivity.addData=true;
+                    InterestingFactsActivity.addFactsFirstTime =true;
                     startFetchingData(1);
                     break;
-
 
             }
         }
@@ -324,6 +299,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         if(method_type.equals("ACCEPT_CHALLENGE")){
             CheckingUtils.createErrorBox("Iššūkis priimtas!", context);
+            startFetchingData(1);
         }
         if(method_type.equals("DECLINE_CHALLENGE")){
             CheckingUtils.createErrorBox("Iššūkis atmestas :(", context);
@@ -496,7 +472,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(SERVER_ADDRESS_DECLINE_CHALLENGE);
-
 
         //JSON object.
         JSONObject jsonObject = new JSONObject();

@@ -216,10 +216,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
 
         //Send challenge
-        private Spinner challenges_spinner;
-        private TextView create_challenge_manually;
-        private EditText mail_receiver;
-        private AppCompatButton send_challenge;
+        private AppCompatButton go_to_send_activity;
 
         //New challenge layout
         private TextView timer;
@@ -360,7 +357,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                 InterestingFactsActivity.addFactsFirstTime=true;
                                 AskQuestionsActivity.addFAQData=true;
                                 new ServerManager(context, "").execute("ACCEPT_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
-                                new ServerManager(context, "").startFetchingData(1);
+
                             }
 
                         }
@@ -376,8 +373,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                 HealthyLifeActivity.addData=true;
                                 InterestingFactsActivity.addFactsFirstTime=true;
                                 AskQuestionsActivity.addFAQData=true;
+
+                                remove(getAdapterPosition());
                                 new ServerManager(context, "").execute("DECLINE_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
-                                new ServerManager(context, "").startFetchingData(1);
+
                             }
 
 
@@ -387,62 +386,17 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                     break;
 
-                case 2: //Create new challenge layout
+                case 2:
 
-                    TextView textView = (TextView) itemView.findViewById(R.id.textView6);
-                    textView.setTypeface(tf);
+                            go_to_send_activity = (AppCompatButton) itemView.findViewById(R.id.go_to_send_challenge_activity);
 
-                    challenges_spinner = (Spinner) itemView.findViewById(R.id.challenges_created);
-                    final ArrayAdapter<CharSequence> gender_adapter = ArrayAdapter.createFromResource(context,
-                            R.array.challenges, R.layout.spinner_item_challenge);
-                    gender_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    challenges_spinner.setAdapter(gender_adapter);
+                            go_to_send_activity.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    context.startActivity(new Intent(context, CreateChallengeManually.class));
+                                }
+                            });
 
-
-
-                    create_challenge_manually = (TextView) itemView.findViewById(R.id.create_challenge_manually);
-
-                    mail_receiver = (EditText) itemView.findViewById(R.id.mail_receiver);
-                    create_challenge_manually.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            context.startActivity(new Intent(context, CreateChallengeManually.class));
-                        }
-                    });
-
-                    send_challenge = (AppCompatButton) itemView.findViewById(R.id.send_challenge);
-                    send_challenge.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
-                                return;
-                            }
-
-                            String challenge = challenges_spinner.getSelectedItem().toString();
-                            String mail = mail_receiver.getText().toString();
-                            String username = sharedPreferences.getString("username", "");
-                            String password = sharedPreferences.getString("password", "");
-                            String title =null;
-                            String time =null;
-
-                            if(challenge.equals("Nevartoti alkoholio 7 dienas")){
-                                title = "Nevartoju alkoholio";
-                                time = "7";
-                            }
-
-                            if(challenge.equals("Gerti bent penkias stiklines vandens per dieną(21diena)")){
-                                title = "Gerti vandenį";
-                                time = "21";
-                            }
-
-                            if(mail.isEmpty()){
-                                mail_receiver.setError("Kam nusiųsti?");
-                                return;
-                            }
-                            new ServerManager(context,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password);
-                        }
-                    });
 
                     break;
 
