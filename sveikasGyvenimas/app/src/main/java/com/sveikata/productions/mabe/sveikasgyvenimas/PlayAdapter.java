@@ -102,7 +102,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(challenge_in_progress, 4);
                 return viewHolder;
 
-
+            case 5:
+                View get_question = layoutInflater.inflate(R.layout.get_random_question, parent, false);
+                viewHolder = new ViewHolder(get_question, 5);
+                return viewHolder;
 
 
         }
@@ -140,6 +143,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 countDownStart(holder.days_proggress, holder.hours_progress, holder.minutes_progress, holder.seconds_progress, data.getChallengeTime());
 
                 break;
+
+
 
 
         }
@@ -215,8 +220,11 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
 
 
+
+
         //Send challenge
         private AppCompatButton go_to_send_activity;
+
 
         //New challenge layout
         private TextView timer;
@@ -243,6 +251,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         private ImageButton failed;
 
+        private ImageView get_random_question;
         public ViewHolder(View itemView, int type) {
             super(itemView);
 
@@ -445,6 +454,17 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         }
                     });
                     break;
+
+                case 5:
+
+                    get_random_question = (ImageView) itemView.findViewById(R.id.get_random_question);
+
+                    get_random_question.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            context.startActivity(new Intent(context, QuizActivity.class));
+                        }
+                    });
 
 
             }

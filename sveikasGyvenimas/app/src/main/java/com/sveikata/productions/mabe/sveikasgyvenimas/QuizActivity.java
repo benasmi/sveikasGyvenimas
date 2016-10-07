@@ -124,5 +124,5 @@ public class QuizActivity extends AppCompatActivity {
     {
         return (int) (Math.random()*(max-min))+min;
     }
-    
+
 }
