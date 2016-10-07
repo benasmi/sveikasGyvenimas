@@ -65,6 +65,7 @@ public class InsertFactActivity extends Activity {
             return;
         }else{
 
+            AskQuestionsActivity.addFAQData = true;
             InterestingFactsActivity.addFactsFirstTime = true;
             HealthyLifeActivity.addData = true;
             PlayActivity.shouldAddInfo = true;

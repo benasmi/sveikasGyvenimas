@@ -30,6 +30,11 @@ public class TabActivityLoader extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_activity_loader);
 
+        AskQuestionsActivity.addFAQData = true;
+        InterestingFactsActivity.addFactsFirstTime = true;
+        HealthyLifeActivity.addData = true;
+        PlayActivity.shouldAddInfo = true;
+
         window = getWindow();
         sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
 

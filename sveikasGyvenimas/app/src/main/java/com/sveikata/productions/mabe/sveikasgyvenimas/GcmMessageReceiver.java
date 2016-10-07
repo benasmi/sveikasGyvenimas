@@ -33,16 +33,19 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Map data = remoteMessage.getData();
 
-        String message = String.valueOf(data.get("message"));
-        String description= String.valueOf(data.get("description"));
-        String title = String.valueOf(data.get("title"));
-        String challenge_body = String.valueOf(data.get("challenge"));
+
+
         String type = String.valueOf(data.get("type"));
+        
         if(type.equals("message_for_all")){
+            String message = String.valueOf(data.get("message"));
+            String description= String.valueOf(data.get("description"));
             sendNotificationGeneral(message, description);
         }
 
         if(type.equals("challenge")){
+            String title = String.valueOf(data.get("title"));
+            String challenge_body = String.valueOf(data.get("challenge"));
             sendNotificationChallenge(title, challenge_body);
         }
 
@@ -51,6 +54,7 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
     }
 
     private void sendNotificationGeneral(String message, String description) {
+
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("isAnimDisabled", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

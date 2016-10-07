@@ -349,7 +349,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
+                                CheckingUtils.createErrorBox("Norint priimti iššūkį, jums reikia interneto", context);
                                 return;
                             }else{
                                 PlayActivity.shouldAddInfo=true;
