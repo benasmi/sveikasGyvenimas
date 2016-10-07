@@ -47,6 +47,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         //Adding views
         if(shouldAddInfo){
             shouldAddInfo=false;
+            addGetRandomQuiz();
             addCalculatorPreview();
             addSendChallenge();
 
@@ -58,9 +59,11 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
             try{
                 addCompletedChallenges();
+
             }catch(JSONException e){
                 e.printStackTrace();
             }
+
 
 
         }
@@ -75,7 +78,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     public void addCalculatorPreview(){
         info.add(0, new PlayInfoHolder(0));
     }
-
+    public void addGetRandomQuiz(){
+        info.add(1, new PlayInfoHolder(5));
+    }
 
     public void addSendChallenge(){
         info.add(1, new PlayInfoHolder(2));
