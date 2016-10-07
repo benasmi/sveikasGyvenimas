@@ -356,6 +356,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                 HealthyLifeActivity.addData=true;
                                 InterestingFactsActivity.addFactsFirstTime=true;
                                 AskQuestionsActivity.addFAQData=true;
+
                                 new ServerManager(context, "").execute("ACCEPT_CHALLENGE", sharedPreferences.getString("username", ""), sharedPreferences.getString("password", ""));
 
                             }
