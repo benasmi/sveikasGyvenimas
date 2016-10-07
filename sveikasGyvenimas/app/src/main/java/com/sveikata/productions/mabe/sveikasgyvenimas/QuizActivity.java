@@ -1,6 +1,12 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.CountDownTimer;
+import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -30,10 +36,13 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        CheckingUtils.changeNotifBarColor("#2B3C50", getWindow());
+
         answer1 = (AppCompatButton) findViewById(R.id.quiz_answer_1);
         answer2 = (AppCompatButton) findViewById(R.id.quiz_answer_2);
         answer3 = (AppCompatButton) findViewById(R.id.quiz_answer_3);
         answer4 = (AppCompatButton) findViewById(R.id.quiz_answer_4);
+
 
         View.OnClickListener wrongListener = new View.OnClickListener() {
             @Override
@@ -44,7 +53,7 @@ public class QuizActivity extends AppCompatActivity {
         View.OnClickListener rightListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizActivity.this, PlayActivity.class));
+                startActivity(new Intent(QuizActivity.this, TabActivityLoader.class).putExtra("Tab", 1));
             }
         };
 
@@ -55,6 +64,10 @@ public class QuizActivity extends AppCompatActivity {
 
         timer = (TextView) findViewById(R.id.quiz_timer);
         question_textview = (TextView) findViewById(R.id.quiz_question);
+
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
+        question_textview.setTypeface(tf);
+        timer.setTypeface(tf);
 
         int question_count = 2; //CHANGE THIS ACCORDING TO QUESTION COUNT
 
@@ -116,7 +129,32 @@ public class QuizActivity extends AppCompatActivity {
         question_textview.setText(question_title);
 
 
+        new CountDownTimer(16000, 1000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timer.setText(String.valueOf(millisUntilFinished/1000));
+            }
 
+            @Override
+            public void onFinish() {
+
+                try{
+
+                new android.app.AlertDialog.Builder(QuizActivity.this, R.style.MyAlertDialogStyle)
+                        .setMessage("Baigėsi laikas :(")
+                        .setPositiveButton("Meh", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(QuizActivity.this, TabActivityLoader.class).putExtra("Tab", 1));
+                            }
+                        })
+                        .show();
+
+                }catch (Exception e){
+                }
+
+            }
+        }.start();
 
     }
 
@@ -124,5 +162,6 @@ public class QuizActivity extends AppCompatActivity {
     {
         return (int) (Math.random()*(max-min))+min;
     }
+
 
 }

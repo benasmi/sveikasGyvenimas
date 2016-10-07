@@ -6,7 +6,7 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/calories_calculator"
+        android:src="@drawable/ask_question"
         android:id="@+id/calculator_preview_image" />
 
         <RelativeLayout

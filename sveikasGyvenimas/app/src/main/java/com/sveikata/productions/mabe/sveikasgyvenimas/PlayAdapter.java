@@ -102,11 +102,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(challenge_in_progress, 4);
                 return viewHolder;
 
-            case 5:
-                View get_question = layoutInflater.inflate(R.layout.get_random_question, parent, false);
-                viewHolder = new ViewHolder(get_question, 5);
-                return viewHolder;
-
 
         }
 
@@ -268,18 +263,21 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     isAnimRunning = false;
                     switch (which_image){
                         case 0:
-                            calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+                            calculator_preview_image.setImageResource(R.drawable.ask_question);
                             break;
                         case 1:
-                            calculator_preview_image.setImageResource(R.drawable.water_calculator);
+                            calculator_preview_image.setImageResource(R.drawable.calories_calculator);
                             break;
                         case 2:
-                            calculator_preview_image.setImageResource(R.drawable.your_drink);
+                            calculator_preview_image.setImageResource(R.drawable.water_calculator);
                             break;
                         case 3:
-                            calculator_preview_image.setImageResource(R.drawable.info_sheet);
+                            calculator_preview_image.setImageResource(R.drawable.your_drink);
                             break;
                         case 4:
+                            calculator_preview_image.setImageResource(R.drawable.info_sheet);
+                            break;
+                        case 5:
                             calculator_preview_image.setImageResource(R.drawable.limit_calculator);
                             break;
                     }
@@ -300,7 +298,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_left = (ImageView) itemView.findViewById(R.id.arrow_left);
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
-                    calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+                    calculator_preview_image.setImageResource(R.drawable.ask_question);
                     challenge_text = (TextView) itemView.findViewById(R.id.chellanges_text);
 
                     challenge_text.setTypeface(verdanaFont);
@@ -312,7 +310,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             if(!isAnimRunning){
                                 which_image--;
                                 if(which_image<0){
-                                    which_image=4;
+                                    which_image=5;
                                 }
                                 calculator_preview_image.startAnimation(animation);
                             }
@@ -324,7 +322,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View view) {
                             if(!isAnimRunning){
                                 which_image++;
-                                if(which_image>=4){
+                                if(which_image>=5){
                                     which_image=0;
                                 }
 
@@ -455,18 +453,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     });
                     break;
 
-                case 5:
-
-                    get_random_question = (ImageView) itemView.findViewById(R.id.get_random_question);
-
-                    get_random_question.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            context.startActivity(new Intent(context, QuizActivity.class));
-                        }
-                    });
-
-
             }
 
         }
@@ -479,27 +465,40 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
     private void launchCalculator(int which_img)
     {
         Uri uri = null;
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+
         switch (which_img){
             case 0:
-                uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
+                context.startActivity(new Intent(context, QuizActivity.class));
                 break;
             case 1:
-                uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
+                uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
+                context.startActivity(intent);
+
                 break;
             case 2:
-                uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
+                uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
+                context.startActivity(intent);
+
                 break;
             case 3:
-                uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
+                uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
+                context.startActivity(intent);
+
                 break;
             case 4:
-                uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
-                break;
+                uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
+                context.startActivity(intent);
 
+                break;
+            case 5:
+                uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
+                context.startActivity(intent);
+
+                break;
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        context.startActivity(intent);
 
     }
 }
