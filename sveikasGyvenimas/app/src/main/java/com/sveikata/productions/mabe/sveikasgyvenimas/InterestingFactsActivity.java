@@ -129,7 +129,9 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                     String url = factsDataValue.getString("url");
                     String source = factsDataValue.getString("source");
                     int height = factsDataValue.getInt("height");
-
+                    if(String.valueOf(height).equals("")){
+                        height=0;
+                    }
                     if(is_administrator.equals("1")){
                         adapter.add(new FactInfoHolder(title,body,url,source, 0, height), 1);
                     }else{

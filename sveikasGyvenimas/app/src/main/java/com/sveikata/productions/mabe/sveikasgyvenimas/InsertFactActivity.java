@@ -47,6 +47,7 @@ public class InsertFactActivity extends Activity {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);
+                Log.i("TEST", "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
             }
         });
 
@@ -62,11 +63,11 @@ public class InsertFactActivity extends Activity {
         url = url_fact_admin.getText().toString();
         String source = source_fact_admin.getText().toString();
 
-        if(title.equals(null)){
+        if(title.equals("")){
             title_fact_admin.setError("Sukurkite antraštę");
             return;
         }
-        if(body.equals(null)){
+        if(body.equals("")){
             body_fact_admin.setError("Negalite įdėti fakto be jokios informacijos");
             return;
 
@@ -93,7 +94,9 @@ public class InsertFactActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1){
             switch (resultCode){
-                case Activity.RESULT_OK:
+
+                case RESULT_OK:
+
                     url_fact_admin.setTextColor(Color.parseColor("#bdc3c7"));
 
                     Uri selectedImage = data.getData();
@@ -103,17 +106,17 @@ public class InsertFactActivity extends Activity {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     image_fact_admin.setImageBitmap(bitmap);
 
+                    break;
 
 
-                case Activity.RESULT_CANCELED:
+                case RESULT_CANCELED:
 
                     return;
-
             }
+
         }
 
     }
-
 
     public String getPath(Uri uri) {
         String[] projection = {MediaStore.MediaColumns.DATA};

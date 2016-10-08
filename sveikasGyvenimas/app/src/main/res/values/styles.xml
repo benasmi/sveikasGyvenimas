@@ -14,7 +14,7 @@
 
     <style name="CasualStyle" parent="Base.V7.Theme.AppCompat.Dialog">
         <!-- Used for the buttons -->
-        <item name="colorAccent">#1b1b1b</item>
+        <item name="colorAccent">#c2c2c2</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->
@@ -24,7 +24,7 @@
     //Schedule
     <style name="ScheduleDialogStyle" parent="Base.V7.Theme.AppCompat.Dialog">
         <!-- Used for the buttons -->
-        <item name="colorAccent">#1b1b1b</item>
+        <item name="colorAccent">#c2c2c2</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->
@@ -34,7 +34,7 @@
     //Facts
     <style name="FactsDialogStyle" parent="Base.V7.Theme.AppCompat.Dialog">
         <!-- Used for the buttons -->
-        <item name="colorAccent">#1b1b1b</item>
+        <item name="colorAccent">#c2c2c2</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->
@@ -45,7 +45,7 @@
     //Play
     <style name="PlayDialogStyle" parent="Base.V7.Theme.AppCompat.Dialog">
         <!-- Used for the buttons -->
-        <item name="colorAccent">#1b1b1b</item>
+        <item name="colorAccent">#c2c2c2</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->
@@ -55,7 +55,7 @@
     //Questions
     <style name="QuestionsDialogStyle" parent="Base.V7.Theme.AppCompat.Dialog">
         <!-- Used for the buttons -->
-        <item name="colorAccent">#1b1b1b</item>
+        <item name="colorAccent">#c2c2c2</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">#FFFFFF</item>
         <!-- Used for the background -->

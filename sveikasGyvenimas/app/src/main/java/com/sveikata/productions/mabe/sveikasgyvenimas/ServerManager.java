@@ -316,6 +316,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     editor.putString("password", password_login);
                     editor.commit();
                     new fetchData(0).execute();
+
                     break;
                 case 1:
                     CheckingUtils.createErrorBox("Uhhh...Leisiu pabandyti dar kartą", context,  R.style.ScheduleDialogStyle);
@@ -1060,6 +1061,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             if(onfinishlistener == null){
                 context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
+               // ((Activity) context).finish();
             }else{
                 onfinishlistener.onFinish();
             }
