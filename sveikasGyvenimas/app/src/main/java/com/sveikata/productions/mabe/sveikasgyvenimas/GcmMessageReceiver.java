@@ -12,6 +12,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -49,7 +50,13 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
             sendNotificationChallenge(title, challenge_body);
         }
 
+
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("UPDATE_REQUIRED"));
+
         super.onMessageReceived(remoteMessage);
+
+
 
     }
 

@@ -36,8 +36,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
 
 
-    public static String specialist_BEN = "Benas. M";
-    public static String specialist_MARTIN = "Martynas. D";
+
     private Context context;
     private ArrayList<QuestionsDataHolder> questionsDataHolder;
     private SharedPreferences sharedPreferences;
@@ -65,18 +64,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         notifyDataSetChanged();
     }
 
-    public void sendEmail(String[] to, String subject, String message){
 
-        Intent intent =new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, to);
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, message);
-        intent.setType("message/rfc822");
-
-        Intent email = Intent.createChooser(intent,"Email");
-        context.startActivity(email);
-
-    }
 
 
     @Override
@@ -163,13 +151,9 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         private ImageView arrow_two;
 
 
-        //Button for user
-        private AppCompatButton ask_button;
-        private EditText message;
-        private EditText subject;
-        private Spinner spinner;
+        //Ask Question layout
         private TextView faq_txt;
-        private TextView ask_question_txt;
+        private AppCompatButton ask_pro;
 
 
 
@@ -237,51 +221,22 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
                 case 1:
 
-                    //TEXTVIEWS
+                    //Ask pro
                     Typeface tf_txt = Typeface.createFromAsset(context.getAssets(), "fonts/comforta.ttf");
+
+
                     faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
-                    ask_question_txt = (TextView) itemView.findViewById(R.id.ask_new_question_txt);
                     faq_txt.setTypeface(tf_txt);
-                    ask_question_txt.setTypeface(tf_txt);
 
-                    //Setting up spinner
-                    spinner = (Spinner) itemView.findViewById(R.id.spinner);
-                    ArrayAdapter spinner_adapter = ArrayAdapter.createFromResource(context,
-                            R.array.specialists, R.layout.spinner_item);
-                    spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(spinner_adapter);
-
-
-                    //Sending email
-                    message = (EditText) itemView.findViewById(R.id.email_message);
-                    subject = (EditText) itemView.findViewById(R.id.subject_email);
-                    ask_button = (AppCompatButton) itemView.findViewById(R.id.ask);
-
-                    ask_button.setOnClickListener(new View.OnClickListener() {
+                    ask_pro = (AppCompatButton) itemView.findViewById(R.id.ask_pro);
+                    ask_pro.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String message_value = message.getText().toString().trim();
-                            String subject_value = subject.getText().toString().trim();
-
-                            String specialist = spinner.getSelectedItem().toString();
-
-                            if(specialist.equals("Pasirink specialistą")){
-                                CheckingUtils.createErrorBox("Pasirinkimas negalimas", context);
-                                return;
-                            }
-                            else if(specialist.equals(specialist_BEN)){
-                                String to [] = {"benasmiliunas@gmail.com"};
-                                sendEmail(to,subject_value,message_value);
-                            }else if(specialist.equals(specialist_MARTIN)){
-                                String to [] = {"dargis.martynas@gmail.com"};
-                                sendEmail(to,subject_value,message_value);
-                            }
-
+                            context.startActivity(new Intent(context, AskProfessionalActivity.class));
                         }
                     });
+
                     break;
-
-
                 case 2:
                     //View init
                     question_body_two = (TextView) itemView.findViewById(R.id.question_body_two);

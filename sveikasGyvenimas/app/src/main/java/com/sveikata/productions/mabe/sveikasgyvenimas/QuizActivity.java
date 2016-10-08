@@ -47,7 +47,7 @@ public class QuizActivity extends AppCompatActivity {
         View.OnClickListener wrongListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckingUtils.createErrorBox("Atsakymas neteisingas!", QuizActivity.this);
+                CheckingUtils.createErrorBox("Atsakymas neteisingas!", QuizActivity.this, R.style.PlayDialogStyle);
             }
         };
         View.OnClickListener rightListener = new View.OnClickListener() {
@@ -140,7 +140,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 try{
 
-                new android.app.AlertDialog.Builder(QuizActivity.this, R.style.MyAlertDialogStyle)
+                new android.app.AlertDialog.Builder(QuizActivity.this, R.style.PlayDialogStyle)
                         .setMessage("Baigėsi laikas :(")
                         .setPositiveButton("Meh", new DialogInterface.OnClickListener() {
                             @Override

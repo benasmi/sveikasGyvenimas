@@ -331,7 +331,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //                                Log.i("TEST", " position: " + String.valueOf(getAdapterPosition()) );
 
                                 if(!CheckingUtils.isNetworkConnected(context)){
-                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalinga interneto ryšys", context);
+                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
                                     return false;
                                 }
 
@@ -376,7 +376,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                 final double longtitude = results[0].geometry.location.lng;
 
                                 if(!CheckingUtils.isNetworkConnected(context)){
-                                    CheckingUtils.createErrorBox("Norėdami pridėti renginį, jums reikia įjungti internetą", context);
+                                    CheckingUtils.createErrorBox("Norėdami pridėti renginį, jums reikia įjungti internetą", context, R.style.ScheduleDialogStyle);
                                     return;
                                 }else{
                                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -407,7 +407,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
                             } catch (Exception e) {
-                                CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context);
+                                CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context, R.style.ScheduleDialogStyle);
                             }
 
 
@@ -423,7 +423,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                            final String description = notif_description.getText().toString().trim();
 
                             if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("Norėdami išsiųsti žinutę visiems vartotojams, jums reikia įjungti internetą", context);
+                                CheckingUtils.createErrorBox("Norėdami išsiųsti žinutę visiems vartotojams, jums reikia įjungti internetą", context, R.style.ScheduleDialogStyle);
                                 return;
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

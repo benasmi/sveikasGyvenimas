@@ -1,10 +1,14 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +29,8 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
     private JSONArray challenges;
-
+    private boolean isReceiverRegistered = false;
+    private BroadcastReceiver broadcastReceiver;
 
     @Nullable
     @Override
@@ -70,8 +75,14 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
         recyclerView.setAdapter(adapter);
 
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                new ServerManager(getActivity(), "").startFetchingData(1);
+            }
+        };
 
-
+        registerReceiver();
         return rootView;
     }
 
@@ -130,5 +141,12 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
 
 
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(broadcastReceiver,
+                    new IntentFilter("UPDATE_REQUIRED"));
+            isReceiverRegistered = true;
+        }
+    }
 
 }

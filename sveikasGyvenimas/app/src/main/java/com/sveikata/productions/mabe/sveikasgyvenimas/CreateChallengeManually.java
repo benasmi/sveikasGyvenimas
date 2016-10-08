@@ -37,7 +37,7 @@ public class CreateChallengeManually extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(!CheckingUtils.isNetworkConnected(CreateChallengeManually.this)){
-                    CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", CreateChallengeManually.this);
+                    CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", CreateChallengeManually.this, R.style.PlayDialogStyle);
                     return;
                 }
 
@@ -75,7 +75,7 @@ public class CreateChallengeManually extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!CheckingUtils.isNetworkConnected(CreateChallengeManually.this)){
-                    CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", CreateChallengeManually.this);
+                    CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", CreateChallengeManually.this, R.style.PlayDialogStyle);
                     return;
                 }
 

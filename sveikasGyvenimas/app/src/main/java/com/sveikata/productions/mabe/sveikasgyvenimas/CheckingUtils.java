@@ -51,47 +51,100 @@ public class CheckingUtils {
         return mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    public static void createErrorBox(String message, Context context) {
-        new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
-                .setMessage(message)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+
+        //Error box to inform UI
+        public static void createErrorBox(String message, Context context, int theme){
+
+            if (android.os.Build.VERSION.SDK_INT >= 21) {
+                new AlertDialog.Builder(context, theme)
+                        .setMessage(message)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }else{
+                new AlertDialog.Builder(context)
+                        .setMessage(message)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        }
+
+
+    public static void createBoxSuggestToFriend(final String message, final Context context, int theme) {
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            new AlertDialog.Builder(context, theme)
+                    .setMessage(message)
+                    .setPositiveButton("Pasidalinti", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                    "Sveikas, parsisųsk 'appsa' čia: https://www.google.com");
+                            sendIntent.setType("text/plain");
+                            context.startActivity(sendIntent);
+                        }
+                    })
+                    .setNegativeButton("Grižti", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+        }else{
+            new AlertDialog.Builder(context)
+                    .setMessage(message)
+                    .setPositiveButton("Pasidalinti", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                    "Sveikas, parsisųsk 'appsa' čia: https://www.google.com");
+                            sendIntent.setType("text/plain");
+                            context.startActivity(sendIntent);
+                        }
+                    })
+                    .setNegativeButton("Grižti", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 
-    public static void createBoxSuggestToFriend(final String message, final Context context) {
-        new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
-                .setMessage(message)
-                .setPositiveButton("Pasidalinti", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT,
-                                "Sveikas, parsisųsk 'appsa' čia: https://www.google.com");
-                        sendIntent.setType("text/plain");
-                        context.startActivity(sendIntent);
-                    }
-                })
-                .setNegativeButton("Grižti", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
-                .show();
-    }
 
+    public static ProgressDialog progressDialog(Context context, String message, int theme){
 
-    public static ProgressDialog progressDialog(Context context, String message){
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage(message);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        ProgressDialog progressDialog = null;
+
+        if(Build.VERSION.SDK_INT>=21){
+            progressDialog = new ProgressDialog(context, theme);
+            progressDialog.setMessage(message);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }else{
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage(message);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
 
         return progressDialog;
     }

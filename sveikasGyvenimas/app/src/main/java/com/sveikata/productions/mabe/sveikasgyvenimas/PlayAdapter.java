@@ -356,7 +356,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("Norint priimti iššūkį, jums reikia interneto", context);
+                                CheckingUtils.createErrorBox("Norint priimti iššūkį, jums reikia interneto", context, R.style.PlayDialogStyle);
                                 return;
                             }else{
                                 PlayActivity.shouldAddInfo=true;
@@ -374,7 +374,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context);
+                                CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context, R.style.PlayDialogStyle);
                                 return;
                             }else{
                                 PlayActivity.shouldAddInfo=true;
@@ -436,7 +436,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
-                                CheckingUtils.createErrorBox("FAIL", context);
+                                CheckingUtils.createErrorBox("FAIL", context, R.style.PlayDialogStyle);
                                 return;
                             }else{
 

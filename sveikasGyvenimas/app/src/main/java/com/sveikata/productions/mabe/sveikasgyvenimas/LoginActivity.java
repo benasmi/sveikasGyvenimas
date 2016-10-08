@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        CheckingUtils.createErrorBox("Oooops! Bandyk dar kartą.", LoginActivity.this);
+                        CheckingUtils.createErrorBox("Oooops! Bandyk dar kartą.", LoginActivity.this, R.style.ScheduleDialogStyle);
                     }
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
@@ -255,7 +255,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(!CheckingUtils.isNetworkConnected(this)){
-            CheckingUtils.createErrorBox("Nejaugi gaila mobilių?...", this);
+            CheckingUtils.createErrorBox("Nejaugi gaila mobilių?...", this, R.style.ScheduleDialogStyle);
             return;
         }
 
@@ -282,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean revoke = loginPrefs.getBoolean("revoke", false);
 
             if(!CheckingUtils.isNetworkConnected(this)){
-                CheckingUtils.createErrorBox("Įjunkite internetą", this);
+                CheckingUtils.createErrorBox("Įjunkite internetą", this, R.style.ScheduleDialogStyle);
                 return;
             }
 

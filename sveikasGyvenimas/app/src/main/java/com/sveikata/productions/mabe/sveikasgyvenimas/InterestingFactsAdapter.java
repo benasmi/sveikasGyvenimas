@@ -191,7 +191,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
 
                                 if(!CheckingUtils.isNetworkConnected(context)){
-                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalinga interneto ryšys", context);
+                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalinga interneto ryšys", context, R.style.FactsDialogStyle);
                                     return false;
                                 }
 

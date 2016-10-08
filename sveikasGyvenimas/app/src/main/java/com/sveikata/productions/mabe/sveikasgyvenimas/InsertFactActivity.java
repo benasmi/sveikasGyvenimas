@@ -30,6 +30,8 @@ public class InsertFactActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        CheckingUtils.changeNotifBarColor("#2980b9", getWindow());
+
         filePath = "";
         setContentView(R.layout.fact_admin);
         super.onCreate(savedInstanceState);
@@ -48,8 +50,8 @@ public class InsertFactActivity extends Activity {
             }
         });
 
-
     }
+
 
 
     public void add_fact(View view) {
@@ -60,18 +62,28 @@ public class InsertFactActivity extends Activity {
         url = url_fact_admin.getText().toString();
         String source = source_fact_admin.getText().toString();
 
-        if(!CheckingUtils.isNetworkConnected(this)){
-            CheckingUtils.createErrorBox("Įjunkite internetą", this);
+        if(title.equals(null)){
+            title_fact_admin.setError("Sukurkite antraštę");
             return;
-        }else{
-
-            AskQuestionsActivity.addFAQData = true;
-            InterestingFactsActivity.addFactsFirstTime = true;
-            HealthyLifeActivity.addData = true;
-            PlayActivity.shouldAddInfo = true;
-            new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath, img_height);
+        }
+        if(body.equals(null)){
+            body_fact_admin.setError("Negalite įdėti fakto be jokios informacijos");
+            return;
 
         }
+
+        if(!CheckingUtils.isNetworkConnected(this)){
+            CheckingUtils.createErrorBox("Įjunkite internetą", this, R.style.FactsDialogStyle);
+            return;
+        }
+
+        AskQuestionsActivity.addFAQData = true;
+        InterestingFactsActivity.addFactsFirstTime = true;
+        HealthyLifeActivity.addData = true;
+        PlayActivity.shouldAddInfo = true;
+        new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath, img_height);
+
+
 
     }
 

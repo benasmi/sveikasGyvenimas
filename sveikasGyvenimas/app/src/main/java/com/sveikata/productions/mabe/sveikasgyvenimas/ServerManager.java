@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.internal.http.multipart.MultipartEntity;
 import com.facebook.TestUserManager;
@@ -85,13 +86,13 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         if(dialogType.equals("LOGIN")){
-            progressDialog = CheckingUtils.progressDialog(context,"1...2...3... Net nespėjai perskaityti, kad čia parašyta");
+            progressDialog = CheckingUtils.progressDialog(context,"1...2...3... Net nespėjai perskaityti, kad čia parašyta", R.style.ScheduleDialogStyle);
         }
         if(dialogType.equals("REGISTRATION")){
-            progressDialog = CheckingUtils.progressDialog(context, "Tik išsaugom tavo duomenis");
+            progressDialog = CheckingUtils.progressDialog(context, "Tik išsaugom tavo duomenis", R.style.ScheduleDialogStyle);
         }
         if(dialogType.equals("ADD_FACT")){
-            progressDialog = CheckingUtils.progressDialog(context, "Pridedame faktą");
+            Toast.makeText(context, "Pridedame faktą..." , Toast.LENGTH_LONG).show();
         }
         super.onPreExecute();
     }
@@ -252,7 +253,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 3:
-                    CheckingUtils.createErrorBox("Nejaugi gaila mobilių?", context);
+                    CheckingUtils.createErrorBox("Nejaugi gaila mobilių?", context, R.style.ScheduleDialogStyle);
                     break;
                 case 4:
 
@@ -272,7 +273,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             switch (response){
 
                 case 0:
-                    CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context);
+                    CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context, R.style.PlayDialogStyle);
                     PlayActivity.shouldAddInfo=true;
                     AskQuestionsActivity.addFAQData=true;
                     HealthyLifeActivity.addData=true;
@@ -281,11 +282,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 1:
-                    CheckingUtils.createBoxSuggestToFriend("Toks vartotojas neegzistuoja, pasiūlyk draugui prisiregistruoti!", context);
+                    CheckingUtils.createBoxSuggestToFriend("Toks vartotojas neegzistuoja, pasiūlyk draugui prisiregistruoti!", context, R.style.PlayDialogStyle);
                     break;
 
                 case 2:
-                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context);
+                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context, R.style.PlayDialogStyle);
                     PlayActivity.shouldAddInfo=true;
                     AskQuestionsActivity.addFAQData=true;
                     HealthyLifeActivity.addData=true;
@@ -298,11 +299,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
         if(method_type.equals("ACCEPT_CHALLENGE")){
-            CheckingUtils.createErrorBox("Iššūkis priimtas!", context);
+            CheckingUtils.createErrorBox("Iššūkis priimtas!", context, R.style.PlayDialogStyle);
             startFetchingData(1);
         }
         if(method_type.equals("DECLINE_CHALLENGE")){
-            CheckingUtils.createErrorBox("Iššūkis atmestas :(", context);
+            CheckingUtils.createErrorBox("Iššūkis atmestas :(", context, R.style.PlayDialogStyle);
         }
 
         if(method_type.equals("LOGIN")){
@@ -317,7 +318,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     new fetchData(0).execute();
                     break;
                 case 1:
-                    CheckingUtils.createErrorBox("Uhhh...Leisiu pabandyti dar kartą", context);
+                    CheckingUtils.createErrorBox("Uhhh...Leisiu pabandyti dar kartą", context,  R.style.ScheduleDialogStyle);
                     break;
 
                 case 2:
@@ -325,7 +326,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 3:
-                    CheckingUtils.createErrorBox("Pamaitink mūsų serverį WIFI arba mobiliais", context);
+                    CheckingUtils.createErrorBox("Pamaitink mūsų serverį WIFI ryšiu arba mobiliais", context, R.style.ScheduleDialogStyle);
                     break;
             }
 
@@ -352,7 +353,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         }
         if(method_type.equals("SEND_NOTIFICATION")){
-            CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context);
+            CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context, R.style.ScheduleDialogStyle);
         }
         if(method_type.equals("ADD_FACT")){
             startFetchingData(2);
@@ -1040,7 +1041,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = CheckingUtils.progressDialog(context, "Sshhh...Tuoj užkrausim");
+            progressDialog = CheckingUtils.progressDialog(context, "Sshhh...Tuoj užkrausim", R.style.CasualStyle);
             super.onPreExecute();
         }
 

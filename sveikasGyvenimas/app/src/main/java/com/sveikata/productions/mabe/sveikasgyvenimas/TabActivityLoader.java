@@ -134,7 +134,7 @@ public class TabActivityLoader extends AppCompatActivity {
                 String password = sharedPreferences.getString("password", "");
 
                 if(!CheckingUtils.isNetworkConnected(TabActivityLoader.this)){
-                    CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this);
+                    CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this, R.style.CasualStyle);
                     return false;
                 }else{
                     new ServerManager(TabActivityLoader.this, "LOGOUT").execute("LOGOUT", username, password);

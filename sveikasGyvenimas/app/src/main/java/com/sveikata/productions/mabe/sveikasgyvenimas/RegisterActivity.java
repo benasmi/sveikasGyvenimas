@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if(!CheckingUtils.isNetworkConnected(this)){
-            CheckingUtils.createErrorBox("Norėdami prisijungti, turite įjungti internetą",this);
+            CheckingUtils.createErrorBox("Nori susikurti paskyrą? Įjunk WI-FI arba mobilius ;)",this, R.style.ScheduleDialogStyle);
             return;
         }
         SharedPreferences sharedPrefs = getSharedPreferences("UserData", Context.MODE_PRIVATE);
