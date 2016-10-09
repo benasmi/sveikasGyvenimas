@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2B3C50"
+    android:id="@+id/quiz_layout_activity"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.QuizActivity">
     
     <TextView

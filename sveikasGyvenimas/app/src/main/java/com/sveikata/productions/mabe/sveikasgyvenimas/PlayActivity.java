@@ -93,6 +93,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     public void addSendChallenge(){
         info.add(1, new PlayInfoHolder(2));
     }
+    public void addHigherLower(){
+        info.add(1, new PlayInfoHolder(5));
+    }
 
 
     public void addChallenge() throws JSONException {
