@@ -64,7 +64,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
             try{
                 addCompletedChallenges();
-
+                addHigherLower();
             }catch(JSONException e){
                 e.printStackTrace();
             }

@@ -9,10 +9,10 @@ import android.graphics.Bitmap;
 public class Alcohol {
 
     private int resource;
-    private float volume;
+    private String volume;
     private String name;
 
-    public Alcohol(int resource, float volume, String name){
+    public Alcohol(int resource, String volume, String name){
 
         this.resource = resource;
         this.volume=volume;
@@ -25,7 +25,7 @@ public class Alcohol {
         return resource;
     }
 
-    public float getVolume() {
+    public String getVolume() {
         return volume;
     }
 

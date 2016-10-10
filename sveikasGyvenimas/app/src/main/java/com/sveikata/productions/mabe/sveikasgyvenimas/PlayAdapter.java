@@ -102,6 +102,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 viewHolder = new ViewHolder(challenge_in_progress, 4);
                 return viewHolder;
 
+            case 5:
+                View game = layoutInflater.inflate(R.layout.start_playing, parent, false);
+                viewHolder = new ViewHolder(game, 5);
+                return viewHolder;
 
 
         }
@@ -221,6 +225,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         //Send challenge
         private AppCompatButton go_to_send_activity;
 
+        //Start Playing
+        private AppCompatButton start_playing;
 
         //New challenge layout
         private TextView timer;
@@ -443,9 +449,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                                 String username = sharedPreferences.getString("username", "");
                                 String password = sharedPreferences.getString("password", "");
-
                                 remove(getAdapterPosition());
-
                                 new ServerManager(context, "I_FAILED_CHALLENGE").execute("I_FAILED_CHALLENGE", username, password);
 
 
@@ -453,6 +457,14 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         }
                     });
                     break;
+                case 5:
+                    start_playing = (AppCompatButton) itemView.findViewById(R.id.start_playing_game);
+                    start_playing.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            context.startActivity(new Intent(context, GameScreen.class));
+                        }
+                    });
 
             }
 

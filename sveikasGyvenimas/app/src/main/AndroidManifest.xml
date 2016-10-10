@@ -54,7 +54,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".StartingActivity"
-
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -81,7 +80,8 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity android:name=".AskProfessionalActivity" />
-        <activity android:name=".GameScreen"></activity>
+        <activity android:name=".GameScreen" />
+        <activity android:name=".YouLostHigherLowerAcitivity"></activity>
     </application>
 
 </manifest>

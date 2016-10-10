@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_you_lost_higher_lower_acitivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.YouLostHigherLowerAcitivity">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/gif_background"
+        android:adjustViewBounds="true"
+
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:id="@+id/imageView3"
+        android:alpha="0.6"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/gif_background"
+        android:layout_toEndOf="@+id/gif_background" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:text="Grįžti atgal"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/go_back_to_play_bar"
+        android:layout_marginBottom="116dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/try_again"
+        android:layout_alignStart="@+id/try_again" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:text="Bandyti dar kartą !"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/try_again"
+        android:layout_above="@+id/go_back_to_play_bar"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Tu surinkai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/score_game_over"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/textView10"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Geriausias tavo rezultatas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView12"
+        android:layout_below="@+id/score_game_over"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:id="@+id/highscore_game_over"
+        android:layout_below="@+id/textView12"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
