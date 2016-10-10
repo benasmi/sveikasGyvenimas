@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -56,6 +58,8 @@ public class InsertFactActivity extends Activity {
 
 
     public void add_fact(View view) {
+        Animation shake = AnimationUtils.loadAnimation(this,R.anim.shake);
+
         String title = title_fact_admin.getText().toString();
         String body = body_fact_admin.getText().toString();
 
@@ -65,10 +69,12 @@ public class InsertFactActivity extends Activity {
 
         if(title.equals("")){
             title_fact_admin.setError("Sukurkite antraštę");
+            title_fact_admin.startAnimation(shake);
             return;
         }
         if(body.equals("")){
             body_fact_admin.setError("Negalite įdėti fakto be jokios informacijos");
+            body_fact_admin.startAnimation(shake);
             return;
 
         }
@@ -102,7 +108,6 @@ public class InsertFactActivity extends Activity {
                     Uri selectedImage = data.getData();
                     filePath = getPath(selectedImage);
 
-                    Log.i("TEST", filePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     image_fact_admin.setImageBitmap(bitmap);
 
@@ -110,7 +115,6 @@ public class InsertFactActivity extends Activity {
 
 
                 case RESULT_CANCELED:
-
                     return;
             }
 

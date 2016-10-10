@@ -263,7 +263,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     editor.putString("username", username_register);
                     editor.putString("password", password_register);
                     editor.commit();
-                    new fetchData(0).execute();
+                    new fetchData(0, true).execute();
                     break;
 
 
@@ -278,7 +278,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     AskQuestionsActivity.addFAQData=true;
                     HealthyLifeActivity.addData=true;
                     InterestingFactsActivity.addFactsFirstTime =true;
-                    startFetchingData(1);
+                    startFetchingData(1, true);
                     break;
 
                 case 1:
@@ -291,7 +291,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     AskQuestionsActivity.addFAQData=true;
                     HealthyLifeActivity.addData=true;
                     InterestingFactsActivity.addFactsFirstTime =true;
-                    startFetchingData(1);
+                    startFetchingData(1, true);
                     break;
 
             }
@@ -300,7 +300,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         if(method_type.equals("ACCEPT_CHALLENGE")){
             CheckingUtils.createErrorBox("Iššūkis priimtas!", context, R.style.PlayDialogStyle);
-            startFetchingData(1);
+            startFetchingData(1, true);
         }
         if(method_type.equals("DECLINE_CHALLENGE")){
             CheckingUtils.createErrorBox("Iššūkis atmestas :(", context, R.style.PlayDialogStyle);
@@ -315,7 +315,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     editor.putString("username", username_login);
                     editor.putString("password", password_login);
                     editor.commit();
-                    new fetchData(0).execute();
+                    new fetchData(0, true).execute();
 
                     break;
                 case 1:
@@ -357,7 +357,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             CheckingUtils.createErrorBox("Sėkmingai išsiųsta",context, R.style.ScheduleDialogStyle);
         }
         if(method_type.equals("ADD_FACT")){
-            startFetchingData(2);
+            startFetchingData(2, true);
 //            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 2));
         }
 
@@ -506,8 +506,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
-    public void startFetchingData(int tabAfterwards){
-        new fetchData(tabAfterwards).execute();
+    public void startFetchingData(int tabAfterwards, boolean shouldCreateProgressDialog){
+        new fetchData(tabAfterwards, shouldCreateProgressDialog).execute();
     }
 
     private int insertFact(String title, String body, String source, String url, String path, String username, String password){
@@ -1035,14 +1035,19 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         int tabAfterwards = 0;
         private ProgressDialog progressDialog;
+        boolean shouldCreateDialog;
 
-        public fetchData(int tabAfterwards) {
+        public fetchData(int tabAfterwards, boolean shouldCreateDialog) {
             this.tabAfterwards = tabAfterwards;
+            this.shouldCreateDialog = shouldCreateDialog;
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog = CheckingUtils.progressDialog(context, "Sshhh...Tuoj užkrausim", R.style.CasualStyle);
+            if(shouldCreateDialog) {
+                progressDialog = CheckingUtils.progressDialog(context, "Sshhh...Tuoj užkrausim", R.style.CasualStyle);
+            }
+
             super.onPreExecute();
         }
 
@@ -1057,7 +1062,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            progressDialog.cancel();
+            if(shouldCreateDialog){
+                progressDialog.cancel();
+            }
 
             if(onfinishlistener == null){
                 context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));

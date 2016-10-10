@@ -78,7 +78,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                new ServerManager(getActivity(), "").startFetchingData(1);
+                new ServerManager(getActivity(), "").startFetchingData(1, true);
             }
         };
 

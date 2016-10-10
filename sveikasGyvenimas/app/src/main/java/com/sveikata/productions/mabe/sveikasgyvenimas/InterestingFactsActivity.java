@@ -101,7 +101,7 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                         refresh_layout.setRefreshing(false);
                     }
                 });
-                manager.startFetchingData(0);
+                manager.startFetchingData(0, false);
 
             }
         });

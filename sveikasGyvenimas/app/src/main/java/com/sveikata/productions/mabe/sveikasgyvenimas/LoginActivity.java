@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.i("TEST",loginPrefs.getString("username", "") );
 
         if(!loginPrefs.getString("username", "").isEmpty() && CheckingUtils.isNetworkConnected(this))
-            new ServerManager(this, "LOGIN").startFetchingData(0);
+            new ServerManager(this, "LOGIN").startFetchingData(0, false);
 
     }
 
