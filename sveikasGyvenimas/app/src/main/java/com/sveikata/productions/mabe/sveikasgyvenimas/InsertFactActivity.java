@@ -49,7 +49,6 @@ public class InsertFactActivity extends Activity {
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, 1);
-                Log.i("TEST", "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
             }
         });
 
@@ -112,7 +111,7 @@ public class InsertFactActivity extends Activity {
                     filePath = getPath(selectedImage);
 
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                    image_fact_admin.setImageBitmap(bitmap);
+                    image_fact_admin.setImageBitmap(CheckingUtils.scaleBitmap(bitmap));
 
                     break;
 

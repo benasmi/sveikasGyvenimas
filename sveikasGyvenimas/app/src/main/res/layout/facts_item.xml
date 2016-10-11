@@ -68,7 +68,7 @@
                 android:drawableLeft="@drawable/fb_icon_small"
                 android:paddingLeft="7dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="5dp"
                 android:id="@+id/facebook_share_fact"
                 android:background="@drawable/blue_borders"
                 android:text="DALINTIS"

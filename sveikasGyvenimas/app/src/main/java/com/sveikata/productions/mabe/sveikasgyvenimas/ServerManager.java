@@ -273,12 +273,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             switch (response){
 
                 case 0:
-                    CheckingUtils.createErrorBox("Iššūkis išsiųstas sėkmingai!", context, R.style.PlayDialogStyle);
                     PlayActivity.shouldAddInfo=true;
                     AskQuestionsActivity.addFAQData=true;
                     HealthyLifeActivity.addData=true;
                     InterestingFactsActivity.addFactsFirstTime =true;
-                    startFetchingData(1, true);
+                    startFetchingData(1, false);
+                    Toast.makeText(context, "Iššūkis išsiųstas sėkmingai.", Toast.LENGTH_LONG).show();
                     break;
 
                 case 1:
