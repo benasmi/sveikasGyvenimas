@@ -117,7 +117,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(PlayAdapter.ViewHolder holder, int position) {
-        PlayInfoHolder data = play_info_holder.get(position);
+        final PlayInfoHolder data = play_info_holder.get(position);
 
         switch (data.getType()){
 
@@ -135,6 +135,14 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 holder.completed_challenge_description.setText(data.getChallengeDescription());
                 holder.completed_challenge_title.setText(data.getChallengeTitle());
                 holder.completed_challenge_sender.setText(data.getChallengeTitle());
+                holder.completed_challenge_share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckingUtils.shareChallenge(data.getChallengeTitle(),
+                                context, "www.google.com",data.getChallengeDescription() );
+                    }
+                });
+
                 break;
             case 4: //Challenge in progress layout
                 holder.challenge_in_progress_description.setText(data.getChallengeDescription());
@@ -245,6 +253,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private TextView completed_challenge_title;
         private TextView completed_challenge_description;
         private TextView completed_challenge_sender;
+        private AppCompatButton completed_challenge_share;
 
         public TextView days_proggress;
         public TextView hours_progress;
@@ -364,6 +373,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
                                 CheckingUtils.createErrorBox("Norint priimti iššūkį, jums reikia interneto", context, R.style.PlayDialogStyle);
+                                CheckingUtils.vibrate(context, 100);
                                 return;
                             }else{
                                 PlayActivity.shouldAddInfo=true;
@@ -382,6 +392,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
                                 CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", context, R.style.PlayDialogStyle);
+                                CheckingUtils.vibrate(context, 100);
                                 return;
                             }else{
                                 PlayActivity.shouldAddInfo=true;
@@ -420,8 +431,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     completed_challenge_title = (TextView) itemView.findViewById(R.id.trophy_title);
                     completed_challenge_description = (TextView) itemView.findViewById(R.id.trophy_description);
                     completed_challenge_sender = (TextView) itemView.findViewById(R.id.trophy_sender);
+                    completed_challenge_share = (AppCompatButton) itemView.findViewById(R.id.send_challenge_ccmpleted);
                     break;
-
 
                 case 4: //Challenge in progress layout
                     challenge_in_progress_description = (TextView) itemView.findViewById(R.id.challenge_in_progress_description);
@@ -444,6 +455,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View v) {
                             if(!CheckingUtils.isNetworkConnected(context)){
                                 CheckingUtils.createErrorBox("FAIL", context, R.style.PlayDialogStyle);
+                                CheckingUtils.vibrate(context, 100);
                                 return;
                             }else{
 

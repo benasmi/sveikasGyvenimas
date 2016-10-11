@@ -91,32 +91,38 @@ public class RegisterActivity extends AppCompatActivity {
         mail_value = mail_ET.getText().toString();
 
         if(username_value.isEmpty()){
-
+            CheckingUtils.vibrate(this, 100);
             username_ET.setError("Prašome įvesti vartotojo vardą");
             return;
         }
         if(name_value.isEmpty()){
+            CheckingUtils.vibrate(this, 100);
             name_ET.setError("Įveskite savo vardą");
             return;
         }
         if(last_name_value.isEmpty()){
+            CheckingUtils.vibrate(this, 100);
             last_name_ET.setError("Įveskite savo pavardę");
             return;
         }
         if(mail_value.isEmpty() || !mail_value.contains("@")){
+            CheckingUtils.vibrate(this, 100);
             mail_ET.setError("Įveskite galiojantį pašto adresą");
             return;
         }
         if(password_value.isEmpty()){
+            CheckingUtils.vibrate(this, 100);
             password_ET.setError("Įveskite slaptažodį");
             return;
         }
         if(!password_value.equals(repeat_password_value)){
+            CheckingUtils.vibrate(this, 100);
             password_ET.setError("Slaptažodžiai nesutampa");
             repeat_password_ET.setError("Slaptažodžiai nesutampa");
             return;
         }
         if(years_value.equals("Metai")){
+            CheckingUtils.vibrate(this, 100);
             TextView errorText = (TextView) years.getSelectedView();
             errorText.setError("Pasirinkite metus");
             errorText.startAnimation(shake);
@@ -124,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
         if(gender_value.equals("Lytis")) {
+            CheckingUtils.vibrate(this, 100);
             TextView errorText = (TextView) gender.getSelectedView();
             errorText.setError("Pasirinkite lytį");
             errorText.startAnimation(shake);
@@ -131,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if(!CheckingUtils.isNetworkConnected(this)){
+            CheckingUtils.vibrate(this, 100);
             CheckingUtils.createErrorBox("Nori susikurti paskyrą? Įjunk WI-FI arba mobilius ;)",this, R.style.ScheduleDialogStyle);
             return;
         }

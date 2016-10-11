@@ -283,6 +283,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if(!CheckingUtils.isNetworkConnected(this)){
                 CheckingUtils.createErrorBox("Įjunkite internetą", this, R.style.ScheduleDialogStyle);
+
                 return;
             }
 

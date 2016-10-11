@@ -249,7 +249,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                             .show();
                     break;
                 case 1:
-                    context.startActivity(new Intent(context, ActivateAccountActivity.class));
+                    context.startActivity(new Intent(context, LoginActivity.class));
                     break;
 
                 case 3:
@@ -323,7 +323,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 2:
-                    context.startActivity(new Intent(context, ActivateAccountActivity.class));
+                    CheckingUtils.createErrorBox("Sveikinu prisiregistravus, tačiau tau reikia nueiti į paštą ir aktyvuoti savo paskyrą", context, R.style.ScheduleDialogStyle);
                     break;
 
                 case 3:
@@ -1068,7 +1068,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             if(onfinishlistener == null){
                 context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
-               // ((Activity) context).finish();
+                ((Activity) context).finish();
             }else{
                 onfinishlistener.onFinish();
             }

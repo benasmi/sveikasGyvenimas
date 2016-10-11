@@ -105,6 +105,7 @@ public class GameScreen extends AppCompatActivity {
                     if(new_score>highscore){
                         sharedPreferences.edit().putInt("highscore", new_score).commit();
                     }
+                    CheckingUtils.vibrate(GameScreen.this, 100);
                     startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", new_score).putExtra("highscore", highscore));
                 }else{
                     new_score++;
@@ -139,7 +140,7 @@ public class GameScreen extends AppCompatActivity {
                         sharedPreferences.edit().putInt("highscore", new_score).commit();
                     }
                     startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", new_score).putExtra("highscore", highscore));
-
+                    CheckingUtils.vibrate(GameScreen.this, 100);
 
                 }else{
                     new_score++;

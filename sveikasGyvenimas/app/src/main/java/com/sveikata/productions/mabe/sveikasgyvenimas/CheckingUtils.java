@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Vibrator;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Window;
@@ -167,6 +168,21 @@ public class CheckingUtils {
                 .setImageUrl(Uri.parse(url))
                 .build();
         ShareDialog.show((Activity) context, linkContent);
+    }
+    public static void shareChallenge(String title, Context context, String source,String body){
+
+        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                .setContentTitle(title)
+                .setContentDescription(body)
+                .setContentUrl(Uri.parse("http://www.play.google.com"))
+                .build();
+        ShareDialog.show((Activity) context, linkContent);
+    }
+
+
+    public static void vibrate(Context context, int duration){
+        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(duration);
     }
 
 }

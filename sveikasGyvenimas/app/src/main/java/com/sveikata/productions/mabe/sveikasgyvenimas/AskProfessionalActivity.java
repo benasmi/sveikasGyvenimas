@@ -17,8 +17,8 @@ public class AskProfessionalActivity extends AppCompatActivity {
     private EditText subject;
     private Spinner spinner;
 
-    public static String specialist_BEN = "Benas. M";
-    public static String specialist_MARTIN = "Martynas. D";
+    public static String specialist_BEN = "Kietas - Benas. M";
+    public static String specialist_MARTIN = "Lopas - Martynas. D";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +49,18 @@ public class AskProfessionalActivity extends AppCompatActivity {
 
                 if(specialist.equals("Pasirink specialistą")){
                     CheckingUtils.createErrorBox("Pasirinkimas negalimas", AskProfessionalActivity.this, R.style.QuestionsDialogStyle);
+                    CheckingUtils.vibrate(AskProfessionalActivity.this, 100);
                     return;
                 }
                 if(message_value.equals(null)){
                     message.setError("Paklausk ko nors :D!");
+                    CheckingUtils.vibrate(AskProfessionalActivity.this, 100);
                     return;
                 }
 
                 if(!CheckingUtils.isNetworkConnected(AskProfessionalActivity.this)){
                     CheckingUtils.createErrorBox("Norint parašyti specialistui, tau reikia interneto :?", AskProfessionalActivity.this,R.style.QuestionsDialogStyle);
+                    CheckingUtils.vibrate(AskProfessionalActivity.this, 100);
                     return;
                 }
 

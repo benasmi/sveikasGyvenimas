@@ -70,17 +70,20 @@ public class InsertFactActivity extends Activity {
         if(title.equals("")){
             title_fact_admin.setError("Sukurkite antraštę");
             title_fact_admin.startAnimation(shake);
+            CheckingUtils.vibrate(this, 100);
             return;
         }
         if(body.equals("")){
             body_fact_admin.setError("Negalite įdėti fakto be jokios informacijos");
             body_fact_admin.startAnimation(shake);
+            CheckingUtils.vibrate(this, 100);
             return;
 
         }
 
         if(!CheckingUtils.isNetworkConnected(this)){
             CheckingUtils.createErrorBox("Įjunkite internetą", this, R.style.FactsDialogStyle);
+            CheckingUtils.vibrate(this, 100);
             return;
         }
 

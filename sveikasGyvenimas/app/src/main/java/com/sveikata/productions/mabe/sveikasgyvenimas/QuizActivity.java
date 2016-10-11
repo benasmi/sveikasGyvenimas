@@ -29,6 +29,17 @@ public class QuizActivity extends AppCompatActivity {
 
     public static final String[] question_1 = {"Kokia yra mirtina alkoholio dozė?", "dahuja", "dahuja su biski", "labai dahuja", "labai dahuja su biski", "labai dahuja su biski"};
     public static final String[] question_2 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_3 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_4 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_5 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_6 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_7 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_8 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_9 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_10 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_11 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_12 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
+    public static final String[] question_13 = {"Kiek viena cigaretė sutrumpina gyvenimo trukmę?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
 
 
     @Override
@@ -53,7 +64,7 @@ public class QuizActivity extends AppCompatActivity {
         View.OnClickListener rightListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizActivity.this, TabActivityLoader.class).putExtra("Tab", 1));
+                startActivity(new Intent(QuizActivity.this, QuizActivity.class ).putExtra("Tab", 1));
             }
         };
 
@@ -87,7 +98,6 @@ public class QuizActivity extends AppCompatActivity {
                 question_answer_3 = question_1[3];
                 question_answer_4 = question_1[4];
                 rightAnswer = question_1[5];
-
 
 
 
@@ -140,6 +150,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 try{
 
+                    timer.setText(String.valueOf(0));
                 new android.app.AlertDialog.Builder(QuizActivity.this, R.style.PlayDialogStyle)
                         .setMessage("Baigėsi laikas :(")
                         .setPositiveButton("Meh", new DialogInterface.OnClickListener() {

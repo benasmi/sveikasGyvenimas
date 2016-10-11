@@ -38,6 +38,7 @@ public class CreateChallengeManually extends AppCompatActivity {
 
                 if(!CheckingUtils.isNetworkConnected(CreateChallengeManually.this)){
                     CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", CreateChallengeManually.this, R.style.PlayDialogStyle);
+                    CheckingUtils.vibrate(CreateChallengeManually.this, 100);
                     return;
                 }
 
@@ -49,6 +50,7 @@ public class CreateChallengeManually extends AppCompatActivity {
                 String password = sharedPreferences.getString("password", "");
 
                 if(title.equals("Laikas")){
+                    CheckingUtils.vibrate(CreateChallengeManually.this, 100);
                     return;
                 }
 
@@ -76,6 +78,7 @@ public class CreateChallengeManually extends AppCompatActivity {
             public void onClick(View view) {
                 if(!CheckingUtils.isNetworkConnected(CreateChallengeManually.this)){
                     CheckingUtils.createErrorBox("Norint nusiųsti iššūkį, tau reikia interneto", CreateChallengeManually.this, R.style.PlayDialogStyle);
+                    CheckingUtils.vibrate(CreateChallengeManually.this, 100);
                     return;
                 }
 
@@ -98,6 +101,7 @@ public class CreateChallengeManually extends AppCompatActivity {
 
                 if(mail.isEmpty()){
                     mail_receiver.setError("Kam nusiųsti?");
+                    CheckingUtils.vibrate(CreateChallengeManually.this, 100);
                     return;
                 }
                 new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password);
