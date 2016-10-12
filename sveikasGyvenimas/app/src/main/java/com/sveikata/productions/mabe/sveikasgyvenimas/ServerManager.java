@@ -237,16 +237,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             progressDialog.cancel();
             switch (response) {
                 case 0:
-                    new AlertDialog.Builder(context)
-                            .setMessage("Sugalvok kažką kitą :/")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
+                    CheckingUtils.createErrorBox(" Su tokiu vartotojo vardu arba El.Paštu jau turi paskyra :?", context, R.style.ScheduleDialogStyle);
                     break;
                 case 1:
                     context.startActivity(new Intent(context, LoginActivity.class));
@@ -417,6 +408,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
 
 

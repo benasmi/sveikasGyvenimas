@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.drive.internal.StringListResponse;
 import com.google.android.gms.games.Game;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class GameScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
         Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
+        Typeface tfBevan = Typeface.createFromAsset(getAssets(), "fonts/bevan.ttf");
         sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -75,7 +77,7 @@ public class GameScreen extends AppCompatActivity {
         bottom_image = (ImageView) findViewById(R.id.bottom_image);
 
         which_stronger = (TextView) findViewById(R.id.which_is_stronger);
-        which_stronger.setTypeface(tf);
+        which_stronger.setTypeface(tfBevan);
         score_txt.setTypeface(tf);
         highscore_txt.setTypeface(tf);
 
@@ -106,7 +108,7 @@ public class GameScreen extends AppCompatActivity {
                         sharedPreferences.edit().putInt("highscore", new_score).commit();
                     }
                     CheckingUtils.vibrate(GameScreen.this, 100);
-                    startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", new_score).putExtra("highscore", highscore));
+                    startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", String.valueOf(new_score)).putExtra("highscore", String.valueOf(highscore)));
                 }else{
                     new_score++;
                     score_txt.setText("Score: " + String.valueOf(new_score));
@@ -139,7 +141,7 @@ public class GameScreen extends AppCompatActivity {
                     if(new_score>highscore){
                         sharedPreferences.edit().putInt("highscore", new_score).commit();
                     }
-                    startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", new_score).putExtra("highscore", highscore));
+                    startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", String.valueOf(new_score)).putExtra("highscore", String.valueOf(highscore)));
                     CheckingUtils.vibrate(GameScreen.this, 100);
 
                 }else{

@@ -8,76 +8,98 @@
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.YouLostHigherLowerAcitivity">
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:id="@+id/gif_background"
-        android:adjustViewBounds="true"
 
         android:layout_height="match_parent" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
-        android:id="@+id/imageView3"
         android:alpha="0.6"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/gif_background"
-        android:layout_toEndOf="@+id/gif_background" />
+        android:background="#000000"/>
+
 
     <android.support.v7.widget.AppCompatButton
         android:text="Grįžti atgal"
+        android:textColor="#f1c40f"
         android:layout_width="200dp"
+        android:textSize="13dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/game_over_buttons"
         android:id="@+id/go_back_to_play_bar"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="116dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/try_again"
         android:layout_alignStart="@+id/try_again" />
 
+
     <android.support.v7.widget.AppCompatButton
         android:text="Bandyti dar kartą !"
         android:layout_width="200dp"
+        android:textColor="#f1c40f"
         android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:background="@drawable/game_over_buttons"
         android:id="@+id/try_again"
         android:layout_above="@+id/go_back_to_play_bar"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Tu surinkai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/textView10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/score_game_over"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/textView10"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="Geriausias tavo rezultatas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="21dp"
         android:textColor="#FFFFFF"
         android:id="@+id/textView12"
-        android:layout_below="@+id/score_game_over"
-        android:layout_centerHorizontal="true" />
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="76dp" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:textSize="70dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/score_game_over"
+        android:textColor="#f1c40f"
+        android:layout_below="@+id/highscore_game_over"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:text="Tu surinkai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView10"
+        android:textSize="20dp"
+        android:layout_below="@+id/highscore_game_over"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
 
     <TextView
         android:text="25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
+        android:textColor="#f1c40f"
+        android:textSize="20dp"
         android:id="@+id/highscore_game_over"
         android:layout_below="@+id/textView12"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:drawableLeft="@drawable/fb_icon_small"
+        android:paddingLeft="7dp"
+        android:id="@+id/share_score"
+        android:background="@drawable/blue_borders"
+        android:text="DALINTIS"
+        android:textSize="10dp"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/score_game_over"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

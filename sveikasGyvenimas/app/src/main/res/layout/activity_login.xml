@@ -84,6 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
+            android:textSize="18dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Neturi paskyros? Spausk čia!"
             android:id="@+id/textView2"
@@ -151,6 +152,7 @@
         android:background="@drawable/button_borders_different_color"
         android:drawablePadding="8dp"
         android:inputType="textPassword"
+        android:maxLines="1"
         android:ems="10"
         android:textColorHint="#515959"
         android:id="@+id/login_password_text"
@@ -161,10 +163,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/icon"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
     <EditText
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:drawableLeft="@drawable/user_icon"
+        android:maxLines="1"
         android:drawablePadding="8dp"
         android:textColorHint="#515959"
 
@@ -173,18 +184,10 @@
         android:hint="Vartotojo vardas"
         android:paddingLeft="5dp"
         android:textSize="15dp"
+        android:layout_marginTop="49dp"
         android:layout_below="@+id/imageView"
         android:layout_alignLeft="@+id/login_password_text"
-        android:layout_alignStart="@+id/login_password_text"
-        android:layout_marginTop="50dp" />
-
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/imageView"
-        android:src="@drawable/icon"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/login_password_text" />
 
 </RelativeLayout>
 

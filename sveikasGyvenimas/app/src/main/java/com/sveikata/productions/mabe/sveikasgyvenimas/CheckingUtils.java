@@ -52,6 +52,11 @@ public class CheckingUtils {
         return mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
+    public static int random_int(int min, int max)
+    {
+        return (int) (Math.random()*(max-min))+min;
+    }
+
 
         //Error box to inform UI
         public static void createErrorBox(String message, Context context, int theme){

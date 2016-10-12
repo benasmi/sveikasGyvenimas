@@ -47,6 +47,7 @@ public class TabActivityLoader extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.my_tab_layout);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
         viewPager.getCurrentItem();
 

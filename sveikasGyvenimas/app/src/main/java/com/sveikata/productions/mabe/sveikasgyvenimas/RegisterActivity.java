@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -146,5 +147,9 @@ public class RegisterActivity extends AppCompatActivity {
         String token = sharedPrefs.getString("device_id", "");
         new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token);
 
+    }
+
+    public void goBackToLogin(View view) {
+        startActivity(new Intent(this, LoginActivity.class).putExtra("isAnimDisabled", false));
     }
 }

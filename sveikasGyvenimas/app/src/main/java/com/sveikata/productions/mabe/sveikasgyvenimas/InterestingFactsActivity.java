@@ -123,7 +123,6 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                 for (int i = 0; i<scheduleDataArray.length(); i++){
                     JSONObject factsDataValue = scheduleDataArray.getJSONObject(i);
 
-                    Log.i("TEST", factsDataValue.toString());
                     String title = factsDataValue.getString("title");
                     String body = factsDataValue.getString("body");
                     String url = factsDataValue.getString("url");
@@ -133,9 +132,9 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                         height=0;
                     }
                     if(is_administrator.equals("1")){
-                        adapter.add(new FactInfoHolder(title,body,url,source, 0, height), 1);
+                        adapter.add(new FactInfoHolder(title,body,url,source, 0, height), adapter.getItemCount());
                     }else{
-                        adapter.add(new FactInfoHolder(title,body,url,source, 0, height), 0);
+                        adapter.add(new FactInfoHolder(title,body,url,source, 0, height), adapter.getItemCount());
 
                     }
                 }

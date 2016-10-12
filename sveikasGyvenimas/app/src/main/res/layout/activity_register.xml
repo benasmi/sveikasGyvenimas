@@ -3,28 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ndroid="http://schemas.android.com/apk/res-auto"
 
     android:background="#009688"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
         android:background="#00796B"
         android:layout_alignParentTop="true"
-        >
+        android:layout_height="40dp"
+        android:id="@+id/relativeLayout4">
 
         <TextView
+            android:text="Grįžti atgal ir prisijungti"
+            android:onClick="goBackToLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Registracija"
             android:textColor="#FFFFFF"
-            android:id="@+id/register_textview"
-            android:textSize="40dp"
+            android:textSize="18dp"
+            android:id="@+id/textView3"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_borders_green"
+        android:text="Registruotis !"
+        android:id="@+id/register"
+        android:textColor="#ffffff"
+        android:onClick="register"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true">
+
+    </android.support.v7.widget.AppCompatButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Registracija"
+        android:textColor="#FFFFFF"
+        android:id="@+id/register_textview"
+        android:textSize="40dp"
+        android:layout_marginTop="54dp"
+        android:layout_below="@+id/relativeLayout4"
+        android:layout_centerHorizontal="true" />
 
     <RelativeLayout
 
@@ -35,25 +62,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/relativeLayout"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/register_textview"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <EditText
-            android:layout_width="160dp"
-            android:layout_height="38dp"
-            android:id="@+id/last_name"
-            android:layout_weight="1"
-            android:textColorHint="#999999"
-            android:hint="Pavardė"
-            android:paddingLeft="10dp"
-            android:layout_alignTop="@+id/name"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="#999999"
-            android:background="@drawable/button_borders_different_color"
-            android:textSize="15dp"
-            android:maxLength="18" />
 
         <EditText
             android:layout_width="160dp"
@@ -159,24 +171,23 @@
             android:textSize="15dp"
             android:maxLength="32" />
 
+        <EditText
+            android:layout_width="160dp"
+            android:layout_height="38dp"
+            android:id="@+id/last_name"
+            android:layout_weight="1"
+            android:textColorHint="#999999"
+            android:hint="Pavardė"
+            android:paddingLeft="10dp"
+            android:textColor="#999999"
+            android:background="@drawable/button_borders_different_color"
+            android:textSize="15dp"
+            android:maxLength="18"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
-
-    <android.support.v7.widget.AppCompatButton
-        android:layout_width="370dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button_borders_green"
-        android:text="Registruotis !"
-        android:id="@+id/register"
-        android:textColor="#ffffff"
-        android:onClick="register"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_marginTop="39dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
-
-    </android.support.v7.widget.AppCompatButton>
 
 
 </RelativeLayout>

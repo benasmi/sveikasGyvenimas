@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if(!getIntent().getExtras().getBoolean("isAnimDisabled", false))
-            overridePendingTransition(R.anim.slide_down, R.anim.slide_out);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
 
         username_ET = (EditText) findViewById(R.id.login_username_text);
@@ -164,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                 Profile profile = Profile.getCurrentProfile();
 
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "first_name,last_name,email,location,gender,age_range");
+                parameters.putString("fields", "first_name,last_name,email,location,gender,user_birthday");
 
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String password = loginResult.getAccessToken().getToken().toString();
                                     String mail = object.getString("email");
                                     String gender = object.getString("gender");
-                                    String years = "15";
+                                    String years = object.getString("birthday");
                                     String type = "facebook";
                                     String token = sharedPrefs.getString("device_id", "");
 
@@ -226,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 String name = account.getGivenName();
                 String last_name = account.getFamilyName();
-                String username = account.getDisplayName();
+                String username = account.getId();
                 String password = account.getIdToken();
                 String mail = account.getEmail();
                 String gender = "unknown";
