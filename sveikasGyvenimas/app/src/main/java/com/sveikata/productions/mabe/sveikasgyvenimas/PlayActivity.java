@@ -53,6 +53,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         if(shouldAddInfo){
             shouldAddInfo=false;
             addCalculatorPreview();
+
+            addStartQuiz();
+            addHigherLower();
             addSendChallenge();
 
 
@@ -64,7 +67,6 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
             try{
                 addCompletedChallenges();
-                addHigherLower();
             }catch(JSONException e){
                 e.printStackTrace();
             }
@@ -87,15 +89,21 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     }
 
     public void addCalculatorPreview(){
-        info.add(0, new PlayInfoHolder(0));
+        info.add(new PlayInfoHolder(0));
     }
 
     public void addSendChallenge(){
-        info.add(1, new PlayInfoHolder(2));
+        info.add(new PlayInfoHolder(2));
     }
     public void addHigherLower(){
-        info.add(1, new PlayInfoHolder(5));
+        info.add(new PlayInfoHolder(5));
     }
+
+    public void addStartQuiz(){
+        info.add(new PlayInfoHolder(6));
+    }
+
+
 
 
     public void addChallenge() throws JSONException {

@@ -31,6 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import pl.droidsonroids.gif.GifImageButton;
+import pl.droidsonroids.gif.GifImageView;
+
 
 /**
  * Created by Benas on 9/18/2016.
@@ -105,6 +108,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 5:
                 View game = layoutInflater.inflate(R.layout.start_playing, parent, false);
                 viewHolder = new ViewHolder(game, 5);
+                return viewHolder;
+            case 6:
+                View game_quiz = layoutInflater.inflate(R.layout.start_playing_quiz, parent, false);
+                viewHolder = new ViewHolder(game_quiz, 6);
                 return viewHolder;
 
 
@@ -234,7 +241,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private AppCompatButton go_to_send_activity;
 
         //Start Playing
-        private AppCompatButton start_playing;
+        private GifImageView start_playing;
 
         //New challenge layout
         private TextView timer;
@@ -261,8 +268,9 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         public TextView seconds_progress;
 
         private ImageButton failed;
-
         private ImageView get_random_question;
+
+        private GifImageView start_playing_quiz;
         public ViewHolder(View itemView, int type) {
             super(itemView);
 
@@ -279,21 +287,18 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     isAnimRunning = false;
                     switch (which_image){
                         case 0:
-                            calculator_preview_image.setImageResource(R.drawable.ask_question);
-                            break;
-                        case 1:
                             calculator_preview_image.setImageResource(R.drawable.calories_calculator);
                             break;
-                        case 2:
+                        case 1:
                             calculator_preview_image.setImageResource(R.drawable.water_calculator);
                             break;
-                        case 3:
+                        case 2:
                             calculator_preview_image.setImageResource(R.drawable.your_drink);
                             break;
-                        case 4:
+                        case 3:
                             calculator_preview_image.setImageResource(R.drawable.info_sheet);
                             break;
-                        case 5:
+                        case 4:
                             calculator_preview_image.setImageResource(R.drawable.limit_calculator);
                             break;
                     }
@@ -314,10 +319,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     arrow_left = (ImageView) itemView.findViewById(R.id.arrow_left);
                     arrow_right = (ImageView) itemView.findViewById(R.id.arrow_right);
                     calculator_preview_image = (ImageView)itemView.findViewById(R.id.calculator_preview_image);
-                    calculator_preview_image.setImageResource(R.drawable.ask_question);
-                    challenge_text = (TextView) itemView.findViewById(R.id.chellanges_text);
+                    calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+//                    challenge_text = (TextView) itemView.findViewById(R.id.challanges_text);
 
-                    challenge_text.setTypeface(verdanaFont);
+//                    challenge_text.setTypeface(verdanaFont);
 
 
                     arrow_left.setOnClickListener(new View.OnClickListener() {
@@ -326,7 +331,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             if(!isAnimRunning){
                                 which_image--;
                                 if(which_image<0){
-                                    which_image=5;
+                                    which_image=4;
                                 }
                                 calculator_preview_image.startAnimation(animation);
                             }
@@ -338,7 +343,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View view) {
                             if(!isAnimRunning){
                                 which_image++;
-                                if(which_image>=5){
+                                if(which_image>=4){
                                     which_image=0;
                                 }
 
@@ -470,7 +475,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     });
                     break;
                 case 5:
-                    start_playing = (AppCompatButton) itemView.findViewById(R.id.start_playing_game);
+                    start_playing = (GifImageView) itemView.findViewById(R.id.start_playing_game);
+
                     start_playing.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -478,6 +484,19 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         }
                     });
 
+                    break;
+                case 6:
+                    start_playing_quiz = (GifImageView) itemView.findViewById(R.id.start_playing_quiz_gifbutton);
+
+                    start_playing_quiz.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            context.startActivity(new Intent(context, QuizActivity.class));
+                        }
+                    });
+
+                    break;
             }
 
         }
@@ -495,29 +514,26 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         switch (which_img){
             case 0:
-                context.startActivity(new Intent(context, QuizActivity.class));
-                break;
-            case 1:
                 uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
                 context.startActivity(intent);
 
                 break;
-            case 2:
+            case 1:
                 uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
                 context.startActivity(intent);
 
                 break;
-            case 3:
+            case 2:
                 uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
                 context.startActivity(intent);
 
                 break;
-            case 4:
+            case 3:
                 uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
                 context.startActivity(intent);
 
                 break;
-            case 5:
+            case 4:
                 uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
                 context.startActivity(intent);
 

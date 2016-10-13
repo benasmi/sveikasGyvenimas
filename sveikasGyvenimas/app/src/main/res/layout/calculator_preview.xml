@@ -6,7 +6,7 @@
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/ask_question"
+        android:src="@drawable/calories_calculator"
         android:id="@+id/calculator_preview_image" />
 
         <RelativeLayout
@@ -34,14 +34,5 @@
             android:layout_marginTop="60dp" />
 
         </RelativeLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:textSize="25dp"
-        android:id="@+id/chellanges_text"
-        android:text="Iššūkiai"
-        android:layout_below="@+id/calculator_preview_image"/>
 
 </RelativeLayout>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+              android:paddingRight="5dp"
+              android:paddingLeft="5dp">
 
-    <android.support.v7.widget.AppCompatButton
-        android:text="Žaisk Žaidimą"
-        android:layout_width="match_parent"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/challenge_friend_buttons_borders"
-        android:layout_height="wrap_content"
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="384dp"
+        android:src="@drawable/start_game"
+        android:layout_height="70dp"
         android:id="@+id/start_playing_game" />
 </LinearLayout>

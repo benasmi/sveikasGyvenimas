@@ -50,6 +50,8 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient-4.3.jar"
     }
-
+    compile ('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar'){
+        transitive=true
+    }
 }
 apply plugin: 'com.google.gms.google-services'
