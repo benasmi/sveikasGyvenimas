@@ -325,11 +325,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                 String name = infoHolder.get(getAdapterPosition()).getEvent_name();
 
 
-//                                Log.i("TEST", "name: " + name);
-//                                Log.i("TEST", " description: " + description );
-//                                Log.i("TEST", " date/place: " + event_date );
-//                                Log.i("TEST", " position: " + String.valueOf(getAdapterPosition()) );
-
                                 if(!CheckingUtils.isNetworkConnected(context)){
                                     CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
                                     return false;

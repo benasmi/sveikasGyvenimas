@@ -81,7 +81,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         this.dialogType = dialogType;
         this.userData = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
-
     }
     @Override
     protected void onPreExecute() {
@@ -103,6 +102,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String...params) {
+
         method_type = params[0];
 
         if(method_type.equals("REGISTRATION")){

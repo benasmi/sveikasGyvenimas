@@ -29,6 +29,7 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
 
     public static boolean addFAQData = true;
+    public static boolean onThisTab = false;
 
     private ArrayList<QuestionsDataHolder> data = new ArrayList<QuestionsDataHolder>();
     private RecyclerView recyclerView;

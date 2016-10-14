@@ -52,8 +52,8 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
 
 
 
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("UPDATE_REQUIRED"));
 
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("UPDATE_REQUIRED"));
         super.onMessageReceived(remoteMessage);
 
 

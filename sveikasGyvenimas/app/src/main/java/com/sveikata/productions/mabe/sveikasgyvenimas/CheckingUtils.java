@@ -16,8 +16,12 @@ import android.os.Build;
 import android.os.Vibrator;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 
 import com.facebook.share.ShareApi;
 import com.facebook.share.model.ShareContent;
@@ -30,11 +34,17 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
+
 /**
  * Created by Benas on 9/7/2016.
  */
 public class CheckingUtils {
 
+    public static boolean show = true;
 
     //Checking network connection
     public static boolean isNetworkConnected(Context context) {
@@ -216,5 +226,33 @@ public class CheckingUtils {
         bm = Bitmap.createScaledBitmap(bm, width, height, true);
         return bm;
     }
+
+    public static TourGuide tutorialForView(View view, Activity activity,String title, String description){
+
+    /* setup enter and exit animation */
+        Animation enterAnimation = new AlphaAnimation(0f, 1f);
+        enterAnimation.setDuration(600);
+        enterAnimation.setFillAfter(true);
+
+        Animation exitAnimation = new AlphaAnimation(1f, 0f);
+        exitAnimation.setDuration(600);
+        exitAnimation.setFillAfter(true);
+
+        /* initialize TourGuide without playOn() */
+        TourGuide mTutorialHandler = TourGuide.init(activity).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip()
+                        .setTitle("Hey!")
+                        .setDescription("I'm the top fellow")
+                )
+                .setOverlay(new Overlay()
+                        .setEnterAnimation(enterAnimation)
+                        .setExitAnimation(exitAnimation)
+                );
+
+        return mTutorialHandler;
+    }
+
+
 
 }

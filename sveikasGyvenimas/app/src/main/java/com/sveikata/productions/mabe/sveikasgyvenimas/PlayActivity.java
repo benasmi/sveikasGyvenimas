@@ -26,17 +26,19 @@ import java.util.ArrayList;
 public class PlayActivity extends android.support.v4.app.Fragment {
 
     public static boolean shouldAddInfo = true;
+    public static boolean onThisTab = false;
     private RecyclerView recyclerView;
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
     private JSONArray challenges;
     private boolean isReceiverRegistered = false;
     private BroadcastReceiver broadcastReceiver;
+    private Context ctx;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_play,container,false);
-
+        ctx = getContext();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.play_recycler_view);
 
         try{
@@ -80,7 +82,8 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                new ServerManager(getActivity(), "").startFetchingData(1, true);
+                new ServerManager(ctx, "").startFetchingData(1, false);
+
             }
         };
 

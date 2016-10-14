@@ -151,15 +151,15 @@ public class QuizActivity extends AppCompatActivity {
                 try{
 
                     timer.setText(String.valueOf(0));
-                new android.app.AlertDialog.Builder(QuizActivity.this, R.style.PlayDialogStyle)
-                        .setMessage("Baigėsi laikas :(")
-                        .setPositiveButton("Meh", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(QuizActivity.this, TabActivityLoader.class).putExtra("Tab", 1));
-                            }
-                        })
-                        .show();
+                    new android.app.AlertDialog.Builder(QuizActivity.this, R.style.PlayDialogStyle)
+                            .setMessage("Baigėsi laikas :(")
+                            .setPositiveButton("Meh", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(QuizActivity.this, TabActivityLoader.class).putExtra("Tab", 1));
+                                }
+                            })
+                            .show();
 
                 }catch (Exception e){
                 }

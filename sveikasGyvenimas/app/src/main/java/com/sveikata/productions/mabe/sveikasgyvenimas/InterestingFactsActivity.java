@@ -30,6 +30,7 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
     private JSONObject userData;
 
     public static boolean addFactsFirstTime = true;
+    public static boolean onThisTab = false;
 
     private String is_administrator;
     private View rootView;

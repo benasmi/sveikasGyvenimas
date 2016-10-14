@@ -31,9 +31,14 @@ public class TabActivityLoader extends AppCompatActivity {
         setContentView(R.layout.activity_tab_activity_loader);
 
         AskQuestionsActivity.addFAQData = true;
+        AskQuestionsActivity.onThisTab=false;
         InterestingFactsActivity.addFactsFirstTime = true;
+        InterestingFactsActivity.onThisTab=false;
         HealthyLifeActivity.addData = true;
+        HealthyLifeActivity.onThisTab = true;
+        PlayActivity.onThisTab=false;
         PlayActivity.shouldAddInfo = true;
+
 
         window = getWindow();
         sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
@@ -156,6 +161,11 @@ public class TabActivityLoader extends AppCompatActivity {
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
             myToolbar.setTitle("Eh..Tvarkaraštis");
+            HealthyLifeActivity.onThisTab=true;
+            PlayActivity.onThisTab=false;
+            InterestingFactsActivity.onThisTab=false;
+            AskQuestionsActivity.onThisTab=false;
+
 
         }else if(position==1){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
@@ -163,14 +173,20 @@ public class TabActivityLoader extends AppCompatActivity {
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
             myToolbar.setTitle("Skaičiuok ir žaisk");
-
+            PlayActivity.onThisTab=true;
+            InterestingFactsActivity.onThisTab=false;
+            AskQuestionsActivity.onThisTab=false;
+            HealthyLifeActivity.onThisTab=false;
         }else if(position==2){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_unactive);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_active);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
             myToolbar.setTitle("Ar gali patikėti?");
-
+            InterestingFactsActivity.onThisTab=true;
+            AskQuestionsActivity.onThisTab=false;
+            HealthyLifeActivity.onThisTab=false;
+            PlayActivity.onThisTab=false;
         }else if(position==3){
 
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
@@ -178,7 +194,10 @@ public class TabActivityLoader extends AppCompatActivity {
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_active);
             myToolbar.setTitle("Klausk..Klausk..!");
-
+            AskQuestionsActivity.onThisTab=true;
+            HealthyLifeActivity.onThisTab=false;
+            PlayActivity.onThisTab=false;
+            InterestingFactsActivity.onThisTab=false;
         }
 
 

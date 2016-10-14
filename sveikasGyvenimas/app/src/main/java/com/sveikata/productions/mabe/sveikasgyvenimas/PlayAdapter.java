@@ -3,6 +3,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 /**
  * Created by Martyno on 2016.10.03.
  */
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,9 +14,11 @@ import android.os.Handler;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -33,6 +36,10 @@ import java.util.Date;
 
 import pl.droidsonroids.gif.GifImageButton;
 import pl.droidsonroids.gif.GifImageView;
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 
 /**
@@ -234,7 +241,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         boolean isAnimRunning = false;
 
 
-
+        private TourGuide tourGuide;
 
 
         //Send challenge
@@ -481,13 +488,14 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             context.startActivity(new Intent(context, GameScreen.class));
+                           }
                         }
-                    });
+
+                    );
 
                     break;
                 case 6:
                     start_playing_quiz = (GifImageView) itemView.findViewById(R.id.start_playing_quiz_gifbutton);
-
                     start_playing_quiz.setOnClickListener(new View.OnClickListener() {
 
                         @Override
@@ -502,10 +510,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         }
     }
 
-    // //////////////COUNT DOWN START/////////////////////////
-
-    // //////////////COUNT DOWN END/////////////////////////
-
     private void launchCalculator(int which_img)
     {
         Uri uri = null;
@@ -515,26 +519,31 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         switch (which_img){
             case 0:
                 uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
+                intent.setData(uri);
                 context.startActivity(intent);
 
                 break;
             case 1:
                 uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
+                intent.setData(uri);
                 context.startActivity(intent);
 
                 break;
             case 2:
                 uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
+                intent.setData(uri);
                 context.startActivity(intent);
 
                 break;
             case 3:
                 uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
+                intent.setData(uri);
                 context.startActivity(intent);
 
                 break;
             case 4:
                 uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
+                intent.setData(uri);
                 context.startActivity(intent);
 
                 break;

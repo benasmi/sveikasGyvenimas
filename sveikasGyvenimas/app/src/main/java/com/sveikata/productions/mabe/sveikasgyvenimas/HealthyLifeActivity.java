@@ -35,6 +35,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     private String is_administrator;
     private View rootView;
 
+    public static boolean onThisTab = false;
     public static boolean addData = true;
 
     @Nullable
