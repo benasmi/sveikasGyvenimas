@@ -129,10 +129,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setTypeface(tf);
 
-        Log.i("TEST",loginPrefs.getString("username", "") );
 
-        if(!loginPrefs.getString("username", "").isEmpty() && CheckingUtils.isNetworkConnected(this))
-            new ServerManager(this, "LOGIN").startFetchingData(0, false);
 
     }
 
@@ -154,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onfbClick(View view) {
         callbackManager = CallbackManager.Factory.create();
 
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_location"));
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_hometown", "user_birthday"));
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
 
@@ -164,15 +161,15 @@ public class LoginActivity extends AppCompatActivity {
                 Profile profile = Profile.getCurrentProfile();
 
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "first_name,last_name,email,location,gender,user_birthday");
+                parameters.putString("fields", "first_name,last_name,email,gender,hometown,birthday");
 
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
+//                                Log.i("TEST", response.getError().toString());
 
-                                Log.i("TEST", object.toString());
                                 try {
                                     String name = object.getString("first_name");
                                     String last_name = object.getString("last_name");
@@ -181,10 +178,11 @@ public class LoginActivity extends AppCompatActivity {
                                     String mail = object.getString("email");
                                     String gender = object.getString("gender");
                                     String years = object.getString("birthday");
+                                    Log.i("TEST", "bday: " + years);
                                     String type = "facebook";
                                     String token = sharedPrefs.getString("device_id", "");
 
-                                    new ServerManager(LoginActivity.this, "REGISTRATION").execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type,token);
+                                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type);
                                 }catch (Exception e ){
                                     Log.i("TEST", "ERROR");
                                 }
@@ -220,9 +218,11 @@ public class LoginActivity extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == REQUEST_CODE_FOR_GOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-
+            Log.i("TEST", result.getStatus().toString());
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
+
+
 
                 String name = account.getGivenName();
                 String last_name = account.getFamilyName();
@@ -234,9 +234,11 @@ public class LoginActivity extends AppCompatActivity {
                 String type = "gmail";
                 String token = sharedPrefs.getString("device_id", "");
 
-                new ServerManager(LoginActivity.this, "REGISTRATION").execute("REGISTRATION", name, last_name, username, password, mail, gender, years, type,token);
+                new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", name, last_name, username, password, mail, gender, years, type,token);
                 firebaseAuthWithGoogle(account);
 
+                }else{
+                    Log.i("TEST", "ASFASFASFASSAASFASFFSA");
                 }
 
             } else {
@@ -269,7 +271,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        new ServerManager(this, "LOGIN").execute("LOGIN", username,password, device_id);
+        new ServerManager(this, "LOGIN").execute("LOGIN", username,password, device_id, "regular");
 
     }
 

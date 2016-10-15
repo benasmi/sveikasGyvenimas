@@ -90,7 +90,7 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
                 ServerManager manager = new ServerManager(getActivity(), "");
                 manager.setOnFinishListener(new OnFinishListener() {
                     @Override
-                    public void onFinish() {
+                    public void onFinish(int responseCode) {
                         adapter.clear();
 
                         if(is_administrator.equals("1")){

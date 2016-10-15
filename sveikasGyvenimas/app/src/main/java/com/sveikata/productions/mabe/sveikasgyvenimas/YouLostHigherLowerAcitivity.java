@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -23,6 +24,9 @@ public class YouLostHigherLowerAcitivity extends AppCompatActivity {
     private TextView score_txt;
     private TextView highscore_txt;
     private GifImageView gif_background;
+
+    private Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
+    private Typeface tfBevan = Typeface.createFromAsset(getAssets(), "fonts/bevan.ttf");
 
     private String score;
     private String  highscore;
@@ -67,6 +71,9 @@ public class YouLostHigherLowerAcitivity extends AppCompatActivity {
 
         score_txt.setText(score);
         highscore_txt.setText(highscore);
+
+        score_txt.setTypeface(tf);
+        highscore_txt.setTypeface(tf);
 
         try_again.setOnClickListener(new View.OnClickListener() {
             @Override

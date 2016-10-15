@@ -75,6 +75,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADRESS_FETCH_CHALLENGES = "http://dvp.lt/android/fetch_challenges.php";
     public static final String SERVER_ADRESS_I_FAILED_CHALLENGE = "http://dvp.lt/android/failed_challenge.php";
 
+    private String type;
+    private String device_id;
+    private String first_name;
+    private String last_name;
+    private String hometown;
+    private String birthday;
+    private String gender;
+    private String mail;
+
 
     public ServerManager(Context context, String dialogType){
         this.context=context;
@@ -93,6 +102,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(dialogType.equals("ADD_FACT")){
             Toast.makeText(context, "Pridedame faktą..." , Toast.LENGTH_LONG).show();
         }
+        if(dialogType.equals("LOGIN_GMAIL_AND_REGISTER")){
+            progressDialog = CheckingUtils.progressDialog(context, "Prisijungiama...", R.style.ScheduleDialogStyle);
+        }
         super.onPreExecute();
     }
 
@@ -101,7 +113,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String...params) {
+    protected Void doInBackground(String...params){
 
         method_type = params[0];
 
@@ -128,8 +140,23 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             username_login = params[1];
             password_login = params[2];
             String device_id = params[3];
+            String type = params[4];
+            response = login(username_login,password_login, device_id, type);
+        }
 
-            response = login(username_login,password_login, device_id);
+        if(method_type.equals("LOGIN_GMAIL_AND_REGISTER")) {
+            username_login = params[1];
+            password_login = params[2];
+            device_id = params[3];
+            first_name = params[4];
+            last_name = params[5];
+            birthday = params[6];
+            gender = params[7];
+            mail = params[8];
+            type = params[9];
+
+            response = loginSocials(username_login,password_login, type);
+
         }
 
         if(method_type.equals("ACCEPT_CHALLENGE")) {
@@ -240,7 +267,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     CheckingUtils.createErrorBox(" Su tokiu vartotojo vardu arba El.Paštu jau turi paskyra :?", context, R.style.ScheduleDialogStyle);
                     break;
                 case 1:
-                    context.startActivity(new Intent(context, LoginActivity.class));
+                    context.startActivity(new Intent(context, LoginActivity.class).putExtra("isAnimDisabled", true));
                     break;
 
                 case 3:
@@ -300,29 +327,55 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(method_type.equals("LOGIN")){
             progressDialog.cancel();
             switch (response) {
-                case 0:
+                case 0: //success login regular or other types
                     sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", username_login);
                     editor.putString("password", password_login);
                     editor.commit();
                     new fetchData(0, true).execute();
-
                     break;
+
+                //wrong password
                 case 1:
                     CheckingUtils.createErrorBox("Uhhh...Leisiu pabandyti dar kartą", context,  R.style.ScheduleDialogStyle);
                     break;
 
+                ///Not activated
                 case 2:
                     CheckingUtils.createErrorBox("Sveikinu prisiregistravus, tačiau tau reikia nueiti į paštą ir aktyvuoti savo paskyrą", context, R.style.ScheduleDialogStyle);
                     break;
 
+                //No internet
                 case 3:
                     CheckingUtils.createErrorBox("Pamaitink mūsų serverį WIFI ryšiu arba mobiliais", context, R.style.ScheduleDialogStyle);
                     break;
             }
 
         }
+        if(method_type.equals("LOGIN_GMAIL_AND_REGISTER")){
+            progressDialog.cancel();
+            switch (response) {
+                case 0: //success login regular or other types
+                    sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username_login);
+                    editor.putString("password", password_login);
+                    editor.commit();
+                    new fetchData(0, true).execute();
+                    break;
+
+                //Failed to login with facebook or gmail
+                case 5:
+                    new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id);
+                    break;
+
+            }
+
+        }
+
+
+
 
         if(method_type.equals("LOGOUT")){
             sharedPreferences = context.getSharedPreferences("DataPrefs", context.MODE_PRIVATE);
@@ -354,7 +407,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
         if(onfinishlistener!=null){
-            onfinishlistener.onFinish();
+            onfinishlistener.onFinish(response);
 
         }
 
@@ -544,7 +597,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
 
-    private int login(String username, String password, String device_id) {
+    private int login(String username, String password, String device_id, String type) {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -558,14 +611,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
             jsonObject.putOpt("device_id", device_id);
+            jsonObject.putOpt("type", type);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
         MultipartEntityBuilder entity = MultipartEntityBuilder.create();
-        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
-        entity.addTextBody("json", jsonObject.toString(), type);
+        ContentType content_type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), content_type);
         httpPost.setEntity(entity.build());
 
         JSONObject responseObject = null;
@@ -589,6 +643,54 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+
+
+    private int loginSocials(String username, String password, String type) {
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_LOGIN);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("type", type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType content_type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), content_type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            return responseObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+    }
+
     private int send_challenge(String username, String password, String challenge,String title, String time, String mail) {
 
         //Connect to mysql.
@@ -1062,7 +1164,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                 context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
                 ((Activity) context).finish();
             }else{
-                onfinishlistener.onFinish();
+                onfinishlistener.onFinish(response);
             }
 
 

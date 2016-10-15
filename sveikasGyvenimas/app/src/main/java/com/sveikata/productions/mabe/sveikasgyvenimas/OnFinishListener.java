@@ -5,6 +5,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
  */
 public interface OnFinishListener {
 
-    public void onFinish();
+    public void onFinish(int responseCode);
+
 
 }
