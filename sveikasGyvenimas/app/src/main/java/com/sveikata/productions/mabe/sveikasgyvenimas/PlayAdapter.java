@@ -245,7 +245,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
 
         //Send challenge
-        private AppCompatButton go_to_send_activity;
+        private GifImageView go_to_send_activity;
 
         //Start Playing
         private GifImageView start_playing;
@@ -424,9 +424,9 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                     break;
 
-                case 2:
+                case 2: //send challenge button
 
-                            go_to_send_activity = (AppCompatButton) itemView.findViewById(R.id.go_to_send_challenge_activity);
+                            go_to_send_activity = (GifImageView) itemView.findViewById(R.id.go_to_send_challenge_activity);
 
                             go_to_send_activity.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -514,7 +514,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
     {
         Uri uri = null;
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-
 
         switch (which_img){
             case 0:

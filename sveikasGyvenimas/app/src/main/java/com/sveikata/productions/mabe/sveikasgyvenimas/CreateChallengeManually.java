@@ -94,9 +94,9 @@ public class CreateChallengeManually extends AppCompatActivity {
                     time = "7";
                 }
 
-                if(challenge.equals("Gerti daug vandens 21 dieną")){
+                if(challenge.equals("Gerti daug vandens 14 dienų")){
                     title = "Gerti vandenį";
-                    time = "21";
+                    time = "14";
                 }
 
                 if(mail.isEmpty()){

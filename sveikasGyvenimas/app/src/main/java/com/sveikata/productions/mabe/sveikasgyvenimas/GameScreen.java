@@ -53,7 +53,7 @@ public class GameScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_screen);
         Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
-        Typeface tfBevan = Typeface.createFromAsset(getAssets(), "fonts/bevan.ttf");
+        Typeface tfComforta = Typeface.createFromAsset(getAssets(), "fonts/comforta.ttf");
         sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -65,8 +65,8 @@ public class GameScreen extends AppCompatActivity {
         final Animation down = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         highscore_txt = (TextView) findViewById(R.id.highscore);
         score_txt = (TextView) findViewById(R.id.score);
-        highscore_txt.setText("Highscore: " + String.valueOf(highscore));
-        score_txt.setText("Score: " + "0");
+        highscore_txt.setText("Geriausias rezultatas: " + String.valueOf(highscore));
+        score_txt.setText("Rezultatas: " + "0");
 
         top_title = (TextView) findViewById(R.id.top_title);
         top_volume = (TextView) findViewById(R.id.top_volume);
@@ -77,7 +77,7 @@ public class GameScreen extends AppCompatActivity {
         bottom_image = (ImageView) findViewById(R.id.bottom_image);
 
         which_stronger = (TextView) findViewById(R.id.which_is_stronger);
-        which_stronger.setTypeface(tfBevan);
+        which_stronger.setTypeface(tfComforta);
         score_txt.setTypeface(tf);
         highscore_txt.setTypeface(tf);
 
@@ -93,10 +93,10 @@ public class GameScreen extends AppCompatActivity {
         bottom = generateNewBottom();
 
         final ResizeAnimation expand_top = new ResizeAnimation(top_volume, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this), 0);
-        expand_top.setDuration(200);
+        expand_top.setDuration(1);
 
         final ResizeAnimation expand_bottom = new ResizeAnimation(bottom_volume, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this), 0);
-        expand_bottom.setDuration(200);
+        expand_bottom.setDuration(1);
 
 
         top_image.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +111,7 @@ public class GameScreen extends AppCompatActivity {
                     startActivity(new Intent(GameScreen.this, YouLostHigherLowerAcitivity.class).putExtra("score", String.valueOf(new_score)).putExtra("highscore", String.valueOf(highscore)));
                 }else{
                     new_score++;
-                    score_txt.setText("Score: " + String.valueOf(new_score));
+                    score_txt.setText("Rezultatas: " + String.valueOf(new_score));
 
                     if(canClick){
                         bottom_volume.startAnimation(expand_bottom);
@@ -146,7 +146,7 @@ public class GameScreen extends AppCompatActivity {
 
                 }else{
                     new_score++;
-                    score_txt.setText("Score: " + String.valueOf(new_score));
+                    score_txt.setText("Rezultatas: " + String.valueOf(new_score));
 
                     if(canClick){
                     bottom_volume.startAnimation(expand_bottom);
@@ -223,7 +223,7 @@ public class GameScreen extends AppCompatActivity {
     private int generateNewTop(){
         Animation right_animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
 
-        final ResizeAnimation shrink_top = new ResizeAnimation(top_volume, 0, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this));
+        final ResizeAnimation shrink_top = new ResizeAnimation(top_volume, 0, (int) CheckingUtils.convertPixelsToDp(0, GameScreen.this));
         shrink_top.setDuration(0);
         top_volume.startAnimation(shrink_top);
 
@@ -235,14 +235,16 @@ public class GameScreen extends AppCompatActivity {
         top_title.setText(top_title_value);
         top_volume.setText(top_volume_value);
         top_image.setImageResource(top_image_value);
+        top_image.invalidate();
         top_image.startAnimation(right_animation);
+
 
         return top;
     }
 
     private int generateNewBottom(){
         Animation left_animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
-        final ResizeAnimation shrink_bottom = new ResizeAnimation(top_volume, 0, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this));
+        final ResizeAnimation shrink_bottom = new ResizeAnimation(top_volume, 0, (int) CheckingUtils.convertPixelsToDp(0, GameScreen.this));
         shrink_bottom.setDuration(0);
         bottom_volume.startAnimation(shrink_bottom);
 
@@ -256,6 +258,7 @@ public class GameScreen extends AppCompatActivity {
         bottom_volume.getLayoutParams().height=0;
         bottom_volume.setText(bottom_volume_value);
         bottom_image.setImageResource(bottom_image_value);
+        top_image.invalidate();
         bottom_image.startAnimation(left_animation);
 
         return bottom;

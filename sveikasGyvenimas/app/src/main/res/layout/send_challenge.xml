@@ -4,16 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.AppCompatButton
-        android:layout_width="fill_parent"
-        android:text="Mesk iššūkį draugui!"
-        android:layout_height="45dp"
-        android:textColor="#FFFFFF"
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="384dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
         android:id="@+id/go_to_send_challenge_activity"
-        android:background="@drawable/challenge_friend_buttons_borders"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="8dp" />
+        android:src="@drawable/challenge_button"/>
 
 </RelativeLayout>

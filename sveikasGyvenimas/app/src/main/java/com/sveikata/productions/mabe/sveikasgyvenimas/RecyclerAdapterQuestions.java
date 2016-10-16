@@ -29,6 +29,9 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.droidsonroids.gif.GifImageButton;
+import pl.droidsonroids.gif.GifImageView;
+
 /**
  * Created by Benas on 9/18/2016.
  */
@@ -153,7 +156,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
         //Ask Question layout
         private TextView faq_txt;
-        private AppCompatButton ask_pro;
+        private GifImageView ask_pro;
 
 
 
@@ -228,7 +231,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
                     faq_txt.setTypeface(tf_txt);
 
-                    ask_pro = (AppCompatButton) itemView.findViewById(R.id.ask_pro);
+                    ask_pro = (GifImageView) itemView.findViewById(R.id.ask_pro);
                     ask_pro.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

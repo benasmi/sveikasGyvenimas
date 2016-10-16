@@ -78,6 +78,7 @@
         android:text="Pridėti faktą naudotojams"
         android:id="@+id/add_fact"
         android:onClick="add_fact"
+            android:textColor="#FFFFFF"
         android:background="#34495e"
             android:layout_below="@+id/image_fact_admin"
             android:layout_alignParentLeft="true"

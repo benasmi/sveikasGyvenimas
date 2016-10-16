@@ -25,8 +25,8 @@ public class YouLostHigherLowerAcitivity extends AppCompatActivity {
     private TextView highscore_txt;
     private GifImageView gif_background;
 
-    private Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
-    private Typeface tfBevan = Typeface.createFromAsset(getAssets(), "fonts/bevan.ttf");
+    private Typeface tf;
+    private Typeface tfBevan;
 
     private String score;
     private String  highscore;
@@ -38,6 +38,9 @@ public class YouLostHigherLowerAcitivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_you_lost_higher_lower_acitivity);
+
+        tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
+        tfBevan = Typeface.createFromAsset(getAssets(), "fonts/bevan.ttf");
 
         gif_background = (GifImageView) findViewById(R.id.gif_background);
 

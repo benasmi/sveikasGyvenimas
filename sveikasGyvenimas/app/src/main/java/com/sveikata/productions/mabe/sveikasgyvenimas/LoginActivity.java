@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
                 String type = "gmail";
                 String token = sharedPrefs.getString("device_id", "");
 
-                new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", name, last_name, username, password, mail, gender, years, type,token);
+                new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name,years,gender,mail,type);
                 firebaseAuthWithGoogle(account);
 
                 }else{
@@ -280,21 +280,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void signIn() {
-
-            boolean revoke = loginPrefs.getBoolean("revoke", false);
-
-            if(!CheckingUtils.isNetworkConnected(this)){
-                CheckingUtils.createErrorBox("Įjunkite internetą", this, R.style.ScheduleDialogStyle);
-
-                return;
-            }
-
-            if(revoke){
                 revokeAccess();
-            }else{
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(signInIntent, REQUEST_CODE_FOR_GOOGLE);
-            }
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

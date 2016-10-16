@@ -78,7 +78,6 @@ public class TabActivityLoader extends AppCompatActivity {
 
                 switch (position){
 
-
                     case 0:
                         CheckingUtils.changeNotifBarColor("#00796B", window);
                         myToolbar.setBackgroundColor(Color.parseColor("#009688"));
@@ -118,6 +117,7 @@ public class TabActivityLoader extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 tabLayout.getTabAt(tab.getPosition()).setIcon(tabIcons[tab.getPosition()]);
+                setTabScheduleIcon(tabLayout, tab.getPosition());
             }
         });
 

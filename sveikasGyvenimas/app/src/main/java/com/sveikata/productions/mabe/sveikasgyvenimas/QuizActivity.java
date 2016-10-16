@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,12 +35,11 @@ public class QuizActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     public static final int questionCount = 5;
 
-    public static final String[] question_1 = {"Kokia yra mirtina alkoholio dozė?", "dahuja", "dahuja su biski", "labai dahuja", "labai dahuja su biski", "labai dahuja su biski"};
-    public static final String[] question_2 = {"Kas tu??", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
-    public static final String[] question_3 = {"Kodėl taip sakai?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
-    public static final String[] question_4 = {"Kaip kepti blynus?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
-    public static final String[] question_5 = {"Ar astunkojis yra kebabo lekste?", "Nu nedaug", "Nu biski", "Px man", "Daug", "Daug"};
-
+    public static final String[] question_1 = {"Kokia yra mirtina alkoholio dozė?", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
+    public static final String[] question_2 = {"Kas tu?", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
+    public static final String[] question_3 = {"Dar vienas klausimas?", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
+    public static final String[] question_4 = {"Beveik paskutinis klausimas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
+    public static final String[] question_5 = {"Paskutinis klausimas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
     public static int question;
     public static int score;
     private int highscore;
@@ -60,7 +60,10 @@ public class QuizActivity extends AppCompatActivity {
         CheckingUtils.changeNotifBarColor("#2B3C50", getWindow());
 
 
-        generatePolnijBred();
+        answer1 = (AppCompatButton) findViewById(R.id.quiz_answer_1);
+        answer2 = (AppCompatButton) findViewById(R.id.quiz_answer_2);
+        answer3 = (AppCompatButton) findViewById(R.id.quiz_answer_3);
+        answer4 = (AppCompatButton) findViewById(R.id.quiz_answer_4);
 
 
         final TimerTask task = new TimerTask() {
@@ -218,10 +221,7 @@ public class QuizActivity extends AppCompatActivity {
 
         question_textview.setText(question_title);
 
-        answer1.setText(question_answer_1);
-        answer2.setText(question_answer_2);
-        answer3.setText(question_answer_3);
-        answer4.setText(question_answer_4);
+        generatePolnijBred(question_answer_1, question_answer_2, question_answer_3, question_answer_4);
 
         if(answer1.getText().toString().equals(rightAnswer)){
             answer1.setOnClickListener(rightListener);
@@ -242,8 +242,7 @@ public class QuizActivity extends AppCompatActivity {
 
         question_textview.setText(question_title);
 
-        if(question<=5){
-
+        if(question<=4){
        countDownTimer = new CountDownTimer(16000, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -286,41 +285,55 @@ public class QuizActivity extends AppCompatActivity {
 
     }
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            countDownTimer.cancel();
+            question = 0;
+            score = 0;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     private int random_int(int min, int max)
     {
         return (int) (Math.random()*(max-min))+min;
     }
 
-    private void generatePolnijBred(){
+
+    private void generatePolnijBred(String question_answer_1, String question_answer_2, String question_answer_3, String question_answer_4){
         int randomButtonQuestions = random_int(0,4);
         Log.i("TEST", String.valueOf(randomButtonQuestions));
         switch (randomButtonQuestions){
             case 0:
-                answer1 = (AppCompatButton) findViewById(R.id.quiz_answer_1);
-                answer2 = (AppCompatButton) findViewById(R.id.quiz_answer_2);
-                answer3 = (AppCompatButton) findViewById(R.id.quiz_answer_3);
-                answer4 = (AppCompatButton) findViewById(R.id.quiz_answer_4);
+
+                answer1.setText(question_answer_1);
+                answer2.setText(question_answer_3);
+                answer3.setText(question_answer_4);
+                answer4.setText(question_answer_2);
                 break;
             case 1:
-                answer1 = (AppCompatButton) findViewById(R.id.quiz_answer_2);
-                answer2 = (AppCompatButton) findViewById(R.id.quiz_answer_1);
-                answer3 = (AppCompatButton) findViewById(R.id.quiz_answer_3);
-                answer4 = (AppCompatButton) findViewById(R.id.quiz_answer_4);
+                answer1.setText(question_answer_2);
+                answer2.setText(question_answer_1);
+                answer3.setText(question_answer_3);
+                answer4.setText(question_answer_4);
                 break;
 
             case 2:
-                answer1 = (AppCompatButton) findViewById(R.id.quiz_answer_3);
-                answer2 = (AppCompatButton) findViewById(R.id.quiz_answer_2);
-                answer3 = (AppCompatButton) findViewById(R.id.quiz_answer_1);
-                answer4 = (AppCompatButton) findViewById(R.id.quiz_answer_4);
+                answer1.setText(question_answer_1);
+                answer2.setText(question_answer_4);
+                answer3.setText(question_answer_2);
+                answer4.setText(question_answer_3);
                 break;
 
             case 3:
-                answer1 = (AppCompatButton) findViewById(R.id.quiz_answer_4);
-                answer2 = (AppCompatButton) findViewById(R.id.quiz_answer_3);
-                answer3 = (AppCompatButton) findViewById(R.id.quiz_answer_2);
-                answer4 = (AppCompatButton) findViewById(R.id.quiz_answer_1);
+                answer1.setText(question_answer_4);
+                answer2.setText(question_answer_3);
+                answer3.setText(question_answer_2);
+                answer4.setText(question_answer_1);
                 break;
         }
     }
+
 }

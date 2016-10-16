@@ -155,7 +155,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             mail = params[8];
             type = params[9];
 
-            response = loginSocials(username_login,password_login, type);
+            response = loginSocials(username_login,password_login, type, device_id);
 
         }
 
@@ -645,7 +645,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
 
-    private int loginSocials(String username, String password, String type) {
+    private int loginSocials(String username, String password, String type, String token) {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -658,6 +658,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         try {
             jsonObject.putOpt("username", username);
             jsonObject.putOpt("password", password);
+            jsonObject.putOpt("device_id", token);
             jsonObject.putOpt("type", type);
         } catch (JSONException e) {
             e.printStackTrace();
