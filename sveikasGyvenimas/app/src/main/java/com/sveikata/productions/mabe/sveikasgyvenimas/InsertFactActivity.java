@@ -6,15 +6,22 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 /**
  * Created by Benas on 9/19/2016.
@@ -29,6 +36,7 @@ public class InsertFactActivity extends Activity {
     private ImageView image_fact_admin;
     private String filePath;
     private String img_height;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +60,41 @@ public class InsertFactActivity extends Activity {
             }
         });
 
+        //Gets called when user finishes typing
+        url_fact_admin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+
+                    Glide.with(InsertFactActivity.this)
+                            .load(((TextView) v).getText().toString())
+                            .asBitmap()
+                            .animate(R.anim.slide_in_left)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                    image_fact_admin.setImageBitmap(resource);
+                                    filePath = null;
+                                }
+
+                                @Override
+                                public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                                    Animation shake = AnimationUtils.loadAnimation(InsertFactActivity.this, R.anim.shake);
+                                    url_fact_admin.startAnimation(shake);
+                                    url_fact_admin.setError("Netinkamas paveiksliuko URL!");
+                                    image_fact_admin.setImageResource(R.drawable.add_file);
+                                }
+                            });
+                }
+            }
+        });
+
     }
 
 
 
     public void add_fact(View view) {
+
         Animation shake = AnimationUtils.loadAnimation(this,R.anim.shake);
 
         String title = title_fact_admin.getText().toString();
@@ -112,11 +150,11 @@ public class InsertFactActivity extends Activity {
 
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     image_fact_admin.setImageBitmap(CheckingUtils.scaleBitmap(bitmap));
-
                     break;
 
 
                 case RESULT_CANCELED:
+                    image_fact_admin.setImageResource(R.drawable.add_file);
                     return;
             }
 

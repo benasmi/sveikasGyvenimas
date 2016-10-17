@@ -178,7 +178,6 @@
         android:maxLines="1"
         android:drawablePadding="8dp"
         android:textColorHint="#515959"
-
         android:background="@drawable/button_borders_different_color"
         android:id="@+id/login_username_text"
         android:hint="Vartotojo vardas"
