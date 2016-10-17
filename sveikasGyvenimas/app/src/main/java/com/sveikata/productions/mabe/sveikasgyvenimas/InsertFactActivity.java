@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,7 +38,7 @@ public class InsertFactActivity extends Activity {
     private ImageView image_fact_admin;
     private String filePath;
     private String img_height;
-
+    private boolean failedToLoad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,38 +62,44 @@ public class InsertFactActivity extends Activity {
             }
         });
 
-        //Gets called when user finishes typing
-        url_fact_admin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+
+        url_fact_admin.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    Glide.with(InsertFactActivity.this)
-                            .load(((TextView) v).getText().toString())
-                            .asBitmap()
-                            .animate(R.anim.slide_in_left)
-                            .into(new SimpleTarget<Bitmap>() {
-                                @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                                    image_fact_admin.setImageBitmap(resource);
-                                    filePath = null;
-                                }
+            }
 
-                                @Override
-                                public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                                    Animation shake = AnimationUtils.loadAnimation(InsertFactActivity.this, R.anim.shake);
-                                    url_fact_admin.startAnimation(shake);
-                                    url_fact_admin.setError("Netinkamas paveiksliuko URL!");
-                                    image_fact_admin.setImageResource(R.drawable.add_file);
-                                }
-                            });
-                }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    url_fact_admin.setTextColor(Color.BLACK);
+                    image_fact_admin.setImageResource(R.drawable.add_file);
+                    filePath=null;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Glide.with(InsertFactActivity.this)
+                        .load(s.toString())
+                        .asBitmap()
+                        .animate(R.anim.slide_in_left)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                failedToLoad = false;
+                                image_fact_admin.setImageBitmap(resource);
+                                filePath = null;
+                            }
+
+                            @Override
+                            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                                failedToLoad = true;
+                            }
+                        });
             }
         });
 
     }
-
-
 
     public void add_fact(View view) {
 
@@ -124,6 +132,13 @@ public class InsertFactActivity extends Activity {
             return;
         }
 
+        if(failedToLoad){
+            url_fact_admin.setError("Netinkamas paveiksliuko URL!");
+            image_fact_admin.setImageResource(R.drawable.add_file);
+            url_fact_admin.startAnimation(shake);
+            return;
+        }
+
         AskQuestionsActivity.addFAQData = true;
         InterestingFactsActivity.addFactsFirstTime = true;
         HealthyLifeActivity.addData = true;
@@ -144,7 +159,7 @@ public class InsertFactActivity extends Activity {
                 case RESULT_OK:
 
                     url_fact_admin.setTextColor(Color.parseColor("#bdc3c7"));
-
+                    url_fact_admin.setText("");
                     Uri selectedImage = data.getData();
                     filePath = getPath(selectedImage);
 

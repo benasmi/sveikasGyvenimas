@@ -62,6 +62,16 @@
         <item name="android:background">#8e44ad</item>
     </style>
 
+    //Send challenge
+    <style name="SendChallengeCustom" parent="Base.V7.Theme.AppCompat.Dialog">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#c2c2c2</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <!-- Used for the background -->
+        <item name="android:background">#1d1b18</item>
+    </style>
+
 
 
     <style name="AppThemeBar" parent="Theme.AppCompat.Light.DarkActionBar">

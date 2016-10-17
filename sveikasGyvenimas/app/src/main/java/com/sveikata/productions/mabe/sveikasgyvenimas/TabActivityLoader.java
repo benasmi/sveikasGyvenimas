@@ -103,7 +103,6 @@ public class TabActivityLoader extends AppCompatActivity {
                         tabLayout.setBackgroundColor(Color.parseColor("#9b59b6"));
                         break;
 
-
                 }
 
             }

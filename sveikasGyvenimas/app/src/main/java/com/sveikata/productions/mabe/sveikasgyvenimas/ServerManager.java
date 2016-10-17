@@ -300,11 +300,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     break;
 
                 case 1:
-                    CheckingUtils.createBoxSuggestToFriend("Toks vartotojas neegzistuoja, pasiūlyk draugui prisiregistruoti!", context, R.style.PlayDialogStyle);
+                    CheckingUtils.createBoxSuggestToFriend("Toks vartotojas neegzistuoja, pasiūlyk draugui prisiregistruoti!", context, R.style.SendChallengeCustom);
                     break;
 
                 case 2:
-                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context, R.style.PlayDialogStyle);
+                    CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context, R.style.SendChallengeCustom);
                     PlayActivity.shouldAddInfo=true;
                     AskQuestionsActivity.addFAQData=true;
                     HealthyLifeActivity.addData=true;

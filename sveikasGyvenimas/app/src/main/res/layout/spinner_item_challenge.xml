@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="7dp"
-    android:textColorHint="#000000"
+    android:textColorHint="#eac73c"
     android:hint="Laikas"
     android:textSize="15dp"
-    android:textColor="#000000" />
+    android:textColor="#eac73c"/>

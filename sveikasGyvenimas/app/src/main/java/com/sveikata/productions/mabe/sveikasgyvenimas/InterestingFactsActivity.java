@@ -36,6 +36,9 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
     private View rootView;
 
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
