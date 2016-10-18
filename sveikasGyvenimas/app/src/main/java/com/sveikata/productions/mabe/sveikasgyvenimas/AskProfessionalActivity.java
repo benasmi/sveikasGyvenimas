@@ -1,6 +1,7 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class AskProfessionalActivity extends AppCompatActivity {
 
@@ -16,7 +18,8 @@ public class AskProfessionalActivity extends AppCompatActivity {
     private EditText message;
     private EditText subject;
     private Spinner spinner;
-
+    private Typeface tf;
+    private TextView txt;
     public static String specialist_BEN = "Kietas - Benas. M";
     public static String specialist_MARTIN = "Lopas - Martynas. D";
 
@@ -24,8 +27,9 @@ public class AskProfessionalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_professional);
-        CheckingUtils.changeNotifBarColor("#8e44ad", getWindow());
+        CheckingUtils.changeNotifBarColor("#27382e", getWindow());
 
+        tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
 
         //Setting up spinner
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -34,12 +38,11 @@ public class AskProfessionalActivity extends AppCompatActivity {
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinner_adapter);
 
-
         //Sending email
         message = (EditText) findViewById(R.id.email_message);
         subject = (EditText) findViewById(R.id.subject_email);
+        txt = (TextView) findViewById(R.id.ask_new_question_txt);
         ask_button = (AppCompatButton) findViewById(R.id.ask);
-
         ask_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +78,10 @@ public class AskProfessionalActivity extends AppCompatActivity {
             }
         });
 
-
     }
-    public void sendEmail(String[] to, String subject, String message){
+
+    public void sendEmail(String[] to, String subject, String message)
+    {
 
         Intent intent =new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, to);
@@ -89,4 +93,5 @@ public class AskProfessionalActivity extends AppCompatActivity {
         this.startActivity(email);
 
     }
+
 }

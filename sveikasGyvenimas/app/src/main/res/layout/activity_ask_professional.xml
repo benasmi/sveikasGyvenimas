@@ -8,20 +8,20 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/ask_professional_background"
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.AskProfessionalActivity">
 
 
     <EditText
         android:layout_width="375dp"
-        android:layout_height="50dp"
+        android:layout_height="90dp"
         android:id="@+id/email_message"
-
-        android:background="@drawable/borders_question_email"
+        android:background="@drawable/transparent_backgrounds"
         android:paddingLeft="7dp"
         android:hint="Jūsų klausimas, pasirinktam specialistui"
         android:textSize="15dp"
-        android:textColorHint="#ecf0f1"
-        android:textColor="#ffffff"
+        android:textColor="#FFF1C40F"
+        android:textColorHint="#eac73c"
         android:gravity="top|left"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
@@ -31,10 +31,10 @@
         android:layout_width="375dp"
         android:layout_height="40dp"
         android:id="@+id/ask"
-        android:background="@drawable/ask_pro"
+        android:background="@drawable/game_over_buttons"
         android:text="Klausti !"
-
-        android:textColor="#ffffff"
+        android:layout_marginTop="5dp"
+        android:textColor="#FFFFFF"
         android:layout_below="@+id/email_message"
         android:layout_centerHorizontal="true" />
 
@@ -50,33 +50,34 @@
             android:layout_width="170dp"
             android:layout_height="35dp"
             android:id="@+id/spinner"
-            android:background="@drawable/borders_question_email"
+            android:background="@drawable/transparent_backgrounds"
             android:paddingLeft="7dp" />
-
-        <EditText
-            android:layout_width="180dp"
-            android:layout_height="35dp"
-            android:id="@+id/subject_email"
-            android:background="@drawable/borders_question_email"
-            android:paddingLeft="7dp"
-            android:textSize="15dp"
-            android:textColorHint="#ecf0f1"
-            android:textColor="#ffffff"
-            android:hint="Tema"
-            android:layout_below="@+id/ask_new_question_txt"
-            android:layout_toRightOf="@+id/linearlayout"
-            android:layout_toEndOf="@+id/linearlayout"
-            android:layout_marginLeft="10dp" />
 
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="Užduok klausimą"
         android:id="@+id/ask_new_question_txt"
-        android:textSize="28dp"
+        android:textSize="30dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="181dp"
+        android:layout_height="35dp"
+        android:id="@+id/subject_email"
+        android:background="@drawable/transparent_backgrounds"
+        android:paddingLeft="7dp"
+        android:textSize="15dp"
+
+        android:textColor="#FFF1C40F"
+        android:textColorHint="#eac73c"
+        android:hint="Tema"
+        android:layout_alignTop="@+id/linearlayout"
+        android:layout_toRightOf="@+id/linearlayout"
+        android:layout_toEndOf="@+id/linearlayout" />
 
 </RelativeLayout>

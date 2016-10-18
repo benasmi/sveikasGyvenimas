@@ -103,8 +103,8 @@ public class InsertFactActivity extends Activity {
 
     public void add_fact(View view) {
 
-        Animation shake = AnimationUtils.loadAnimation(this,R.anim.shake);
 
+        Animation shake = AnimationUtils.loadAnimation(this,R.anim.shake);
         String title = title_fact_admin.getText().toString();
         String body = body_fact_admin.getText().toString();
 
@@ -132,7 +132,7 @@ public class InsertFactActivity extends Activity {
             return;
         }
 
-        if(failedToLoad){
+        if(failedToLoad && !url.equals("")){
             url_fact_admin.setError("Netinkamas paveiksliuko URL!");
             image_fact_admin.setImageResource(R.drawable.add_file);
             url_fact_admin.startAnimation(shake);

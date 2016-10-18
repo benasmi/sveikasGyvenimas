@@ -3,9 +3,11 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -206,6 +208,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 });
 
+
+                googleMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
+                    @Override
+                    public void onInfoWindowLongClick(Marker marker) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/"));
+                        context.startActivity(browserIntent);
+                    }
+                });
 
                 //Adding markers
                 for(int i=0;i<infoHolder.size(); i++){

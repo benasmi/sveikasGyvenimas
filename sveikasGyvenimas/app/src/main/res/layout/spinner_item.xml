@@ -3,6 +3,6 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColorHint="#ecf0f1"
+    android:textColorHint="#FFF1C40F"
     android:textSize="15dp"
-    android:textColor="#ffffff" />
+    android:textColor="#FFF1C40F" />
