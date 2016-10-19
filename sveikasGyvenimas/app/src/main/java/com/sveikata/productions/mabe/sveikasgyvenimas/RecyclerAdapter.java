@@ -46,6 +46,9 @@ import com.google.maps.model.GeocodingResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.shape.RectangleShape;
+
 /**
  * Created by Martyno on 2016.09.10.
  */
@@ -57,10 +60,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<InfoHolder> infoHolder;
     private Fragment fragment;
     private GoogleMap googleMaps;
+
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     private RecyclerView recyclerview;
     public String is_administrator;
-
+    private boolean showMap;
     //Map pos
     public LatLng currentPos = new LatLng(55.3, 23.7);
     public float mapZoom = 5.8f;
@@ -75,7 +81,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.is_administrator = is_administrator;
 
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-
+        showMap = sharedPreferences.getBoolean("showMap", false);
+        editor = sharedPreferences.edit();
     }
 
     public void remove(int position) {
@@ -158,16 +165,31 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             });
 
 
-
             if(position % 2 == 0) {
                 holder.layout.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
 
 
 
+
         }
 
         if(dataType.equals("1") || dataType.equals("2")){
+
+            if(!showMap){
+                editor.putBoolean("showMap", true).commit();
+                new MaterialShowcaseView.Builder((Activity) context)
+                        .setTarget(holder.map)
+                        .setDismissTextColor(Color.parseColor("#FFEAC73C"))
+                        .setShape(new RectangleShape((int)CheckingUtils.convertPixelsToDp(400,context),(int)CheckingUtils.convertPixelsToDp(300, context)))
+                        .setShapePadding(-75)
+                        .setDismissText("SUPRATAU!")
+                        .setContentText("Sveikas atvykęs, mielas vartotojau. Čia visada matysi visus vykstančius renginius, o žemiau galėsi apie juos paskaityti!")
+                        .setFadeDuration(1000)
+                        .setDelay(1000) // optional but starting animations immediately in onCreate can make them choppy
+                        .show();
+            }
+
            refreshMap(holder);
         }
 
@@ -347,8 +369,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                     }
 
-
-
                     break;
                 case 1:
                     event_name_admin = (EditText) itemView.findViewById(R.id.event_name_admin);
@@ -458,8 +478,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     break;
                 case 2:
                     map = (MapView) itemView.findViewById(R.id.map_container_client);
+
                     break;
             }
+
+
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,11 +19,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 public class InterestingFactsActivity extends android.support.v4.app.Fragment {
 
 
     private ArrayList<FactInfoHolder> data = new ArrayList<FactInfoHolder>();
-    private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     private InterestingFactsAdapter adapter;
 
     //OBJECTS for checking if user is admin
@@ -30,11 +33,9 @@ public class InterestingFactsActivity extends android.support.v4.app.Fragment {
     private JSONObject userData;
 
     public static boolean addFactsFirstTime = true;
-    public static boolean onThisTab = false;
-
     private String is_administrator;
     private View rootView;
-
+    private boolean show;
 
 
 

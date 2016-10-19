@@ -46,6 +46,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -71,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
 
         //Google+ init
         mAuth = FirebaseAuth.getInstance();
@@ -124,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
         username_ET = (EditText) findViewById(R.id.login_username_text);
         password_ET = (EditText) findViewById(R.id.login_password_text);
+
 
         Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/bevan.ttf");
         TextView textView = (TextView) findViewById(R.id.textView);

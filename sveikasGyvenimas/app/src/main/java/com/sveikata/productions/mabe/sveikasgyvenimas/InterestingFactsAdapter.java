@@ -1,5 +1,6 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFactsAdapter.ViewHolder> {
 
     private Context context;
@@ -35,6 +38,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
     private SharedPreferences sharedPreferences;
     private LayoutInflater layoutInflater;
     private String is_administrator;
+    private boolean show = false;
 
     public InterestingFactsAdapter(Context context, ArrayList<FactInfoHolder> factHolder, String is_administrator) {
         this.context = context;
@@ -105,11 +109,16 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
                 holder.fact_title.setText(data.getFactTitle());
                 holder.fact_source.setText(data.getFactSource());
+
                 holder.fact_body.setText(data.getFactBody());
 
                 holder.fb_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+
+
+
 
                         if(holder.fact_image!=null) {
                            CheckingUtils.shareFact(data.getFactTitle(), context, data.getFactSource(), data.getFactImageUrl(), data.getFactBody());

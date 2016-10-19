@@ -1,5 +1,6 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,23 +24,30 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 public class PlayActivity extends android.support.v4.app.Fragment {
 
     public static boolean shouldAddInfo = true;
-    public static boolean onThisTab = false;
-    private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     private ArrayList<PlayInfoHolder> info = new ArrayList<PlayInfoHolder>();
     private JSONArray challenges;
     private boolean isReceiverRegistered = false;
     private BroadcastReceiver broadcastReceiver;
     private Context ctx;
-
+    private boolean show = false;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_play,container,false);
         ctx = getContext();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.play_recycler_view);
+
+
+
+
+
+
 
         try{
             challenges = new JSONArray(getActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE).getString("challenge_data", "[]"));

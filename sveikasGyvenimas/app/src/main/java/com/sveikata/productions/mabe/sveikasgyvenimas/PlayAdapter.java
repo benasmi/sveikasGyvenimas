@@ -27,19 +27,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import pl.droidsonroids.gif.GifImageButton;
 import pl.droidsonroids.gif.GifImageView;
-import tourguide.tourguide.Overlay;
-import tourguide.tourguide.Pointer;
-import tourguide.tourguide.ToolTip;
-import tourguide.tourguide.TourGuide;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 
 /**
@@ -47,7 +39,7 @@ import tourguide.tourguide.TourGuide;
  */
 public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
-
+    private boolean show = false;
     private Context context;
     private ArrayList<PlayInfoHolder> play_info_holder;
     private SharedPreferences sharedPreferences;
@@ -136,6 +128,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         switch (data.getType()){
 
             case 0: //Preview calculators
+
+
                 break;
             case 1: //current challenge layout
                 holder.challenge_title.setText(data.getChallengeTitle());
@@ -240,8 +234,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private int which_image;
         boolean isAnimRunning = false;
 
-
-        private TourGuide tourGuide;
 
 
         //Send challenge

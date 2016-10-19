@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
     private ArrayList<InfoHolder> data = new ArrayList<InfoHolder>();
-    private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     private RecyclerAdapter adapter;
 
     //OBJECTS for checking if user is admin
@@ -35,7 +35,6 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     private String is_administrator;
     private View rootView;
 
-    public static boolean onThisTab = false;
     public static boolean addData = true;
 
     @Nullable
@@ -69,6 +68,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
             adapter = new RecyclerAdapter(getActivity(), data, this, recyclerView, is_administrator);
             recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0);
+
 
             if(addData) {
                 addData = false;

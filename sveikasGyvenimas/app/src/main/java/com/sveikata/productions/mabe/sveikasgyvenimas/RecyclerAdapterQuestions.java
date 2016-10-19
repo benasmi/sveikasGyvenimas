@@ -1,40 +1,21 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.service.chooser.ChooserTarget;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import pl.droidsonroids.gif.GifImageButton;
 import pl.droidsonroids.gif.GifImageView;
 
-/**
- * Created by Benas on 9/18/2016.
- */
 public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdapterQuestions.ViewHolder> {
 
 
@@ -44,7 +25,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     private ArrayList<QuestionsDataHolder> questionsDataHolder;
     private SharedPreferences sharedPreferences;
     private LayoutInflater layoutInflater;
-
+    private boolean show = false;
 
     public RecyclerAdapterQuestions(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder) {
         this.context = context;
@@ -115,6 +96,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     holder.layout.startAnimation(animation_right);
                 }
                 break;
+
             case 2:
                 holder.question_title_two.setText(data.getQuestionTitle());
                 holder.question_body_two.setText(data.getQuestionBody());
@@ -227,11 +209,11 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     //Ask pro
                     Typeface tf_txt = Typeface.createFromAsset(context.getAssets(), "fonts/comforta.ttf");
 
-
                     faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
                     faq_txt.setTypeface(tf_txt);
 
                     ask_pro = (GifImageView) itemView.findViewById(R.id.ask_pro);
+
                     ask_pro.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

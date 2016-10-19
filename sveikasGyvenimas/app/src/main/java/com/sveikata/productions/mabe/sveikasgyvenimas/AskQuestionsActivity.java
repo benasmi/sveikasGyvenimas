@@ -1,5 +1,6 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -25,21 +26,22 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
 
     public static boolean addFAQData = true;
-    public static boolean onThisTab = false;
 
     private ArrayList<QuestionsDataHolder> data = new ArrayList<QuestionsDataHolder>();
-    private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     private RecyclerAdapterQuestions adapter;
 
     //OBJECTS for checking if user is admin
     private JSONArray jsonArray;
     private JSONObject userData;
     private String is_administrator;
-
+    private boolean show = false;
 
     @Nullable
     @Override
@@ -50,6 +52,7 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_recycler);
         adapter = new RecyclerAdapterQuestions(getActivity(),data);
+
 
         if(addFAQData){
             addFAQData=false;

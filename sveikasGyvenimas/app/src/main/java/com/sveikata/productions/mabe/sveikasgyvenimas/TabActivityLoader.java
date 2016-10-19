@@ -2,6 +2,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,6 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.shape.CircleShape;
+import uk.co.deanwild.materialshowcaseview.shape.RectangleShape;
+
 public class TabActivityLoader extends AppCompatActivity {
 
     public static int[] tabIcons = {R.drawable.schedule_active, R.drawable.play_unactive,R.drawable.facts_unactive,R.drawable.questions_unactive};
@@ -24,24 +29,33 @@ public class TabActivityLoader extends AppCompatActivity {
     private Toolbar myToolbar;
     private Window window;
     private boolean normal_or_reverse;
+
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private boolean showPlay = false;
+    private boolean showFacts = false;
+    private boolean showQuestions = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_activity_loader);
 
         AskQuestionsActivity.addFAQData = true;
-        AskQuestionsActivity.onThisTab=false;
         InterestingFactsActivity.addFactsFirstTime = true;
-        InterestingFactsActivity.onThisTab=false;
         HealthyLifeActivity.addData = true;
-        HealthyLifeActivity.onThisTab = true;
-        PlayActivity.onThisTab=false;
         PlayActivity.shouldAddInfo = true;
+
+
+
 
 
         window = getWindow();
         sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
 
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
@@ -154,16 +168,16 @@ public class TabActivityLoader extends AppCompatActivity {
 
     private void setTabScheduleIcon(TabLayout tabLayout, int position){
 
+        showPlay = sharedPreferences.getBoolean("showPlay", false);
+        showFacts = sharedPreferences.getBoolean("showFacts", false);
+        showQuestions = sharedPreferences.getBoolean("showQuestions", false);
+
         if(position == 0){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_active);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_unactive);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
-            myToolbar.setTitle("Eh..Tvarkaraštis");
-            HealthyLifeActivity.onThisTab=true;
-            PlayActivity.onThisTab=false;
-            InterestingFactsActivity.onThisTab=false;
-            AskQuestionsActivity.onThisTab=false;
+            myToolbar.setTitle("Tvarkaraštis");
 
 
         }else if(position==1){
@@ -172,20 +186,35 @@ public class TabActivityLoader extends AppCompatActivity {
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
             myToolbar.setTitle("Skaičiuok ir žaisk");
-            PlayActivity.onThisTab=true;
-            InterestingFactsActivity.onThisTab=false;
-            AskQuestionsActivity.onThisTab=false;
-            HealthyLifeActivity.onThisTab=false;
+
+            if(!showPlay){
+                editor.putBoolean("showPlay",true).commit();
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(this.myToolbar)
+                        .setDismissText("SUPRATAU!")
+                        .setContentText("O atėjęs į šią skiltį, Tu galėsi išbandyti įvairias skaičiuokles, pažaisti bei mesti iššūkius draugams. Argi nešaunu?!")
+                        .setFadeDuration(1000) // optional but starting animations immediately in onCreate can make them choppy
+                        .setDismissTextColor(Color.parseColor("#FFEAC73C"))
+                        .show();
+            }
+
         }else if(position==2){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_unactive);
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_active);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_unactive);
             myToolbar.setTitle("Ar gali patikėti?");
-            InterestingFactsActivity.onThisTab=true;
-            AskQuestionsActivity.onThisTab=false;
-            HealthyLifeActivity.onThisTab=false;
-            PlayActivity.onThisTab=false;
+
+            if(!showFacts){
+                editor.putBoolean("showFacts",true).commit();
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(this.myToolbar)
+                        .setDismissText("GERAI")
+                        .setDismissTextColor(Color.parseColor("#FFEAC73C"))
+                        .setContentText("Tačiau tai dar ne viskas, nepaisant pramogų, galėsi pasisemti įvairių faktų ir dalintis jais su draugais!")
+                        .setFadeDuration(500) // optional but starting animations immediately in onCreate can make them choppy
+                        .show();
+            }
         }else if(position==3){
 
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
@@ -193,10 +222,19 @@ public class TabActivityLoader extends AppCompatActivity {
             tabLayout.getTabAt(2).setIcon(R.drawable.facts_unactive);
             tabLayout.getTabAt(3).setIcon(R.drawable.questions_active);
             myToolbar.setTitle("Klausk..Klausk..!");
-            AskQuestionsActivity.onThisTab=true;
-            HealthyLifeActivity.onThisTab=false;
-            PlayActivity.onThisTab=false;
-            InterestingFactsActivity.onThisTab=false;
+
+
+            if(!showQuestions){
+                editor.putBoolean("showQuestions",true).commit();
+                new MaterialShowcaseView.Builder(this)
+                        .setTarget(this.myToolbar)
+                        .setDismissTextColor(Color.parseColor("#FFEAC73C"))
+                        .setDismissText("ŠAUNU!")
+                        .setContentText("Nori sužinoti daugiau apie projektą? Čia rasi dažniausiai užduodamus klausimus bei galėsi paklausti specialisto, ko tik širdis geidžia!")
+                        .setFadeDuration(500) // optional but starting animations immediately in onCreate can make them choppy
+                        .show();
+            }
+
         }
 
 
