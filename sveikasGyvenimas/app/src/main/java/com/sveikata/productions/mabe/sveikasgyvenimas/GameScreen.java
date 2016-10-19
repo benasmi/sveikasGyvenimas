@@ -15,8 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.drive.internal.StringListResponse;
-import com.google.android.gms.games.Game;
+
 
 import java.util.ArrayList;
 

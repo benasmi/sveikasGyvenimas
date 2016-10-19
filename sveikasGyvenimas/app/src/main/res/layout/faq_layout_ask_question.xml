@@ -16,8 +16,8 @@
         android:layout_centerHorizontal="true" />
 
     <pl.droidsonroids.gif.GifImageView
-        android:layout_width="384dp"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:id="@+id/ask_pro"
         android:src="@drawable/ask_professional"/>

@@ -3,36 +3,39 @@
     android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@drawable/calories_calculator"
         android:id="@+id/calculator_preview_image" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignBottom="@+id/calculator_preview_image">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
+
+        <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/right_arrow"
+        android:layout_alignParentRight="true"
+        android:alpha="0.3"
+        android:id="@+id/arrow_right"
+        android:layout_marginTop="60dp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/arrow_left"
             android:src="@drawable/left_arrow"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:alpha="0.3" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/right_arrow"
-            android:layout_alignParentRight="true"
             android:alpha="0.3"
-            android:id="@+id/arrow_right"
-            android:layout_marginTop="60dp" />
+            android:layout_alignTop="@+id/arrow_right"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

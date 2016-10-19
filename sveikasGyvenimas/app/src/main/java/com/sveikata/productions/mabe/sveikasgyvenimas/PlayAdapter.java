@@ -281,43 +281,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         public ViewHolder(View itemView, int type) {
             super(itemView);
 
-            verdanaFont = Typeface.createFromAsset(context.getAssets(),"fonts/Verdana.ttf");
 
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    isAnimRunning = true;
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    isAnimRunning = false;
-                    switch (which_image){
-                        case 0:
-                            calculator_preview_image.setImageResource(R.drawable.calories_calculator);
-                            break;
-                        case 1:
-                            calculator_preview_image.setImageResource(R.drawable.water_calculator);
-                            break;
-                        case 2:
-                            calculator_preview_image.setImageResource(R.drawable.your_drink);
-                            break;
-                        case 3:
-                            calculator_preview_image.setImageResource(R.drawable.info_sheet);
-                            break;
-                        case 4:
-                            calculator_preview_image.setImageResource(R.drawable.limit_calculator);
-                            break;
-                    }
-                    calculator_preview_image.startAnimation(top_down_anim);
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
 
             switch (type) {
 
@@ -340,7 +304,23 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                 if(which_image<0){
                                     which_image=4;
                                 }
-                                calculator_preview_image.startAnimation(animation);
+                                switch (which_image){
+                                    case 0:
+                                        calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+                                        break;
+                                    case 1:
+                                        calculator_preview_image.setImageResource(R.drawable.water_calculator);
+                                        break;
+                                    case 2:
+                                        calculator_preview_image.setImageResource(R.drawable.your_drink);
+                                        break;
+                                    case 3:
+                                        calculator_preview_image.setImageResource(R.drawable.info_sheet);
+                                        break;
+                                    case 4:
+                                        calculator_preview_image.setImageResource(R.drawable.limit_calculator);
+                                        break;
+                                }
                             }
                         }
                     });
@@ -354,7 +334,23 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                     which_image=0;
                                 }
 
-                                calculator_preview_image.startAnimation(animation);
+                                switch (which_image){
+                                    case 0:
+                                        calculator_preview_image.setImageResource(R.drawable.calories_calculator);
+                                        break;
+                                    case 1:
+                                        calculator_preview_image.setImageResource(R.drawable.water_calculator);
+                                        break;
+                                    case 2:
+                                        calculator_preview_image.setImageResource(R.drawable.your_drink);
+                                        break;
+                                    case 3:
+                                        calculator_preview_image.setImageResource(R.drawable.info_sheet);
+                                        break;
+                                    case 4:
+                                        calculator_preview_image.setImageResource(R.drawable.limit_calculator);
+                                        break;
+                                }
                             }
                         }
                     });

@@ -10,9 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.google.android.gms.games.Game;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class YouLostHigherLowerAcitivity extends AppCompatActivity {

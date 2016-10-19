@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private final int REQUEST_CODE_FOR_GOOGLE = 1;
 
-
+    //Sharedprefs
     private SharedPreferences sharedPrefs;
     private SharedPreferences loginPrefs;
 
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if(!getIntent().getExtras().getBoolean("isAnimDisabled", false))
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            overridePendingTransition(R.anim.slide_in_long, R.anim.slide_out_long);
 
 
         username_ET = (EditText) findViewById(R.id.login_username_text);
