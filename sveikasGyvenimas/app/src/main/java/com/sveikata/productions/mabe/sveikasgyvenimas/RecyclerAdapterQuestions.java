@@ -69,10 +69,13 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                 View ask_question_admin = layoutInflater.inflate(R.layout.faq_layout_ask_question, parent, false);
                 viewHolder = new ViewHolder(ask_question_admin, 1);
                 return viewHolder;
-
             case 2:
                 View faq_two_lines = layoutInflater.inflate(R.layout.faq_layout_two_lines, parent, false);
                 viewHolder = new ViewHolder(faq_two_lines, 2);
+                return viewHolder;
+            case 3:
+                View phone_help = layoutInflater.inflate(R.layout.phone_help_layout, parent, false);
+                viewHolder = new ViewHolder(phone_help, 3);
                 return viewHolder;
 
         }
@@ -119,6 +122,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        private GifImageView phone_help;
         //Views for one line faq
         private TextView question_title;
         private TextView question_body;
@@ -270,6 +274,16 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                             });
 
                             isClicked = !isClicked;
+                        }
+                    });
+                    break;
+
+                case 3:
+                    phone_help = (GifImageView) itemView.findViewById(R.id.phone_help);
+
+                    phone_help.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
                         }
                     });
                     break;

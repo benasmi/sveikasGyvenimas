@@ -48,7 +48,7 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="Kuris gėrimas stipresnis?"
+        android:text="Kuris vaisius turi mažiau kalorijų?"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/which_is_stronger"
@@ -145,6 +145,70 @@
         android:layout_marginRight="11dp"
         android:layout_marginEnd="11dp"
         android:layout_alignBottom="@+id/highscore" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/fat_top"
+        android:layout_above="@+id/bottom_image"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+
+        android:layout_alignParentStart="true"
+        android:background="#1e000000"
+        android:padding="5dp"
+        android:textSize="17dp"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/carbohydrates_top"
+        android:layout_above="@+id/bottom_image"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="17dp"
+        android:textColor="#FFFFFF"
+        android:padding="5dp"
+        android:gravity="right"
+        android:background="#1e000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/fat_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="17dp"
+        android:textColor="#FFFFFF"
+        android:gravity="left"
+
+        android:padding="5dp"
+        android:background="#1e000000"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/carbohydrates_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+
+        android:textSize="17dp"
+        android:textColor="#FFFFFF"
+        android:padding="5dp"
+        android:background="#1e000000"/>
 
 
 </RelativeLayout>

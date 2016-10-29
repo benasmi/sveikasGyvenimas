@@ -2,10 +2,14 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -16,8 +20,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GameScreen extends AppCompatActivity {
 
@@ -32,8 +40,18 @@ public class GameScreen extends AppCompatActivity {
     private ImageView bottom_image;
     private TextView which_stronger;
 
+    private RelativeLayout layout;
+
     private TextView highscore_txt;
     private TextView score_txt;
+
+    private TextView top_fat;
+    private TextView bottom_fat;
+
+    private TextView top_carbohydrates;
+    private TextView bottom_carbohydrates;
+
+    private boolean isFirstTime = true;
 
     private SharedPreferences sharedPreferences;
 
@@ -55,8 +73,9 @@ public class GameScreen extends AppCompatActivity {
         Typeface tfComforta = Typeface.createFromAsset(getAssets(), "fonts/comforta.ttf");
         sharedPreferences = getSharedPreferences("DataPrefs", MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-
         CheckingUtils.changeNotifBarColor("#2c3e50", getWindow());
+
+
 
         new_score = 0;
         highscore = sharedPreferences.getInt("highscore", 0);
@@ -67,10 +86,16 @@ public class GameScreen extends AppCompatActivity {
         highscore_txt.setText("Geriausias rezultatas: " + String.valueOf(highscore));
         score_txt.setText("Rezultatas: " + "0");
 
+        top_fat = (TextView) findViewById(R.id.fat_top);
+        bottom_fat = (TextView) findViewById(R.id.fat_bottom);
+
+        top_carbohydrates = (TextView) findViewById(R.id.carbohydrates_top);
+        bottom_carbohydrates = (TextView) findViewById(R.id.carbohydrates_bottom);
+
         top_title = (TextView) findViewById(R.id.top_title);
         top_volume = (TextView) findViewById(R.id.top_volume);
         top_image = (ImageView) findViewById(R.id.top_image);
-
+        layout = (RelativeLayout) findViewById(R.id.activity_game_screen);
         bottom_title = (TextView) findViewById(R.id.bottom_title);
         bottom_volume = (TextView) findViewById(R.id.bottom_volume);
         bottom_image = (ImageView) findViewById(R.id.bottom_image);
@@ -88,20 +113,44 @@ public class GameScreen extends AppCompatActivity {
 
         addAllTypes();
 
+
+
+
         top = generateNewTop();
         bottom = generateNewBottom();
+        isFirstTime = false;
+
 
         final ResizeAnimation expand_top = new ResizeAnimation(top_volume, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this), 0);
-        expand_top.setDuration(1);
+        expand_top.setDuration(250);
 
         final ResizeAnimation expand_bottom = new ResizeAnimation(bottom_volume, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this), 0);
-        expand_bottom.setDuration(1);
+        expand_bottom.setDuration(250);
 
+
+        final Animation.AnimationListener listener = new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                canClick =true;
+                bottom = generateNewBottom();
+                top = generateNewTop();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
 
         top_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(top < bottom){
+                if(top > bottom){
 
                     if(new_score>highscore){
                         sharedPreferences.edit().putInt("highscore", new_score).commit();
@@ -116,6 +165,7 @@ public class GameScreen extends AppCompatActivity {
                         bottom_volume.startAnimation(expand_bottom);
                         top_volume.startAnimation(expand_top);
                         canClick=false;
+
                     }
 
 
@@ -123,9 +173,19 @@ public class GameScreen extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            canClick =true;
-                            bottom = generateNewBottom();
-                            top = generateNewTop();
+
+
+                            final ResizeAnimation shrink_bottom = new ResizeAnimation(bottom_volume, 0, bottom_volume.getHeight());
+                            shrink_bottom.setDuration(250);
+                            bottom_volume.startAnimation(shrink_bottom);
+
+                            final ResizeAnimation shrink_top = new ResizeAnimation(top_volume, 0, top_volume.getHeight());
+                            shrink_top.setDuration(250);
+                            top_volume.startAnimation(shrink_top);
+
+                            shrink_top.setAnimationListener(listener);
+                            shrink_bottom.setAnimationListener(listener);
+
                         }
                     },1500);
                 }
@@ -135,7 +195,7 @@ public class GameScreen extends AppCompatActivity {
         bottom_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bottom < top){
+                if(bottom > top){
 
                     if(new_score>highscore){
                         sharedPreferences.edit().putInt("highscore", new_score).commit();
@@ -157,9 +217,18 @@ public class GameScreen extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            canClick =true;
-                            bottom = generateNewBottom();
-                            top = generateNewTop();
+
+                            final ResizeAnimation shrink_bottom = new ResizeAnimation(bottom_volume, 0, bottom_volume.getHeight());
+                            shrink_bottom.setDuration(250);
+                            bottom_volume.startAnimation(shrink_bottom);
+
+                            final ResizeAnimation shrink_top = new ResizeAnimation(top_volume, 0, top_volume.getHeight());
+                            shrink_top.setDuration(250);
+                            top_volume.startAnimation(shrink_top);
+
+                            shrink_top.setAnimationListener(listener);
+                            shrink_bottom.setAnimationListener(listener);
+
                         }
                     },1500);
 
@@ -167,98 +236,145 @@ public class GameScreen extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    private void refreshColor(){
+        int color = CheckingUtils.getDominantColor(BitmapFactory.decodeResource(getResources(), alcoholList.get(top).getResource()));
+
+        layout.setBackgroundColor(color);
+        CheckingUtils.changeNotifBarColor(CheckingUtils.darker(color, 0.9f), getWindow());
     }
 
 
     private void addAllTypes(){
-        alcoholList.add(new Alcohol(R.drawable.light_beer1, "0.05%–1.2%", "Lengvas alus(nealkoholinis)"));
-        alcoholList.add(new Alcohol(R.drawable.kvass2, "0.05%–1.5%", "Gira"));
-        alcoholList.add(new Alcohol(R.drawable.kefir3, "0.2%–2.0%", "Kefyras"));
-        alcoholList.add(new Alcohol(R.drawable.kombucha3, "0.5%–1.5%", "Kombuča"));
-        alcoholList.add(new Alcohol(R.drawable.boza4, "1%", "Boza"));
-        alcoholList.add(new Alcohol(R.drawable.chocha5, "1%–11% (dažniausiai 1%–6%)", "Čiča"));
-        alcoholList.add(new Alcohol(R.drawable.cider6, "2%–8.5%", "Sidras"));
-        alcoholList.add(new Alcohol(R.drawable.beer7, "2%–12% (dažniausiai 4%–6%)", "Alus"));
-        alcoholList.add(new Alcohol(R.drawable.alcopops8, "4%", "Kokteiliai"));
-        alcoholList.add(new Alcohol(R.drawable.malt_liquor9, "5%+", "Nuovirų alkoholinis gėrimas"));
-        alcoholList.add(new Alcohol(R.drawable.makgeoli10, "6.5%–7%", "Korėjiečių ryžių vynas"));
-        alcoholList.add(new Alcohol(R.drawable.barley_wine11, "8%–15%", "Miežių vynas"));
-        alcoholList.add(new Alcohol(R.drawable.mead12, "8%–16%", "Midus"));
-        alcoholList.add(new Alcohol(R.drawable.wine13, "9%–16%", "Vynas"));
-        alcoholList.add(new Alcohol(R.drawable.sugar_wine13, "15%–17%", "Saldus vynas"));
-        alcoholList.add(new Alcohol(R.drawable.desert_wine14, "14%–25%", "Desertinis vynas"));
-        alcoholList.add(new Alcohol(R.drawable.rice_wine15, "dažniausiai 15%", "Ryžių vynas"));
-        alcoholList.add(new Alcohol(R.drawable.liquer16, "15%–55%", "Likeris"));
-        alcoholList.add(new Alcohol(R.drawable.fortified_wine_17, "18%–22%", "Spirituotas vynas"));
-        alcoholList.add(new Alcohol(R.drawable.shochu19, "25%–45% (dažniausiai 25%)", "Japoniškas gėrimas 'Shochu'"));
-        alcoholList.add(new Alcohol(R.drawable.bitters20, "28%–45%", "Trauktinė"));
-        alcoholList.add(new Alcohol(R.drawable.apple_jack21, "30%-40%", "Obuolių trauktinė"));
-        alcoholList.add(new Alcohol(R.drawable.tequila22, "32%–60% (dažniausiai 40%)", "Tekila"));
-        alcoholList.add(new Alcohol(R.drawable.vodka23, "35%–50%(Europoje min. 37,5%)", "Vodka"));
-        alcoholList.add(new Alcohol(R.drawable.brandy24, "35%–60% (dažniausiai 40%)", "Brendis"));
-        alcoholList.add(new Alcohol(R.drawable.grappa25, "37.5%–60%", "Itališkas brendis 'Grappa'"));
-        alcoholList.add(new Alcohol(R.drawable.rum26, "37.5%–80%", "Romas"));
-        alcoholList.add(new Alcohol(R.drawable.ouzo27, "37.5%+", "Graikiškas - 'Ouzo'"));
-        alcoholList.add(new Alcohol(R.drawable.cachaca28, "38%–54%", "Pitu cachaca"));
-        alcoholList.add(new Alcohol(R.drawable.sotol29, "38%–60%", "Spiritas su žolelėmis"));
-        alcoholList.add(new Alcohol(R.drawable.stroh30, "38%–80%", "Subrandintas brendis"));
-        alcoholList.add(new Alcohol(R.drawable.gin32, "40%–50%", "Džinas"));
-        alcoholList.add(new Alcohol(R.drawable.whisky33, "40%–68% (dažniausiai 40%, 43% or 46%)", "Viskis"));
-        alcoholList.add(new Alcohol(R.drawable.baiju34, "40%–60%", "Grūdų vynas"));
-        alcoholList.add(new Alcohol(R.drawable.chacha35, "40%–70%", "Gruziškas brendis 'Cacha'"));
-        alcoholList.add(new Alcohol(R.drawable.centerbe36, "70%", "Itališkas likeris 'Centerbe'"));
-        alcoholList.add(new Alcohol(R.drawable.palinka37, "42%–86%", "Vengriškas vaisių brendis"));
-        alcoholList.add(new Alcohol(R.drawable.rakia38, "42%–86%", "Bulgariškas vaisių brendis"));
-        alcoholList.add(new Alcohol(R.drawable.absinthe39, "45%–89.9%", "Žaliasis anyžinis spiritas"));
-        alcoholList.add(new Alcohol(R.drawable.tuica40, "45%–60% (dažniausiai 52%)", "Tradicinis rumunų spiritas"));
-        alcoholList.add(new Alcohol(R.drawable.arak41, "60%–65%", "Rytų Azijiečių anyžinis spiritas"));
-        alcoholList.add(new Alcohol(R.drawable.poitin42, "60%–95%", "Airių tradicinis gėrimas " + "'Poitin'"));
-        alcoholList.add(new Alcohol(R.drawable.cocoroco43, "93%–96%", "Cukranendrių spiritas"));
-        alcoholList.add(new Alcohol(R.drawable.rectified_spirit44, "95%–96%", "Grynas spiritas"));
+        alcoholList.add(new Alcohol(R.drawable.agrastas, "44", "Agrastai","0.9g","10g","0.6g"));
+        alcoholList.add(new Alcohol(R.drawable.agurkas, "15", "Agurkai","0.7g","3.6g","0.1g"));
+        alcoholList.add(new Alcohol(R.drawable.aviete, "52", "Avietės","1.2","12g","0.7g"));
+        alcoholList.add(new Alcohol(R.drawable.braske, "32", "Braškės","0.7g","8g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.gervuoge, "43", "Gervuogės","1,4g","10g","0.5g"));
+        alcoholList.add(new Alcohol(R.drawable.kriause, "57", "Kriaušės","0.4g","15g","0.1g"));
+        alcoholList.add(new Alcohol(R.drawable.melyne, "44", "Mėlynės","0.7g","11,5g","0.6g"));
+        alcoholList.add(new Alcohol(R.drawable.melionas, "33", "Melionai","0.8g","8g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.obuolys, "53", "Obuolys","0.4g","13g","0.4g"));
+        alcoholList.add(new Alcohol(R.drawable.serbentas, "55", "Obuolys","1.4g","14g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.slyva, "45", "Slyva","0.7g","11g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.spanguole, "46", "Spanguolės","0.4g","12g","0.1g"));
+        alcoholList.add(new Alcohol(R.drawable.svarainis, "76", "Svarainis","0.4g","19.9g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.tresne, "60", "Trešnės","0.9g","14.4g","0.4g"));
+        alcoholList.add(new Alcohol(R.drawable.tekse, "51", "Tekšės","2.4g","9g","0.8g"));
+        alcoholList.add(new Alcohol(R.drawable.vynuoge, "66", "Vynuogės","0.6g","17g","0.4g"));
+        alcoholList.add(new Alcohol(R.drawable.vysnia, "21", "Vyšnios","0.4g","12g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.zemuoge, "32", "Žemuogės","0.74g","8g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.abrikosas, "49", "Abrikosai","0.8g","12g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.ananasas, "50", "Ananasai","0.5g","13g","0.1g"));
+        alcoholList.add(new Alcohol(R.drawable.apelsinas, "43", "Apelsinai","0.8g","11g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.arbuzas, "27", "Arbūzai","0.7g","6g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.avokadas, "224", "Avokadas","1.9g","6g","23.5g"));
+        alcoholList.add(new Alcohol(R.drawable.baklazanas, "24", "Baklažanai","1g","6g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.bananas, "97", "Bananai","1.2g","23.1g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.cidonija, "56", "Cidonijos","0.4g","15g","0.1g"));
+        alcoholList.add(new Alcohol(R.drawable.citrina, "29", "Citrinos","1.1g","9.3g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.datule, "291", "Datulės","2g","74g","0.4g"));
+        alcoholList.add(new Alcohol(R.drawable.figa, "74", "Figos","0.75g","19.2g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.granatas, "68", "Granatai","0.95g","17.2g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.greipfruitas, "38", "Greipfrutai","0.6g","10g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.kivis, "60", "Kiviai","1.1g","15g","0.5g"));
+        alcoholList.add(new Alcohol(R.drawable.kokosas, "354", "Kokosai","3.3g","15g","33g"));
+        alcoholList.add(new Alcohol(R.drawable.mandarinas, "38", "Mandarinai","0.7g","9.4g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.mangas, "70", "Mangai","0.6g","16.5g","0.5g"));
+        alcoholList.add(new Alcohol(R.drawable.papaja, "39", "Papajai","0.6g","9.8g","0.14g"));
+        alcoholList.add(new Alcohol(R.drawable.persikas, "39", "Persikai","0.9g","10g","0.3g"));
+        alcoholList.add(new Alcohol(R.drawable.persimonas, "70", "Persimonai","0.58g","18.6g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.pomelo, "38", "Pomelai","0.76g","9.62g","0.04g"));
+        alcoholList.add(new Alcohol(R.drawable.silauoge, "57", "Šilauogės","1g","14g","0g"));
+        alcoholList.add(new Alcohol(R.drawable.pasiflora, "97", "Pasifloros","2.2g","23.4g","0.7g"));
+        alcoholList.add(new Alcohol(R.drawable.liciai, "66", "Ličiai","0.83g","16.53g","0.44g"));
+        alcoholList.add(new Alcohol(R.drawable.duonvaisis, "103", "Duonvaisiai","1.07g","27.1g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.karambola, "33", "Karambolos","0.54g","7.8g","0.4g"));
+        alcoholList.add(new Alcohol(R.drawable.lokva, "47", "Lokvos","0.43g","12.1g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.silkmedzio_uogos, "43", "Šilkmedžio uogos","1.44g","9.8g","0.4g"));
+
+
+
+        //Sorting arraylist by cal
+        Collections.sort(alcoholList, new Comparator<Alcohol>() {
+            @Override
+            public int compare(Alcohol a1, Alcohol a2) {
+                int a1Cal = Integer.parseInt(a1.getCalories());
+                int a2Cal = Integer.parseInt(a2.getCalories());
+                if (a1Cal > a2Cal)
+                    return 1;
+                if (a1Cal < a2Cal)
+                    return -1;
+                return 0;
+            }
+        });
+
 
 
     }
 
     private int generateNewTop(){
-        Animation right_animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
-
-        final ResizeAnimation shrink_top = new ResizeAnimation(top_volume, 0, (int) CheckingUtils.convertPixelsToDp(0, GameScreen.this));
-        shrink_top.setDuration(0);
-        top_volume.startAnimation(shrink_top);
+        final Animation fade_anim = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
         int top = (int) (Math.random()*alcoholList.size());
+
+        int image_resource = alcoholList.get(top).getResource();
+
+        top_image.setImageResource(image_resource);
+
+        if(!isFirstTime){
+            top_image.startAnimation(fade_anim);
+        }
+
+
         String top_title_value = alcoholList.get(top).getName();
-        top_volume_value  = alcoholList.get(top).getVolume();
-        int top_image_value  = alcoholList.get(top).getResource();
+        top_volume_value  = alcoholList.get(top).getCalories();
+        String top_carbohydrates_value  = alcoholList.get(top).getCarbohydrates();
+        String top_fat_value  = alcoholList.get(top).getLipids();
+
+        top_carbohydrates.setText(top_carbohydrates_value + "\nAngliavandenių");
+        top_fat.setText(top_fat_value + "\nLipidų");
 
         top_title.setText(top_title_value);
-        top_volume.setText(top_volume_value);
-        top_image.setImageResource(top_image_value);
-        top_image.invalidate();
-        top_image.startAnimation(right_animation);
+        top_volume.getLayoutParams().height=0;
+        top_volume.setText(top_volume_value + " Kcal");
+
+        refreshColor();
 
 
         return top;
     }
 
     private int generateNewBottom(){
-        Animation left_animation = AnimationUtils.loadAnimation(this, R.anim.slide_in_left);
-        final ResizeAnimation shrink_bottom = new ResizeAnimation(top_volume, 0, (int) CheckingUtils.convertPixelsToDp(0, GameScreen.this));
-        shrink_bottom.setDuration(0);
-        bottom_volume.startAnimation(shrink_bottom);
+        final Animation fade_anim = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+
 
         int bottom = (int) (Math.random()*alcoholList.size());
 
+        int image_resource = alcoholList.get(bottom).getResource();
+
+        bottom_image.setImageResource(image_resource);
+
+        if(!isFirstTime){
+            bottom_image.startAnimation(fade_anim);
+        }
+
         String bottom_title_value  = alcoholList.get(bottom).getName();
-        bottom_volume_value  = alcoholList.get(bottom).getVolume();
-        int bottom_image_value  = alcoholList.get(bottom).getResource();
+        bottom_volume_value  = alcoholList.get(bottom).getCalories();
+        String bottom_carbohydrates_value  = alcoholList.get(bottom).getCarbohydrates();
+        String bottom_fat_value  = alcoholList.get(bottom).getLipids();
+
+        bottom_carbohydrates.setText(bottom_carbohydrates_value + "\nAngliavandenių");
+        bottom_fat.setText(bottom_fat_value + "\nLipidų");
 
         bottom_title.setText(bottom_title_value);
         bottom_volume.getLayoutParams().height=0;
-        bottom_volume.setText(bottom_volume_value);
-        bottom_image.setImageResource(bottom_image_value);
-        top_image.invalidate();
-        bottom_image.startAnimation(left_animation);
+        bottom_volume.setText(bottom_volume_value + " Kcal");
+
+        refreshColor();
 
         return bottom;
     }

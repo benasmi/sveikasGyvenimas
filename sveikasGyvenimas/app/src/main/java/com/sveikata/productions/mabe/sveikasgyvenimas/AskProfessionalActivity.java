@@ -20,8 +20,8 @@ public class AskProfessionalActivity extends AppCompatActivity {
     private Spinner spinner;
     private Typeface tf;
     private TextView txt;
-    public static String specialist_BEN = "Kietas - Benas. M";
-    public static String specialist_MARTIN = "Lopas - Martynas. D";
+    public static String specialist_BEN = "specialist_BEN - Benas. M";
+    public static String specialist_MARTIN = "specialist_MARTIN - Martynas. D";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

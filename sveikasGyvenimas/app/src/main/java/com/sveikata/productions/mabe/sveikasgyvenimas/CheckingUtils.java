@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -34,6 +35,13 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by Benas on 9/7/2016.
@@ -56,6 +64,50 @@ public class CheckingUtils {
     public static boolean isGpsEnabled(Context context){
         LocationManager mlocManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public static int getDominantColor(Bitmap bitmap) {
+        if (null == bitmap) return Color.TRANSPARENT;
+
+        int redBucket = 0;
+        int greenBucket = 0;
+        int blueBucket = 0;
+        int alphaBucket = 0;
+
+        boolean hasAlpha = bitmap.hasAlpha();
+        int pixelCount = bitmap.getWidth() * bitmap.getHeight();
+        int[] pixels = new int[pixelCount];
+        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
+        {
+            for (int x = 0, w = bitmap.getWidth(); x < w; x++)
+            {
+                int color = pixels[x + y * w]; // x + y * width
+                redBucket += (color >> 16) & 0xFF; // Color.red
+                greenBucket += (color >> 8) & 0xFF; // Color.greed
+                blueBucket += (color & 0xFF); // Color.blue
+                if (hasAlpha) alphaBucket += (color >>> 24); // Color.alpha
+            }
+        }
+
+        return Color.argb(
+                (hasAlpha) ? (alphaBucket / pixelCount) : 255,
+                redBucket / pixelCount,
+                greenBucket / pixelCount,
+                blueBucket / pixelCount);
+    }
+
+    public static int darker (int color, float factor) {
+        int a = Color.alpha( color );
+        int r = Color.red( color );
+        int g = Color.green( color );
+        int b = Color.blue( color );
+
+        return Color.argb( a,
+                Math.max( (int)(r * factor), 0 ),
+                Math.max( (int)(g * factor), 0 ),
+                Math.max( (int)(b * factor), 0 ) );
     }
 
     public static int random_int(int min, int max)
@@ -170,6 +222,17 @@ public class CheckingUtils {
         }
 
     }
+
+    public static void changeNotifBarColor(int color, Window window){
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(color);
+        }
+
+    }
+
     public static void shareFact(String title, Context context, String source, String url, String body){
 
         ShareLinkContent linkContent = new ShareLinkContent.Builder()
@@ -222,7 +285,6 @@ public class CheckingUtils {
         bm = Bitmap.createScaledBitmap(bm, width, height, true);
         return bm;
     }
-
 
 
 }
