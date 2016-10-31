@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class YouLostHigherLowerAcitivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class YouLostHigherLowerAcitivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        FacebookSdk.sdkInitialize(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_you_lost_higher_lower_acitivity);

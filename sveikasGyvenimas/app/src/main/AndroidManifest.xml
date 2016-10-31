@@ -6,8 +6,7 @@
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version"/>
 
-
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -23,12 +22,10 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoBar">
-
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider758055920999143"
             android:exported="true"/>
-
 
         <service android:name=".GcmMessageReceiver">
             <intent-filter>
@@ -75,7 +72,7 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
-            android:name="android.support.multidex.MultiDexApplication">
+        android:name="android.support.multidex.MultiDexApplication">
         <activity
             android:name=".CreateChallengeManually"
             android:noHistory="true"
@@ -89,14 +86,18 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".GameScreen"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".YouLostHigherLowerAcitivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
-        <activity android:name=".YouLostQuizActivity"
-                  android:screenOrientation="portrait">
+            android:noHistory="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".YouLostQuizActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".SuicideActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

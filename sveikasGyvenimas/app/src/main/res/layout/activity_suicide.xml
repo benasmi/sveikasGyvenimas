@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@drawable/suicide_background"
+    tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.SuicideActivity">
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="7dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp">
+
+        <TextView
+            android:layout_width="285dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_alignParentRight="true"
+
+            android:text="Vaikų liniją"
+            android:textColor="#FFFFFF"
+            android:id="@+id/kitas_nr"/>
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/kitas_nr_linija"
+            android:layout_below="@id/kitas_nr"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/kitas_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:onClick="skambintiVaikuLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+
+        <TextView
+            android:layout_width="285dp"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:textIsSelectable="true"
+            android:text="+37062325135"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/kitas_nr_linija"
+            android:id="@+id/kitas_nr_numeris"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -272,7 +272,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private GifImageView start_playing_quiz;
         public ViewHolder(View itemView, int type) {
             super(itemView);
-
+            
 
 
             switch (type) {

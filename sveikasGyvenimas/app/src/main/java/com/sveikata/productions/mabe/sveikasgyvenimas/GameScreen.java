@@ -121,6 +121,7 @@ public class GameScreen extends AppCompatActivity {
         isFirstTime = false;
 
 
+
         final ResizeAnimation expand_top = new ResizeAnimation(top_volume, (int) CheckingUtils.convertPixelsToDp(30, GameScreen.this), 0);
         expand_top.setDuration(250);
 
@@ -342,7 +343,7 @@ public class GameScreen extends AppCompatActivity {
         top_volume.getLayoutParams().height=0;
         top_volume.setText(top_volume_value + " Kcal");
 
-        refreshColor();
+       refreshColor();
 
 
         return top;
@@ -374,7 +375,7 @@ public class GameScreen extends AppCompatActivity {
         bottom_volume.getLayoutParams().height=0;
         bottom_volume.setText(bottom_volume_value + " Kcal");
 
-        refreshColor();
+
 
         return bottom;
     }

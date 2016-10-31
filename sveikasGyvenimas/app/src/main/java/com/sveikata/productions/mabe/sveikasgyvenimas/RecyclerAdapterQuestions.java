@@ -284,6 +284,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     phone_help.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            context.startActivity(new Intent(context, SuicideActivity.class));
                         }
                     });
                     break;
