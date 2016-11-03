@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="5dp"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:background="@drawable/organs_background"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/starting"
+        android:id="@+id/human_organs_gif"
+        android:adjustViewBounds="true"
+
+        />
+    </RelativeLayout>
+
+</LinearLayout>

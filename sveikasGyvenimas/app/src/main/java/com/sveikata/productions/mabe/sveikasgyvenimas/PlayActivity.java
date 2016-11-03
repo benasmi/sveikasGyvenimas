@@ -63,7 +63,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         if(shouldAddInfo){
             shouldAddInfo=false;
             addCalculatorPreview();
-
+            addHumanOrgans();
             addStartQuiz();
             addHigherLower();
             addSendChallenge();
@@ -89,8 +89,15 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                new ServerManager(ctx, "").startFetchingData(1, false);
+            public void onReceive(final Context context, Intent intent) {
+                ServerManager manager = new ServerManager(context, "");
+                manager.setOnFinishListener(new OnFinishListener() {
+                    @Override
+                    public void onFinish(int responseCode) {
+                        startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 1));
+                    }
+                });
+                manager.startFetchingData(1, false);
 
             }
         };
@@ -112,6 +119,10 @@ public class PlayActivity extends android.support.v4.app.Fragment {
 
     public void addStartQuiz(){
         info.add(new PlayInfoHolder(6));
+    }
+
+    public void addHumanOrgans(){
+        info.add(new PlayInfoHolder(7));
     }
 
 

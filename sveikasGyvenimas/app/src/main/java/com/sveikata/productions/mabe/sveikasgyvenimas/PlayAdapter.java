@@ -27,9 +27,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
@@ -111,6 +115,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 6:
                 View game_quiz = layoutInflater.inflate(R.layout.start_playing_quiz, parent, false);
                 viewHolder = new ViewHolder(game_quiz, 6);
+                return viewHolder;
+            case 7:
+                View organs = layoutInflater.inflate(R.layout.human_organs, parent, false);
+                viewHolder = new ViewHolder(organs, 7);
                 return viewHolder;
 
 
@@ -219,6 +227,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        private GifImageView human_organs;
         private Typeface verdanaFont;
 
 
@@ -489,6 +498,182 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         @Override
                         public void onClick(View v) {
                             context.startActivity(new Intent(context, QuizActivity.class));
+                        }
+                    });
+
+                    break;
+
+                case 7:
+                    human_organs = (GifImageView) itemView.findViewById(R.id.human_organs_gif);
+
+
+
+
+
+
+
+                    human_organs.setOnClickListener(new View.OnClickListener() {
+
+                        int timesClicked = 0;
+                        @Override
+                        public void onClick(View v) {
+                            timesClicked++;
+
+
+                            if(timesClicked > 9){
+                                timesClicked = 0;
+                            }
+
+                            final GifDrawable drawable;
+
+
+                            try {
+
+                                final Handler handler = new Handler();
+
+
+
+                                switch (timesClicked){
+                                case 0:
+
+                                    drawable = new GifDrawable(context.getResources(), R.drawable.starting);
+
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            drawable.pause();
+                                        }
+                                    }, 1480l);
+
+                                    human_organs.setImageDrawable(drawable);
+
+
+                                    break;
+
+                                case 1:
+                                    drawable = new GifDrawable(context.getResources(), R.drawable.organs_1);
+
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            drawable.pause();
+                                        }
+                                    }, 1334l);
+
+                                    human_organs.setImageDrawable(drawable);
+
+                                    break;
+
+                                    case 2:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_2);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1320l);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+
+                                    case 3:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_3);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1010);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+
+                                    case 4:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_4);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1060);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+
+                                    case 5:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_5);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1050);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+
+                                    case 6:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_6);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1060);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+                                    case 7:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_7);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1050);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+
+                                    case 8:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_8);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1050);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+
+                                    case 9:
+                                        drawable = new GifDrawable(context.getResources(), R.drawable.organs_9);
+
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                drawable.pause();
+                                            }
+                                        }, 1050);
+
+                                        human_organs.setImageDrawable(drawable);
+                                        break;
+                            }
+
+
+
+
+                            } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         }
                     });
 
