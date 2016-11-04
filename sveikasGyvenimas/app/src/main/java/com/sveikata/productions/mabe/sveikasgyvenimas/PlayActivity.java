@@ -94,7 +94,9 @@ public class PlayActivity extends android.support.v4.app.Fragment {
                 manager.setOnFinishListener(new OnFinishListener() {
                     @Override
                     public void onFinish(int responseCode) {
-                        startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 1));
+                        if(isAdded()){
+                            startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 1));
+                        }
                     }
                 });
                 manager.startFetchingData(1, false);

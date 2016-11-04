@@ -28,7 +28,8 @@
 
     <RelativeLayout
 
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -43,8 +44,10 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/kitas_nr_linija"
-            android:layout_below="@id/kitas_nr2"
+            android:layout_below="@+id/kitas_nr2"
             android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/kitas_nr_phone"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
 
@@ -115,9 +118,9 @@
     </RelativeLayout>
 
 
-
     <RelativeLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -131,11 +134,12 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/vaiku_linija_linija"
-            android:layout_below="@id/kitas_nr"
+            android:layout_below="@+id/kitas_nr"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
+            android:layout_toRightOf="@+id/vaiku_linija_nr_phone"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentRight="true"
-
             android:background="#f1c40f"/>
 
         <ImageView
@@ -203,7 +207,8 @@
 
 
     <RelativeLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -216,9 +221,11 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/vilties_linija_linija"
-            android:layout_below="@id/vilties_linija"
+            android:layout_below="@+id/vilties_linija"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
+            android:layout_toRightOf="@+id/vilties_linija_nr_phone"
+            android:layout_marginLeft="10dp"
             android:layout_alignParentRight="true"
 
             android:background="#f1c40f"/>
@@ -291,7 +298,8 @@
 
 
     <RelativeLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -304,11 +312,12 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/kriziu_linija_linija"
-            android:layout_below="@id/kriziu_linija"
-            android:layout_marginTop="6dp"
+            android:layout_below="@+id/kriziu_linija"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/kriziu_linija_nr_phone"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
-
             android:background="#f1c40f"/>
 
         <ImageView
@@ -360,11 +369,12 @@
             android:layout_alignStart="@+id/kriziu_linija_linija" />
 
         <TextView
-            android:text="(I-V) 16:00 - 20:00 (VI)  12:00 - 18:00 "
+            android:text="(I-V) 16:00-20:00 (VI) 12:00-18:00 "
             android:layout_width="92dp"
             android:textColor="#FFFFFF"
             android:padding="3dp"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:textSize="11dp"
             android:id="@+id/textView9"
             android:layout_alignParentTop="true"
@@ -374,7 +384,8 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -387,8 +398,10 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/moteru_linija_linija"
-            android:layout_below="@id/moteru_linija"
+            android:layout_below="@+id/moteru_linija"
             android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/moteru_linija_nr_phone"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
 
@@ -458,7 +471,8 @@
 
 
     <RelativeLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -471,11 +485,12 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/doverija_linija_linija"
-            android:layout_below="@id/doverija_linija"
+            android:layout_below="@+id/doverija_linija"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
-
+            android:layout_toRightOf="@+id/doverija_linija_nr_phone"
+            android:layout_marginLeft="10dp"
             android:background="#f1c40f"/>
 
         <ImageView
@@ -542,7 +557,8 @@
 
 
     <RelativeLayout
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="17dp"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent_backgrounds"
@@ -555,11 +571,12 @@
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/raidos_linija_linija"
-            android:layout_below="@id/raidos_linija"
+            android:layout_below="@+id/raidos_linija"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
-
+            android:layout_toRightOf="@+id/raidos_linija_nr_phone"
+            android:layout_marginLeft="10dp"
             android:background="#f1c40f"/>
 
         <ImageView

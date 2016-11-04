@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import pl.droidsonroids.gif.AnimationListener;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
@@ -207,7 +208,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         String username = sharedPreferences.getString("username", "");
                         String password = sharedPreferences.getString("password", "");
                         handler.removeCallbacks(this);
-
                         new ServerManager(context, "COMPLETE_CHALLENGE").execute("COMPLETE_CHALLENGE", username, password);
 
                     }
@@ -529,143 +529,79 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                             try {
 
-                                final Handler handler = new Handler();
 
 
 
                                 switch (timesClicked){
                                 case 0:
-
                                     drawable = new GifDrawable(context.getResources(), R.drawable.starting);
-
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            drawable.pause();
-                                        }
-                                    }, 1480l);
-
+                                    drawable.setLoopCount(1);
                                     human_organs.setImageDrawable(drawable);
-
 
                                     break;
 
                                 case 1:
                                     drawable = new GifDrawable(context.getResources(), R.drawable.organs_1);
-
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            drawable.pause();
-                                        }
-                                    }, 1405l);
-
+                                    drawable.setLoopCount(1);
                                     human_organs.setImageDrawable(drawable);
 
                                     break;
 
                                     case 2:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_2);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1325l);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
 
                                     case 3:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_3);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1010);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
 
                                     case 4:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_4);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1060);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
 
                                     case 5:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_5);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1050);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
 
                                     case 6:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_6);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1060);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
                                     case 7:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_7);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1050);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
 
                                     case 8:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_8);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1050);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
 
                                     case 9:
                                         drawable = new GifDrawable(context.getResources(), R.drawable.organs_9);
-
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                drawable.pause();
-                                            }
-                                        }, 1050);
-
+                                        drawable.setLoopCount(1);
                                         human_organs.setImageDrawable(drawable);
+
                                         break;
+
                             }
 
 

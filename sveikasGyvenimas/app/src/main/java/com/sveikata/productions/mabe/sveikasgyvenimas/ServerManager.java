@@ -74,6 +74,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADDRESS_DECLINE_CHALLENGE= "http://dvp.lt/android/decline_challenge.php";
     public static final String SERVER_ADRESS_FETCH_CHALLENGES = "http://dvp.lt/android/fetch_challenges.php";
     public static final String SERVER_ADRESS_I_FAILED_CHALLENGE = "http://dvp.lt/android/failed_challenge.php";
+    public static final String SERVER_ADRESS_COMPLETE_CHALLENGE = "http://dvp.lt/android/complete_challenge.php";
 
     private String type;
     private String device_id;
@@ -252,6 +253,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             failed_challenge(username, password);
         }
+        if(method_type.equals("COMPLETE_CHALLENGE")){
+            String username = params[1];
+            String password = params[2];
+
+            completed_challenge(username, password);
+        }
 
         return null;
     }
@@ -315,9 +322,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             }
         }
 
+        if(method_type.equals("COMPLETE_CHALLENGE")){
+            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 1));
+        }
+
 
         if(method_type.equals("ACCEPT_CHALLENGE")){
-            CheckingUtils.createErrorBox("Iššūkis priimtas!", context, R.style.PlayDialogStyle);
             startFetchingData(1, true);
         }
         if(method_type.equals("DECLINE_CHALLENGE")){
@@ -481,6 +491,44 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(SERVER_ADDRESS_ACCEPT_CHALLENGE);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+
+
+
+    }
+
+    public int completed_challenge(String username, String password){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_COMPLETE_CHALLENGE);
 
 
         //JSON object.
