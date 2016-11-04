@@ -21,7 +21,39 @@ public class SuicideActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void skambintiVaikuLinijai(View view) {
-        sendToCallIntent("123456");
+    public void skambintiJaunimoLinijai(View view) {
+        sendToCallIntent("880028888");
     }
+
+    public void skambintiVaikuLinijai(View view) {
+        sendToCallIntent("116111");
+    }
+
+    public void skambintiViltiesLinijai(View view) {
+        sendToCallIntent("116123");
+    }
+
+
+    public void skambintiKriziuLinijai(View view) {
+        sendToCallIntent("864051555");
+    }
+
+    public void skambintiMoteruLinijai(View view) {
+        sendToCallIntent("880066366");
+    }
+
+    public void skambintiDoverijaLinijai(View view) {
+        sendToCallIntent("880077277");
+    }
+    public void skambintiRaidosLinijai(View view) {
+        sendToCallIntent("852757564");
+    }
+
+
+
+
+
+
+
+
 }

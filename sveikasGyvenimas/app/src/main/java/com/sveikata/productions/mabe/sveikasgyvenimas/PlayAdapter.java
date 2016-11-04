@@ -558,7 +558,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                         public void run() {
                                             drawable.pause();
                                         }
-                                    }, 1334l);
+                                    }, 1405l);
 
                                     human_organs.setImageDrawable(drawable);
 
@@ -572,7 +572,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                             public void run() {
                                                 drawable.pause();
                                             }
-                                        }, 1320l);
+                                        }, 1325l);
 
                                         human_organs.setImageDrawable(drawable);
                                         break;

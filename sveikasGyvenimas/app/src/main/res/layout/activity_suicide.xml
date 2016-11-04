@@ -9,28 +9,41 @@
     tools:context="com.sveikata.productions.mabe.sveikasgyvenimas.SuicideActivity">
 
     <RelativeLayout
-        android:layout_width="350dp"
-        android:layout_marginLeft="7dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/transparent_backgrounds"
-        android:padding="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp">
+        android:gravity="center"
+        android:id="@+id/textViewLayout">
+
 
         <TextView
-            android:layout_width="285dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_alignParentRight="true"
-
-            android:text="Vaikų liniją"
+            android:text="Pagalbos centrų kontaktai"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
             android:textColor="#FFFFFF"
-            android:id="@+id/kitas_nr"/>
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:layout_below="@+id/textViewLayout"
+        android:padding="5dp"
+        android:id="@+id/jaunimo_linija"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="3dp">
+
+
         <ImageView
             android:layout_width="285dp"
             android:layout_height="1dp"
             android:id="@+id/kitas_nr_linija"
-            android:layout_below="@id/kitas_nr"
+            android:layout_below="@id/kitas_nr2"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
@@ -44,6 +57,94 @@
             android:id="@+id/kitas_nr_phone"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="2dp"
+            android:onClick="skambintiJaunimoLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textIsSelectable="true"
+            android:text="8 800 28888"
+            android:textColor="#FFFFFF"
+            android:id="@+id/kitas_nr_numeris"
+            android:layout_below="@+id/kitas_nr_linija"
+            android:layout_alignLeft="@+id/kitas_nr_linija"
+            android:layout_alignStart="@+id/kitas_nr_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text="| www.jaunimolinija.lt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_jaunimo_linija"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/kitas_nr_numeris"
+            android:layout_alignBottom="@+id/kitas_nr_numeris"
+            android:layout_toRightOf="@+id/kitas_nr_numeris"
+            android:layout_toEndOf="@+id/kitas_nr_numeris" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+
+            android:text="Jaunimo linija"
+            android:textColor="#FFFFFF"
+            android:id="@+id/kitas_nr2"
+            android:layout_alignTop="@+id/kitas_nr_phone"
+            android:layout_alignLeft="@+id/kitas_nr_linija"
+            android:layout_alignStart="@+id/kitas_nr_linija" />
+
+        <TextView
+            android:text="(I-VII) 00:00 - 24:00"
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6"
+            android:textSize="11dp"
+            android:layout_alignTop="@+id/kitas_nr2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:id="@+id/vaikų_linija"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/jaunimo_linija"
+        android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/vaiku_linija_linija"
+            android:layout_below="@id/kitas_nr"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/vaiku_linija_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
             android:onClick="skambintiVaikuLinijai"
             android:layout_marginBottom="2dp"
             android:src="@drawable/phone_sillhouette"
@@ -51,17 +152,475 @@
             android:padding="5dp"/>
 
 
-
         <TextView
-            android:layout_width="285dp"
             android:layout_height="wrap_content"
             android:textSize="15dp"
-            android:layout_alignParentRight="true"
             android:textIsSelectable="true"
-            android:text="+37062325135"
+            android:text="116111"
             android:textColor="#FFFFFF"
-            android:layout_below="@id/kitas_nr_linija"
-            android:id="@+id/kitas_nr_numeris"/>
+            android:id="@+id/vaiku_linija_nr"
+            android:layout_below="@+id/vaiku_linija_linija"
+            android:layout_alignLeft="@+id/vaiku_linija_linija"
+            android:layout_alignStart="@+id/vaiku_linija_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text="| www.vaikulinija.lt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/vaiku_linija_website"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/vaiku_linija_nr"
+            android:layout_alignBottom="@+id/vaiku_linija_nr"
+            android:layout_toRightOf="@+id/vaiku_linija_nr"
+            android:layout_toEndOf="@+id/vaiku_linija_nr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Vaikų linija"
+            android:textColor="#FFFFFF"
+            android:id="@+id/kitas_nr"
+            android:layout_alignTop="@+id/vaiku_linija_nr_phone"
+            android:layout_alignLeft="@+id/vaiku_linija_linija"
+            android:layout_alignStart="@+id/vaiku_linija_linija" />
+
+        <TextView
+            android:text="(I-VII) 11:00 - 21:00"
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:textSize="11dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7"
+            android:layout_alignTop="@+id/kitas_nr"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/vaiku_linija"
+        android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/vilties_linija_linija"
+            android:layout_below="@id/vilties_linija"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/vilties_linija_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:onClick="skambintiViltiesLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textIsSelectable="true"
+            android:text="116123"
+            android:textColor="#FFFFFF"
+            android:id="@+id/vilties_linija_nr"
+            android:layout_below="@+id/vilties_linija_linija"
+            android:layout_alignLeft="@+id/vilties_linija_linija"
+            android:layout_alignStart="@+id/vilties_linija_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text="| paklausk.kpsc.lt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/vilties_linija_website"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/vilties_linija_nr"
+            android:layout_alignBottom="@+id/vilties_linija_nr"
+            android:layout_toRightOf="@+id/vilties_linija_nr"
+            android:layout_toEndOf="@+id/vilties_linija_nr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Vilties linija"
+            android:textColor="#FFFFFF"
+            android:id="@+id/vilties_linija"
+            android:layout_alignTop="@+id/vilties_linija_nr_phone"
+            android:layout_alignLeft="@+id/vilties_linija_linija"
+            android:layout_alignStart="@+id/vilties_linija_linija" />
+
+        <TextView
+            android:text="(I-VII) 00:00 - 24:00"
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:textSize="11dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/vaiku_linija"
+        android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/kriziu_linija_linija"
+            android:layout_below="@id/kriziu_linija"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/kriziu_linija_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:onClick="skambintiKriziuLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textIsSelectable="true"
+            android:text="8 640 51555"
+            android:textColor="#FFFFFF"
+            android:id="@+id/kriziu_linija_nr"
+            android:layout_below="@+id/kriziu_linija_linija"
+            android:layout_alignLeft="@+id/kriziu_linija_linija"
+            android:layout_alignStart="@+id/kriziu_linija_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text="| www.krizesiveikimas.lt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/kriziu_linija_website"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/kriziu_linija_nr"
+            android:layout_alignBottom="@+id/kriziu_linija_nr"
+            android:layout_toRightOf="@+id/kriziu_linija_nr"
+            android:layout_toEndOf="@+id/kriziu_linija_nr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Krizių įveikimo centras"
+            android:textColor="#FFFFFF"
+            android:id="@+id/kriziu_linija"
+            android:layout_alignTop="@+id/kriziu_linija_nr_phone"
+            android:layout_alignLeft="@+id/kriziu_linija_linija"
+            android:layout_alignStart="@+id/kriziu_linija_linija" />
+
+        <TextView
+            android:text="(I-V) 16:00 - 20:00 (VI)  12:00 - 18:00 "
+            android:layout_width="92dp"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:layout_height="wrap_content"
+            android:textSize="11dp"
+            android:id="@+id/textView9"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/vaiku_linija"
+        android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/moteru_linija_linija"
+            android:layout_below="@id/moteru_linija"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/moteru_linija_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:onClick="skambintiMoteruLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textIsSelectable="true"
+            android:text="8 800 66366"
+            android:textColor="#FFFFFF"
+            android:id="@+id/moteru_linija_nr"
+            android:layout_below="@+id/moteru_linija_linija"
+            android:layout_alignLeft="@+id/moteru_linija_linija"
+            android:layout_alignStart="@+id/moteru_linija_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text="| www.moters-pagalba.lt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/moteru_linija_website"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/moteru_linija_nr"
+            android:layout_alignBottom="@+id/moteru_linija_nr"
+            android:layout_toRightOf="@+id/moteru_linija_nr"
+            android:layout_toEndOf="@+id/moteru_linija_nr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Pagalba moterims"
+            android:textColor="#FFFFFF"
+            android:id="@+id/moteru_linija"
+            android:layout_alignTop="@+id/moteru_linija_nr_phone"
+            android:layout_alignLeft="@+id/moteru_linija_linija"
+            android:layout_alignStart="@+id/moteru_linija_linija" />
+
+        <TextView
+            android:text="(I-VII) 00:00 - 24:00 "
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:layout_height="wrap_content"
+            android:textSize="11dp"
+            android:id="@+id/textView10"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/vaiku_linija"
+        android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/doverija_linija_linija"
+            android:layout_below="@id/doverija_linija"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/doverija_linija_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:onClick="skambintiDoverijaLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textIsSelectable="true"
+            android:text="8 800 77277"
+            android:textColor="#FFFFFF"
+            android:id="@+id/doverija_linija_nr"
+            android:layout_below="@+id/doverija_linija_linija"
+            android:layout_alignLeft="@+id/doverija_linija_linija"
+            android:layout_alignStart="@+id/doverija_linija_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/doverija_linija_website"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/doverija_linija_nr"
+            android:layout_alignBottom="@+id/doverija_linija_nr"
+            android:layout_toRightOf="@+id/doverija_linija_nr"
+            android:layout_toEndOf="@+id/doverija_linija_nr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Linija doverija"
+            android:textColor="#FFFFFF"
+            android:id="@+id/doverija_linija"
+            android:layout_alignTop="@+id/doverija_linija_nr_phone"
+            android:layout_alignLeft="@+id/doverija_linija_linija"
+            android:layout_alignStart="@+id/doverija_linija_linija" />
+
+        <TextView
+            android:text="(II-VII) 16:00 - 20:00 "
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:layout_height="wrap_content"
+            android:textSize="11dp"
+            android:id="@+id/textView11"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_marginLeft="17dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_backgrounds"
+        android:padding="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/vaiku_linija"
+        android:layout_marginBottom="3dp">
+
+        <ImageView
+            android:layout_width="285dp"
+            android:layout_height="1dp"
+            android:id="@+id/raidos_linija_linija"
+            android:layout_below="@id/raidos_linija"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignParentRight="true"
+
+            android:background="#f1c40f"/>
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="#f1c40f"
+            android:id="@+id/raidos_linija_nr_phone"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="2dp"
+            android:onClick="skambintiRaidosLinijai"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/phone_sillhouette"
+            android:background="@drawable/transparent_background_suicide"
+            android:padding="5dp"/>
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textIsSelectable="true"
+            android:text="8 5 275 75 64"
+            android:textColor="#FFFFFF"
+            android:id="@+id/raidos_linija_nr"
+            android:layout_below="@+id/raidos_linija_linija"
+            android:layout_alignLeft="@+id/raidos_linija_linija"
+            android:layout_alignStart="@+id/raidos_linija_linija"
+            android:layout_width="wrap_content" />
+
+        <TextView
+            android:text="| www.raida.lt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/raidos_linija_website"
+            android:textColor="#FFFFFF"
+            android:layout_alignBaseline="@+id/raidos_linija_nr"
+            android:layout_alignBottom="@+id/raidos_linija_nr"
+            android:layout_toRightOf="@+id/raidos_linija_nr"
+            android:layout_toEndOf="@+id/raidos_linija_nr" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Vaiko krizių ir raidos skyrius"
+            android:textColor="#FFFFFF"
+            android:id="@+id/raidos_linija"
+            android:layout_alignTop="@+id/raidos_linija_nr_phone"
+            android:layout_alignLeft="@+id/raidos_linija_linija"
+            android:layout_alignStart="@+id/raidos_linija_linija" />
+
+        <TextView
+            android:text=""
+            android:layout_width="wrap_content"
+            android:textColor="#FFFFFF"
+            android:padding="3dp"
+            android:layout_height="wrap_content"
+            android:textSize="11dp"
+            android:id="@+id/textView12"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
