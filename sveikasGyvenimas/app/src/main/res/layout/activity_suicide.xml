@@ -375,7 +375,7 @@
             android:padding="3dp"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:textSize="11dp"
+            android:textSize="10dp"
             android:id="@+id/textView9"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
