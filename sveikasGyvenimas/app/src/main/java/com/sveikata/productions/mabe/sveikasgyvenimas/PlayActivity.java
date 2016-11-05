@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,12 +41,14 @@ public class PlayActivity extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         View rootView = inflater.inflate(R.layout.activity_play,container,false);
         ctx = getContext();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.play_recycler_view);
 
 
-
+        FacebookSdk.sdkInitialize(getActivity());
 
 
 

@@ -129,6 +129,7 @@ public class GameScreen extends AppCompatActivity {
         expand_bottom.setDuration(250);
 
 
+
         final Animation.AnimationListener listener = new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -163,6 +164,8 @@ public class GameScreen extends AppCompatActivity {
                     score_txt.setText("Rezultatas: " + String.valueOf(new_score));
 
                     if(canClick){
+                        showCarboHydrates(true);
+                        showFat(true);
                         bottom_volume.startAnimation(expand_bottom);
                         top_volume.startAnimation(expand_top);
                         canClick=false;
@@ -184,6 +187,8 @@ public class GameScreen extends AppCompatActivity {
                             shrink_top.setDuration(250);
                             top_volume.startAnimation(shrink_top);
 
+                            showCarboHydrates(false);
+                            showFat(false);
                             shrink_top.setAnimationListener(listener);
                             shrink_bottom.setAnimationListener(listener);
 
@@ -209,6 +214,8 @@ public class GameScreen extends AppCompatActivity {
                     score_txt.setText("Rezultatas: " + String.valueOf(new_score));
 
                     if(canClick){
+                        showCarboHydrates(true);
+                        showFat(true);
                     bottom_volume.startAnimation(expand_bottom);
                     top_volume.startAnimation(expand_top);
                         canClick=false;
@@ -227,6 +234,9 @@ public class GameScreen extends AppCompatActivity {
                             shrink_top.setDuration(250);
                             top_volume.startAnimation(shrink_top);
 
+                            showCarboHydrates(false);
+                            showFat(false);
+
                             shrink_top.setAnimationListener(listener);
                             shrink_bottom.setAnimationListener(listener);
 
@@ -236,7 +246,6 @@ public class GameScreen extends AppCompatActivity {
                 }
             }
         });
-
 
 
     }
@@ -313,6 +322,50 @@ public class GameScreen extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    private void showCarboHydrates(boolean bool){
+        if(bool){
+            final ResizeAnimation top_anim_expand = new ResizeAnimation(top_carbohydrates, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            final ResizeAnimation bottom_anim_expand = new ResizeAnimation(bottom_carbohydrates, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            top_anim_expand.setDuration(200);
+            bottom_anim_expand.setDuration(200);
+
+            top_carbohydrates.startAnimation(top_anim_expand);
+            bottom_carbohydrates.startAnimation(bottom_anim_expand);
+        }else{
+            final ResizeAnimation top_anim_shrink = new ResizeAnimation(top_carbohydrates, 0, top_carbohydrates.getHeight());
+            final ResizeAnimation bottom_anim_shrink = new ResizeAnimation(bottom_carbohydrates, 0, bottom_carbohydrates.getHeight());
+            top_anim_shrink.setDuration(200);
+            bottom_anim_shrink.setDuration(200);
+
+            bottom_carbohydrates.startAnimation(bottom_anim_shrink);
+            top_carbohydrates.startAnimation(top_anim_shrink);
+        }
+
+
+    }
+
+    private void showFat(boolean bool){
+        if(bool){
+            final ResizeAnimation top_anim_expand = new ResizeAnimation(top_fat, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            final ResizeAnimation bottom_anim_expand = new ResizeAnimation(bottom_fat, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            top_anim_expand.setDuration(200);
+            bottom_anim_expand.setDuration(200);
+
+            top_fat.startAnimation(top_anim_expand);
+            bottom_fat.startAnimation(bottom_anim_expand);
+        }else{
+            final ResizeAnimation top_anim_shrink = new ResizeAnimation(top_fat, 0, top_fat.getHeight());
+            final ResizeAnimation bottom_anim_shrink = new ResizeAnimation(bottom_fat, 0, bottom_fat.getHeight());
+            top_anim_shrink.setDuration(200);
+            bottom_anim_shrink.setDuration(200);
+
+            bottom_fat.startAnimation(bottom_anim_shrink);
+            top_fat.startAnimation(top_anim_shrink);
+        }
 
 
     }
