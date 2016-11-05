@@ -47,7 +47,7 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
         if(type.equals("event")){
             String event_message = String.valueOf(data.get("message"));
             String event_description= String.valueOf(data.get("description"));
-            sendEventGeneral(event_message, event_description);
+            sendEvent(event_message, event_description);
         }
 
         if(type.equals("challenge")){
@@ -56,6 +56,12 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
             sendNotificationChallenge(title, challenge_body);
 
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("UPDATE_REQUIRED"));
+        }
+
+        if(type.equals("facts")){
+            String message = String.valueOf(data.get("message"));
+            String description= String.valueOf(data.get("description"));
+            sendFactNotif(message, description);
         }
 
 
@@ -85,7 +91,7 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
                     .setContentText(description)
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
-                    .setColor(Color.argb(1,72,103,170))
+                    .setColor(Color.parseColor("#009688"))
                     .setContentIntent(pendingIntent);
 
 
@@ -96,7 +102,7 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
     }
 
 
-    private void sendEventGeneral(String message, String description) {
+    private void sendEvent(String message, String description) {
 
         Intent intent = new Intent(this, StartingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -112,7 +118,7 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
                 .setContentText(description)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setColor(Color.argb(1,72,103,170))
+                .setColor(Color.parseColor("#009688"))
                 .setContentIntent(pendingIntent);
 
 
@@ -136,7 +142,30 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setColor(Color.argb(1,72,103,170))
+                .setColor(Color.parseColor("#e67e22"))
+                .setContentIntent(pendingIntent);
+
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0 , notificationBuilder.build());
+    }
+
+    private void sendFactNotif(String title, String body) {
+        Intent intent = new Intent(this, StartingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        notificationBuilder.setSmallIcon(R.drawable.icon_for_notif)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setColor(Color.parseColor("#3498db"))
                 .setContentIntent(pendingIntent);
 
 
