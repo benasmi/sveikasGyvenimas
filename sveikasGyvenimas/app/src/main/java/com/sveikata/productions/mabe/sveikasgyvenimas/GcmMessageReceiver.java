@@ -44,16 +44,25 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
             sendNotificationGeneral(message, description);
         }
 
+        if(type.equals("event")){
+            String event_message = String.valueOf(data.get("message"));
+            String event_description= String.valueOf(data.get("description"));
+            sendEventGeneral(event_message, event_description);
+        }
+
         if(type.equals("challenge")){
             String title = String.valueOf(data.get("title"));
             String challenge_body = String.valueOf(data.get("challenge"));
             sendNotificationChallenge(title, challenge_body);
+
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("UPDATE_REQUIRED"));
         }
 
 
 
 
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent("UPDATE_REQUIRED"));
+
+
         super.onMessageReceived(remoteMessage);
 
 
@@ -85,6 +94,35 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
 
         notificationManager.notify(0 , notificationBuilder.build());
     }
+
+
+    private void sendEventGeneral(String message, String description) {
+
+        Intent intent = new Intent(this, StartingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+
+        notificationBuilder.setSmallIcon(R.drawable.icon_for_notif)
+                .setContentTitle(message)
+                .setContentText(description)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setColor(Color.argb(1,72,103,170))
+                .setContentIntent(pendingIntent);
+
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0 , notificationBuilder.build());
+    }
+
+
     private void sendNotificationChallenge(String title, String body) {
         Intent intent = new Intent(this, StartingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
