@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,7 +31,7 @@ public class YouLostQuizActivity extends AppCompatActivity {
 
 
     private int score;
-    private int maxQuestions=5;
+    private int maxQuestions=12;
     private int  highscore;
     private int percentage;
 
@@ -55,6 +56,7 @@ public class YouLostQuizActivity extends AppCompatActivity {
 
 
         percentage = (100*score)/maxQuestions;
+        Log.i("TEST", String.valueOf(percentage));
 
         try_again = (AppCompatButton) findViewById(R.id.try_again_quiz);
         go_back_to_play_activity = (AppCompatButton) findViewById(R.id.go_back_to_play_bar_quiz);
@@ -63,11 +65,12 @@ public class YouLostQuizActivity extends AppCompatActivity {
         ratingBar.setNumStars(5);
         ratingBar.setEnabled(false);
         percentage_txt = (TextView)findViewById(R.id.percentage_txt);
+
         score_txt = (TextView) findViewById(R.id.score_game_over_quiz);
         highscore_txt = (TextView) findViewById(R.id.highscore_game_over_quiz);
 
-        score_txt.setText(score+ "/" + "5");
-        highscore_txt.setText(highscore+ "/" + "5");
+        score_txt.setText(score+ "/" + "12");
+        highscore_txt.setText(highscore+ "/" + "12");
 
         percentage_txt.setTypeface(tfBevan);
         score_txt.setTypeface(tf);
@@ -76,22 +79,27 @@ public class YouLostQuizActivity extends AppCompatActivity {
         if(percentage>=0 && percentage<=20){
             ratingBar.setRating(1);
             percentage_txt.setText("Nekaip, reikėtų pasistengti :/");
+
         }
-        if(percentage>=20 && percentage<=40){
+        if(percentage>=21 && percentage<=40){
             ratingBar.setRating(2);
             percentage_txt.setText("Galėtum geriau...");
+            ;
         }
-        if(percentage>=40 && percentage<=60){
+        if(percentage>=41 && percentage<=70){
             ratingBar.setRating(3);
-            percentage_txt.setText("Gal dirbi alkoholio fabrike?");
+            percentage_txt.setText("Bandyk dar kartą");
+
         }
-        if(percentage>=60 && percentage<=80){
+        if(percentage>=71 && percentage<=94){
             ratingBar.setRating(4);
             percentage_txt.setText("Beveik tobula!");
+
         }
-        if(percentage>=80 && percentage<=100){
+        if(percentage>=95 && percentage<=100){
             ratingBar.setRating(5);
             percentage_txt.setText("Šaunu!!!");
+
         }
 
 

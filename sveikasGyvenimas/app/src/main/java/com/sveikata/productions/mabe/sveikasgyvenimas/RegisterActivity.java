@@ -96,32 +96,63 @@ public class RegisterActivity extends AppCompatActivity {
             username_ET.setError("Prašome įvesti vartotojo vardą");
             return;
         }
+
+        if(username_value.matches(".*\\s+.*")){
+            CheckingUtils.vibrate(this, 100);
+            username_ET.setError("Negali būti tarpelių");
+            return;
+        }
+
         if(name_value.isEmpty()){
             CheckingUtils.vibrate(this, 100);
             name_ET.setError("Įveskite savo vardą");
             return;
         }
+
+        if(name_value.matches(".*\\s+.*")){
+            CheckingUtils.vibrate(this, 100);
+            name_ET.setError("Negali būti tarpelių");
+            return;
+        }
+
         if(last_name_value.isEmpty()){
             CheckingUtils.vibrate(this, 100);
             last_name_ET.setError("Įveskite savo pavardę");
             return;
         }
-        if(mail_value.isEmpty() || !mail_value.contains("@")){
+
+        if(last_name_value.matches(".*\\s+.*")){
+            CheckingUtils.vibrate(this, 100);
+            last_name_ET.setError("Negali būti tarpelių");
+            return;
+        }
+
+        if(mail_value.isEmpty() || !mail_value.contains("@") || mail_value.matches(".*\\s+.*")){
             CheckingUtils.vibrate(this, 100);
             mail_ET.setError("Įveskite galiojantį pašto adresą");
             return;
         }
+
+
         if(password_value.isEmpty()){
             CheckingUtils.vibrate(this, 100);
             password_ET.setError("Įveskite slaptažodį");
             return;
         }
+
+        if(password_value.matches(".*\\s+.*")){
+            CheckingUtils.vibrate(this, 100);
+            password_ET.setError("Negali būti tarpelių");
+            return;
+        }
+
         if(!password_value.equals(repeat_password_value)){
             CheckingUtils.vibrate(this, 100);
             password_ET.setError("Slaptažodžiai nesutampa");
             repeat_password_ET.setError("Slaptažodžiai nesutampa");
             return;
         }
+
         if(years_value.equals("Metai")){
             CheckingUtils.vibrate(this, 100);
             TextView errorText = (TextView) years.getSelectedView();
@@ -143,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
             CheckingUtils.createErrorBox("Nori susikurti paskyrą? Įjunk WI-FI arba mobilius ;)",this, R.style.ScheduleDialogStyle);
             return;
         }
+
         SharedPreferences sharedPrefs = getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String token = sharedPrefs.getString("device_id", "");
         new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token);

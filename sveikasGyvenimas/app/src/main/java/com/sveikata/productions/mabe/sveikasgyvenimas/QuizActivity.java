@@ -33,13 +33,24 @@ public class QuizActivity extends AppCompatActivity {
 
     private boolean canClick = true;
     private SharedPreferences sharedPreferences;
-    public static final int questionCount = 5;
+    public static final int questionCount = 14;
 
-    public static final String[] question_1 = {"Kokia yra mirtina alkoholio dozė?", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
-    public static final String[] question_2 = {"Kas tu?", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
-    public static final String[] question_3 = {"Dar vienas klausimas?", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
-    public static final String[] question_4 = {"Beveik paskutinis klausimas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
-    public static final String[] question_5 = {"Paskutinis klausimas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Neteisingas atsakymas", "Teisingas atsakymas", "Teisingas atsakymas"};
+    public static final String[] question_1 = {"Kokia medžiaga turima omenyje visuomenėje kalbant apie alkoholį? ", "Etanolis", "Metanolis", "Etilenglikolis", "Alkalolis", "Etanolis"};
+    public static final String[] question_2 = {"Kas turi daugiausiausiai etanolio:  butelis (500ml) 5% alkoholinio kokteilio, 200 ml 12% baltojo vyno ar mažas bokalas (325 ml) 7,5% stipraus alaus? ", "Kokteilis", "Vynas", "Alus", "Visi vienodai 24 g gryno alkoholio (etanolio) – 2,4 alkoholio vieneto", "Visi vienodai 24 g gryno alkoholio (etanolio) – 2,4 alkoholio vieneto"};
+    public static final String[] question_3 = {"Kiek kalorijų turi grynas etanolis?", "7,11 kcal", "9,3 kcal", "4,0 kcal", "Neturi", "7,11 kcal"};
+    public static final String[] question_4 = {"Kiek alkoholio per savaitę turi suvartoti moteris, jog tai būtų laikoma rizikingu vartojimu? ", "Daugiau nei 3 SAV (standartiniai alkoholio vienetai) (daugiau nei 600 ml 5 % alaus) vienkartinai, ar daugiau nei 7 SAV( 0,5 litro 12% stiprumo vyno)  per savaitę", "Daugiau nei 5 SAV ( 1 litras 5% stirpumo alus) vienkartinai arba 14 SAV (0,75 litro 18 % stipraus likerinio vyno) per savaitę",
+            "Daugiau nei suvartoja kartu gėręs vyras", "Daugiau nei 10 SAV (2 litrai 5 % sidro) vienkartinai arba 30 SAV (0,75 litro 40 % brendžio)  per savaitę", "Daugiau nei 3 SAV (standartiniai alkoholio vienetai) (daugiau nei 600 ml 5 % alaus) vienkartinai, ar daugiau nei 7 SAV( 0,5 litro 12% stiprumo vyno)  per savaitę"};
+    public static final String[] question_5 = {"Koks gėrimas kenksmingiausias kepenims?", "Visi vienodai kenksmingi", "Alus", "Prabangus viskis", "Burnos skalavimo skystis", "Visi vienodai kenksmingi"};
+    public static final String[] question_6 = {"Kiel mililitrų stipraus (40%) gėrimo sudaro standartinį alkoholio vienetą?", "30", "40", "50", "60", "40"};
+    public static final String[] question_7 = {"Ar maistas prieš alkoholį sumažina alkoholio absorbciją?", "Tiesa, mažina", "Ne, maistas didina alkoholio patekimą į kraują", "Ne, maistas niekaip neveikia absorbcijos",
+            "Ne, maistas visiškai sustabdo alkoholio patekimą į kraują", "Tiesa, mažina"};
+    public static final String[] question_8 = {"Ar maistas prieš alkoholį sumažina alkoholio kiekį patenkantį į organizmą?", "Ne, maistas tik sulėtina alkoholio patekimą į kraują, bet bendras kiekis išlieka toks pats",
+            "Taip, maistas sumažina alkoholio kiekį patekusį į organizmą per pusę", "Taip, maistas nežymiai sumažina alkoholio kiekį, patekusį į organizmą", "Taip, maistas visiškai neleidžia alkoholiui patekti į kraują.", "Ne, maistas tik sulėtina alkoholio patekimą į kraują, bet bendras kiekis išlieka toks pats"};
+    public static final String[] question_9 = {"Kuriam organui kenkia alkoholis?", "Kasai", "Smegenims", "Kepenims", "Visiems išvardintiems", "Visiems išvardintiems"};
+    public static final String[] question_10 = {"Kiek kcal turi viena taurė (250 ml) 13% stiprumo vyno?", "80 kcal", "123 kcal ", "200 kcal", "228 kcal", "228 kcal"};
+    public static final String[] question_11 = {"Kaip šalinamas alkoholis iš organizmo?", "Su šlapimu", "Su išmatomis", "Su iškvepiamu oru", "Su šlapimu ir iškvepiamu oru", "Su šlapimu ir iškvepiamu oru"};
+    public static final String[] question_12 = {"Kur alkoholis nukenksminamas?", "Kraujyje", "Skrandyje", "Kepenyse", "Smegenyse", "Kepenyse"};
+
     public static int question;
     public static int score;
     private int highscore;
@@ -158,7 +169,6 @@ public class QuizActivity extends AppCompatActivity {
 
         switch (question){
             case 0:
-
                 question_title = question_1[0];
                 question_answer_1 = question_1[1];
                 question_answer_2 = question_1[2];
@@ -198,6 +208,10 @@ public class QuizActivity extends AppCompatActivity {
                 question_answer_2 = question_4[2];
                 question_answer_3 = question_4[3];
                 question_answer_4 = question_4[4];
+                answer1.setTextSize(14);
+                answer2.setTextSize(14);
+                answer3.setTextSize(14);
+                answer4.setTextSize(14);
                 rightAnswer = question_4[5];
                 break;
 
@@ -212,6 +226,83 @@ public class QuizActivity extends AppCompatActivity {
                 break;
 
             case 5:
+
+                question_title = question_6[0];
+                question_answer_1 = question_6[1];
+                question_answer_2 = question_6[2];
+                question_answer_3 = question_6[3];
+                question_answer_4 = question_6[4];
+                rightAnswer = question_6[5];
+                break;
+
+            case 6:
+
+                question_title = question_7[0];
+                question_answer_1 = question_7[1];
+                question_answer_2 = question_7[2];
+                question_answer_3 = question_7[3];
+                question_answer_4 = question_7[4];
+
+                rightAnswer = question_7[5];
+                break;
+
+
+            case 7:
+
+                question_title = question_8[0];
+                question_answer_1 = question_8[1];
+                question_answer_2 = question_8[2];
+                question_answer_3 = question_8[3];
+                question_answer_4 = question_8[4];
+                rightAnswer = question_8[5];
+                break;
+
+
+            case 8:
+
+                question_title = question_9[0];
+                question_answer_1 = question_9[1];
+                question_answer_2 = question_9[2];
+                question_answer_3 = question_9[3];
+                question_answer_4 = question_9[4];
+                rightAnswer = question_9[5];
+                break;
+
+
+            case 9:
+
+                question_title = question_10[0];
+                question_answer_1 = question_10[1];
+                question_answer_2 = question_10[2];
+                question_answer_3 = question_10[3];
+                question_answer_4 = question_10[4];
+                rightAnswer = question_10[5];
+                break;
+
+
+            case 10:
+
+                question_title = question_11[0];
+                question_answer_1 = question_11[1];
+                question_answer_2 = question_11[2];
+                question_answer_3 = question_11[3];
+                question_answer_4 = question_11[4];
+                rightAnswer = question_11[5];
+                break;
+
+
+            case 11:
+
+                question_title = question_12[0];
+                question_answer_1 = question_12[1];
+                question_answer_2 = question_12[2];
+                question_answer_3 = question_12[3];
+                question_answer_4 = question_12[4];
+                rightAnswer = question_12[5];
+                break;
+
+            case 12:
+
                 if(score>highscore){
                     sharedPreferences.edit().putInt("highscore_quiz", score).commit();
                 }
@@ -242,7 +333,7 @@ public class QuizActivity extends AppCompatActivity {
 
         question_textview.setText(question_title);
 
-        if(question<=4){
+        if(question<=11){
        countDownTimer = new CountDownTimer(16000, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -274,6 +365,7 @@ public class QuizActivity extends AppCompatActivity {
                             break;
                     }
 
+                    question++;
                     CheckingUtils.vibrate(QuizActivity.this, 500);
                     new Timer().schedule(task, 1500);
 
