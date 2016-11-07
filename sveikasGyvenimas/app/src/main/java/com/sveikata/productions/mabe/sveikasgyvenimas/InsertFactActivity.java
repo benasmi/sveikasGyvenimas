@@ -44,7 +44,6 @@ public class InsertFactActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         CheckingUtils.changeNotifBarColor("#2980b9", getWindow());
 
-        filePath = "";
         setContentView(R.layout.fact_admin);
         super.onCreate(savedInstanceState);
         title_fact_admin = (EditText) findViewById(R.id.title_fact_admin);
@@ -144,6 +143,8 @@ public class InsertFactActivity extends Activity {
         HealthyLifeActivity.addData = true;
         PlayActivity.shouldAddInfo = true;
         new ServerManager(this, "ADD_FACT").execute("ADD_FACT", title, body, url, source, filePath, img_height);
+
+        Log.i("TEST", "DAR KAZKAS: " + title + " " + body + " " + url + " " + filePath + " " + source);
 
 
 

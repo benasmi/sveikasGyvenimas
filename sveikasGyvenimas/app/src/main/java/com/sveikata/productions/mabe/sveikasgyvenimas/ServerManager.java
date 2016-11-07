@@ -101,7 +101,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             progressDialog = CheckingUtils.progressDialog(context, "Tik išsaugom tavo duomenis", R.style.ScheduleDialogStyle);
         }
         if(dialogType.equals("ADD_FACT")){
-            Toast.makeText(context, "Pridedame faktą..." , Toast.LENGTH_LONG).show();
+            progressDialog = CheckingUtils.progressDialog(context, "Pridedame faktą...", R.style.ScheduleDialogStyle);
         }
         if(dialogType.equals("LOGIN_GMAIL_AND_REGISTER")){
             progressDialog = CheckingUtils.progressDialog(context, "Prisijungiama...", R.style.ScheduleDialogStyle);
@@ -412,6 +412,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
         if(method_type.equals("ADD_FACT")){
             startFetchingData(2, true);
+            progressDialog.dismiss();
 //            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 2));
         }
 
@@ -618,13 +619,14 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("source", source);
 
 
+
             ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
             MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 
-            if(url.isEmpty() && !path.isEmpty()) {
+            if(url.isEmpty() && path != null) {
                 entity.addPart("picture", new FileBody(new File(path)));
             }
-            if(path.isEmpty() && !url.isEmpty()){
+            if(path == null && !url.isEmpty()){
                 jsonObject.putOpt("url", url);
             }
 
@@ -635,6 +637,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             //Getting response
             HttpResponse response = httpClient.execute(httpPost);
             String responseBody = EntityUtils.toString(response.getEntity());
+
 
 
             return 0;
