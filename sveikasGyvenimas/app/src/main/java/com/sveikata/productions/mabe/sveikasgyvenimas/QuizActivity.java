@@ -71,7 +71,7 @@ public class QuizActivity extends AppCompatActivity {
     public static final String[] question_28 = {"Kas gresia vartojant alkoholį su narkotikais?", "Gresia mirtis", "Gresia vėmimas", "Gresia pamiršti kelią, kuriuo galima grįžti į namus", "Gresia užspringimas", "Gresia mirtis"};
     public static final String[] question_29 = {"Kokia šalis užima pirmą vietą pagal suvartojamo alkoholio kiekį asmeniui?", "Lietuva", "Bulgarija", "Prancūzija", "Vokietija", "Lietuva"};
     public static final String[] question_30 = {"Kas laikomi alkoholio surogatais?", "Etanolis", "Metanolis", "Etilenglikolis", "Metanolis ir Etilenglikolis", "Metanolis ir Etilenglikolis"};
-    public static final String[] question_31 = {"Koks alkoholio poveikis širdžiai?", "Sukelia širdies ritmo sutrikimus", "Tiesiogiai pažeidžia širdies raumenį", "Padeda širdies kraujagyslėms geriau dirbti", "A ir B atsakymai", "A ir B atsakymai"};
+    public static final String[] question_31 = {"Koks alkoholio poveikis širdžiai?", "Sukelia širdies ritmo sutrikimus", "Tiesiogiai pažeidžia širdies raumenį", "Padeda širdies kraujagyslėms geriau dirbti", "Sukelia širdies ritmo problemas bei žeidžia širdies raumenį", "Sukelia širdies ritmo problemas bei žeidžia širdies raumenį"};
 
     public static int question;
     public static int score;
