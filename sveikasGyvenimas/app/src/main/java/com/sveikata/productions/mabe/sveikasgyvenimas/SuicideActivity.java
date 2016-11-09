@@ -49,6 +49,13 @@ public class SuicideActivity extends AppCompatActivity {
         sendToCallIntent("852757564");
     }
 
+    public void alkoholikuKlubas(View view){
+        String url = "http://grupes.aalietuvoje.org/index.php?r=susirinkimas/sarasas";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
 
 
 
