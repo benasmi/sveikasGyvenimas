@@ -20,8 +20,8 @@ public class AskProfessionalActivity extends AppCompatActivity {
     private Spinner spinner;
     private Typeface tf;
     private TextView txt;
-    public static String specialist_BEN = "specialist_BEN - Benas. M";
-    public static String specialist_MARTIN = "specialist_MARTIN - Martynas. D";
+    public static String specialist = "Sveikatos specialistė";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +67,8 @@ public class AskProfessionalActivity extends AppCompatActivity {
                     return;
                 }
 
-                else if(specialist.equals(specialist_BEN)){
-                    String to [] = {"benasmiliunas@gmail.com"};
-                    sendEmail(to,subject_value,message_value);
-                }else if(specialist.equals(specialist_MARTIN)){
-                    String to [] = {"dargis.martynas@gmail.com"};
+                else if(specialist.equals(specialist)){
+                    String to [] = {"blaivusgyvenimas@gmail.com"};
                     sendEmail(to,subject_value,message_value);
                 }
 

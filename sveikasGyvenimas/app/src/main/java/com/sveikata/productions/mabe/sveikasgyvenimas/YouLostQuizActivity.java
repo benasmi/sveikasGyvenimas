@@ -69,8 +69,8 @@ public class YouLostQuizActivity extends AppCompatActivity {
         score_txt = (TextView) findViewById(R.id.score_game_over_quiz);
         highscore_txt = (TextView) findViewById(R.id.highscore_game_over_quiz);
 
-        score_txt.setText(score+ "/" + "12");
-        highscore_txt.setText(highscore+ "/" + "12");
+        score_txt.setText(score+ "/" + "31");
+        highscore_txt.setText(highscore+ "/" + "31");
 
         percentage_txt.setTypeface(tfBevan);
         score_txt.setTypeface(tf);
