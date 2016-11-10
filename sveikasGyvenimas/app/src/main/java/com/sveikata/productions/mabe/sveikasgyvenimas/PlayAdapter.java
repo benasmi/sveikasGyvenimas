@@ -305,7 +305,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                             if(!isAnimRunning){
                                 which_image--;
                                 if(which_image<0){
-                                    which_image=4;
+                                    which_image=5;
                                 }
                                 switch (which_image){
                                     case 0:
@@ -323,6 +323,9 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                     case 4:
                                         calculator_preview_image.setImageResource(R.drawable.limit_calculator);
                                         break;
+                                    case 5:
+                                        calculator_preview_image.setImageResource(R.drawable.calories_in_alcohol);
+                                        break;
                                 }
                             }
                         }
@@ -333,7 +336,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View view) {
                             if(!isAnimRunning){
                                 which_image++;
-                                if(which_image>=4){
+                                if(which_image>=5){
                                     which_image=0;
                                 }
 
@@ -353,6 +356,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                     case 4:
                                         calculator_preview_image.setImageResource(R.drawable.limit_calculator);
                                         break;
+                                    case 5:
+                                        calculator_preview_image.setImageResource(R.drawable.calories_in_alcohol);
+                                        break;
+
                                 }
                             }
                         }
@@ -653,6 +660,11 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 break;
             case 4:
                 uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
+                intent.setData(uri);
+                context.startActivity(intent);
+
+            case 5:
+                uri = Uri.parse("https://www.drinkaware.co.uk/alcohol-facts/health-effects-of-alcohol/calories/calories-in-alcohol/");
                 intent.setData(uri);
                 context.startActivity(intent);
 
