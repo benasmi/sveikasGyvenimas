@@ -229,7 +229,10 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        //Human organs
         private GifImageView human_organs;
+        private TextView link_to_more_info;
+
         private Typeface verdanaFont;
 
 
@@ -279,7 +282,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
         private ImageButton failed;
         private ImageView get_random_question;
-
         private GifImageView start_playing_quiz;
         public ViewHolder(View itemView, int type) {
             super(itemView);
@@ -336,7 +338,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                         public void onClick(View view) {
                             if(!isAnimRunning){
                                 which_image++;
-                                if(which_image>=5){
+                                if(which_image>=6){
                                     which_image=0;
                                 }
 
@@ -513,14 +515,19 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     break;
 
                 case 7:
+                    link_to_more_info = (TextView) itemView.findViewById(R.id.link_to_human_organs);
+                    link_to_more_info.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse("https://drinkwise.org.au/alcohol-and-your-health/#");
+                            Intent intent = new Intent();
+                            intent.setData(uri);
+                            context.startActivity(intent);
+                        }
+                    });
+
+
                     human_organs = (GifImageView) itemView.findViewById(R.id.human_organs_gif);
-
-
-
-
-
-
-
                     human_organs.setOnClickListener(new View.OnClickListener() {
 
                         int timesClicked = 0;

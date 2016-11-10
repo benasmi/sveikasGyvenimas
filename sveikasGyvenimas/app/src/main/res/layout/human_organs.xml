@@ -19,6 +19,19 @@
         android:adjustViewBounds="true"
 
         />
+
+        <TextView
+            android:text="@string/nuoroda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/link_to_human_organs"
+            android:textColor="#FFFFFF"
+            android:padding="2dp"
+            android:textSize="12sp"
+            android:onClick="goToHumanOrganCycle"
+            android:layout_alignBottom="@+id/human_organs_gif"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
 </LinearLayout>
