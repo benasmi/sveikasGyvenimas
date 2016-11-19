@@ -396,7 +396,7 @@ public class GameScreen extends AppCompatActivity {
         String top_protein_value = alcoholList.get(top).getProtein();
 
         top_carbohydrates.setText(top_carbohydrates_value + "\nAngliavandenių");
-        top_fat.setText(top_fat_value + "\nLipidų");
+        top_fat.setText(top_fat_value + "\nRiebalų");
         top_protein.setText(top_protein_value + "\nBaltymų");
 
         top_title.setText(top_title_value);
