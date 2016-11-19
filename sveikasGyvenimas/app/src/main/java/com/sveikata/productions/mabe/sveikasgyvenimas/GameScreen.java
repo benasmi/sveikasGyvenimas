@@ -51,6 +51,9 @@ public class GameScreen extends AppCompatActivity {
     private TextView top_carbohydrates;
     private TextView bottom_carbohydrates;
 
+    private TextView top_protein;
+    private TextView bottom_protein;
+
     private boolean isFirstTime = true;
 
     private SharedPreferences sharedPreferences;
@@ -83,6 +86,10 @@ public class GameScreen extends AppCompatActivity {
         final Animation down = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         highscore_txt = (TextView) findViewById(R.id.highscore);
         score_txt = (TextView) findViewById(R.id.score);
+
+        top_protein = (TextView) findViewById(R.id.proteins_top);
+        bottom_protein = (TextView) findViewById(R.id.proteins_bottom);
+
         highscore_txt.setText("Geriausias rezultatas: " + String.valueOf(highscore));
         score_txt.setText("Rezultatas: " + "0");
 
@@ -164,8 +171,7 @@ public class GameScreen extends AppCompatActivity {
                     score_txt.setText("Rezultatas: " + String.valueOf(new_score));
 
                     if(canClick){
-                        showCarboHydrates(true);
-                        showFat(true);
+                        showInfo(true);
                         bottom_volume.startAnimation(expand_bottom);
                         top_volume.startAnimation(expand_top);
                         canClick=false;
@@ -187,13 +193,12 @@ public class GameScreen extends AppCompatActivity {
                             shrink_top.setDuration(250);
                             top_volume.startAnimation(shrink_top);
 
-                            showCarboHydrates(false);
-                            showFat(false);
+                            showInfo(false);
                             shrink_top.setAnimationListener(listener);
                             shrink_bottom.setAnimationListener(listener);
 
                         }
-                    },1500);
+                    },3000);
                 }
             }
         });
@@ -214,8 +219,7 @@ public class GameScreen extends AppCompatActivity {
                     score_txt.setText("Rezultatas: " + String.valueOf(new_score));
 
                     if(canClick){
-                        showCarboHydrates(true);
-                        showFat(true);
+                        showInfo(true);
                     bottom_volume.startAnimation(expand_bottom);
                     top_volume.startAnimation(expand_top);
                         canClick=false;
@@ -234,8 +238,7 @@ public class GameScreen extends AppCompatActivity {
                             shrink_top.setDuration(250);
                             top_volume.startAnimation(shrink_top);
 
-                            showCarboHydrates(false);
-                            showFat(false);
+                            showInfo(false);
 
                             shrink_top.setAnimationListener(listener);
                             shrink_bottom.setAnimationListener(listener);
@@ -267,8 +270,8 @@ public class GameScreen extends AppCompatActivity {
         alcoholList.add(new Alcohol(R.drawable.kriause, "57", "Kriaušės","0.4g","15g","0.1g"));
         alcoholList.add(new Alcohol(R.drawable.melyne, "44", "Mėlynės","0.7g","11,5g","0.6g"));
         alcoholList.add(new Alcohol(R.drawable.melionas, "33", "Melionai","0.8g","8g","0.2g"));
-        alcoholList.add(new Alcohol(R.drawable.obuolys, "53", "Obuolys","0.4g","13g","0.4g"));
-        alcoholList.add(new Alcohol(R.drawable.serbentas, "55", "Obuolys","1.4g","14g","0.2g"));
+        alcoholList.add(new Alcohol(R.drawable.obuolys, "53", "Obuoliai","0.4g","13g","0.4g"));
+        alcoholList.add(new Alcohol(R.drawable.serbentas, "55", "Serbentai","1.4g","14g","0.2g"));
         alcoholList.add(new Alcohol(R.drawable.slyva, "45", "Slyva","0.7g","11g","0.3g"));
         alcoholList.add(new Alcohol(R.drawable.spanguole, "46", "Spanguolės","0.4g","12g","0.1g"));
         alcoholList.add(new Alcohol(R.drawable.svarainis, "76", "Svarainis","0.4g","19.9g","0.3g"));
@@ -326,45 +329,47 @@ public class GameScreen extends AppCompatActivity {
 
     }
 
-    private void showCarboHydrates(boolean bool){
+    private void showInfo(boolean bool){
         if(bool){
             final ResizeAnimation top_anim_expand = new ResizeAnimation(top_carbohydrates, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
             final ResizeAnimation bottom_anim_expand = new ResizeAnimation(bottom_carbohydrates, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            final ResizeAnimation top_anim_expand_fat = new ResizeAnimation(top_fat, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            final ResizeAnimation bottom_anim_expand_fat = new ResizeAnimation(bottom_fat, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            final ResizeAnimation top_anim_expand_protein = new ResizeAnimation(top_protein, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
+            final ResizeAnimation bottom_anim_expand_protein = new ResizeAnimation(bottom_protein, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
             top_anim_expand.setDuration(200);
+            top_anim_expand_fat.setDuration(200);
+            top_anim_expand_protein.setDuration(200);
             bottom_anim_expand.setDuration(200);
+            bottom_anim_expand_fat.setDuration(200);
+            bottom_anim_expand_protein.setDuration(200);
 
             top_carbohydrates.startAnimation(top_anim_expand);
             bottom_carbohydrates.startAnimation(bottom_anim_expand);
+            top_fat.startAnimation(top_anim_expand_fat);
+            bottom_fat.startAnimation(bottom_anim_expand_fat);
+            top_protein.startAnimation(top_anim_expand_protein);
+            bottom_protein.startAnimation(bottom_anim_expand_protein);
         }else{
             final ResizeAnimation top_anim_shrink = new ResizeAnimation(top_carbohydrates, 0, top_carbohydrates.getHeight());
             final ResizeAnimation bottom_anim_shrink = new ResizeAnimation(bottom_carbohydrates, 0, bottom_carbohydrates.getHeight());
+            final ResizeAnimation top_anim_shrink_fat = new ResizeAnimation(top_fat, 0, top_fat.getHeight());
+            final ResizeAnimation bottom_anim_shrink_fat = new ResizeAnimation(bottom_fat, 0, bottom_fat.getHeight());
+            final ResizeAnimation top_anim_shrink_protein = new ResizeAnimation(top_protein, 0, top_protein.getHeight());
+            final ResizeAnimation bottom_anim_shrink_protein = new ResizeAnimation(bottom_protein, 0, bottom_protein.getHeight());
             top_anim_shrink.setDuration(200);
             bottom_anim_shrink.setDuration(200);
+            top_anim_shrink_fat.setDuration(200);
+            bottom_anim_shrink_fat.setDuration(200);
+            top_anim_shrink_protein.setDuration(200);
+            bottom_anim_shrink_protein.setDuration(200);
 
             bottom_carbohydrates.startAnimation(bottom_anim_shrink);
             top_carbohydrates.startAnimation(top_anim_shrink);
-        }
-
-
-    }
-
-    private void showFat(boolean bool){
-        if(bool){
-            final ResizeAnimation top_anim_expand = new ResizeAnimation(top_fat, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
-            final ResizeAnimation bottom_anim_expand = new ResizeAnimation(bottom_fat, (int) CheckingUtils.convertPixelsToDp(50, this), 0);
-            top_anim_expand.setDuration(200);
-            bottom_anim_expand.setDuration(200);
-
-            top_fat.startAnimation(top_anim_expand);
-            bottom_fat.startAnimation(bottom_anim_expand);
-        }else{
-            final ResizeAnimation top_anim_shrink = new ResizeAnimation(top_fat, 0, top_fat.getHeight());
-            final ResizeAnimation bottom_anim_shrink = new ResizeAnimation(bottom_fat, 0, bottom_fat.getHeight());
-            top_anim_shrink.setDuration(200);
-            bottom_anim_shrink.setDuration(200);
-
-            bottom_fat.startAnimation(bottom_anim_shrink);
-            top_fat.startAnimation(top_anim_shrink);
+            bottom_fat.startAnimation(bottom_anim_shrink_fat);
+            top_fat.startAnimation(top_anim_shrink_fat);
+            top_protein.startAnimation(top_anim_shrink_protein);
+            bottom_protein.startAnimation(bottom_anim_shrink_protein);
         }
 
 
@@ -388,9 +393,11 @@ public class GameScreen extends AppCompatActivity {
         top_volume_value  = alcoholList.get(top).getCalories();
         String top_carbohydrates_value  = alcoholList.get(top).getCarbohydrates();
         String top_fat_value  = alcoholList.get(top).getLipids();
+        String top_protein_value = alcoholList.get(top).getProtein();
 
         top_carbohydrates.setText(top_carbohydrates_value + "\nAngliavandenių");
         top_fat.setText(top_fat_value + "\nLipidų");
+        top_protein.setText(top_protein_value + "\nBaltymų");
 
         top_title.setText(top_title_value);
         top_volume.getLayoutParams().height=0;
@@ -420,9 +427,11 @@ public class GameScreen extends AppCompatActivity {
         bottom_volume_value  = alcoholList.get(bottom).getCalories();
         String bottom_carbohydrates_value  = alcoholList.get(bottom).getCarbohydrates();
         String bottom_fat_value  = alcoholList.get(bottom).getLipids();
+        String bottom_protein_value = alcoholList.get(bottom).getProtein();
 
         bottom_carbohydrates.setText(bottom_carbohydrates_value + "\nAngliavandenių");
-        bottom_fat.setText(bottom_fat_value + "\nLipidų");
+        bottom_fat.setText(bottom_fat_value + "\nRiebalų");
+        bottom_protein.setText(bottom_protein_value + "\nBaltymų");
 
         bottom_title.setText(bottom_title_value);
         bottom_volume.getLayoutParams().height=0;

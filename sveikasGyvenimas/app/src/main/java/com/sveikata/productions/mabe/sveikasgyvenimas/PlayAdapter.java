@@ -232,6 +232,8 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         //Human organs
         private GifImageView human_organs;
         private TextView link_to_more_info;
+        private TextView link_to_bbc_movie;
+        private TextView link_external_movie;
 
         private Typeface verdanaFont;
 
@@ -263,6 +265,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private ImageButton accept_challenge;
         private ImageButton decline_challenge;
         private TextView challenge_sender;
+
 
         //Challenge in progress layout
         private TextView challenge_in_progress_title;
@@ -516,6 +519,30 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                 case 7:
                     link_to_more_info = (TextView) itemView.findViewById(R.id.link_to_human_organs);
+                    link_to_bbc_movie = (TextView) itemView.findViewById(R.id.bbc_movie);
+                    link_external_movie = (TextView) itemView.findViewById(R.id.filmukas);
+
+
+                    link_external_movie.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse("https://www.youtube.com/watch?v=lny5u-HIwbg&list=PLu2ub6G0HrRSqTOtHLxB5h0J-9EIODE3z&index=2");
+                            Intent intent = new Intent();
+                            intent.setData(uri);
+                            context.startActivity(intent);
+                        }
+                    });
+
+                    link_to_bbc_movie.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse("https://www.youtube.com/watch?v=qjaaqyhMYPY&list=PLu2ub6G0HrRSqTOtHLxB5h0J-9EIODE3z&index=3");
+                            Intent intent = new Intent();
+                            intent.setData(uri);
+                            context.startActivity(intent);
+                        }
+                    });
+
                     link_to_more_info.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

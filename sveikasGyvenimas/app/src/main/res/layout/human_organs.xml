@@ -27,11 +27,41 @@
             android:id="@+id/link_to_human_organs"
             android:textColor="#FFFFFF"
             android:padding="2dp"
+            android:clickable="true"
             android:textSize="12sp"
             android:onClick="goToHumanOrganCycle"
             android:layout_alignBottom="@+id/human_organs_gif"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="@string/bbc_dokumentika"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bbc_movie"
+            android:textColor="#FFFFFF"
+            android:padding="2dp"
+            android:clickable="true"
+            android:textSize="12sp"
+            android:onClick="goToHumanOrganCycle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:text="@string/filmukas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/filmukas"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:padding="2dp"
+            android:textSize="12sp"
+            android:onClick="goToHumanOrganCycle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
     </RelativeLayout>
 
 </LinearLayout>

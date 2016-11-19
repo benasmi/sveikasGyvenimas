@@ -108,18 +108,21 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
             case 0:
 
                 holder.fact_title.setText(data.getFactTitle());
-                holder.fact_source.setText(data.getFactSource());
+
+                if(data.getFactSource().isEmpty()){
+                    holder.fact_source.setText("Mūsų Facebook puslapis");
+                    holder.fact_source.setHint("www.facebook.com");
+                }else{
+                    holder.fact_source.setHint(data.getFactSource());
+                    holder.fact_source.setText("Paspausk, kad sužinotum daugiau.");
+                }
+
 
                 holder.fact_body.setText(data.getFactBody());
 
                 holder.fb_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-
-
-
-
                         if(holder.fact_image!=null) {
                            CheckingUtils.shareFact(data.getFactTitle(), context, data.getFactSource(), data.getFactImageUrl(), data.getFactBody());
                         }
@@ -127,14 +130,28 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
                 });
 
                 if(!data.getFactImageUrl().isEmpty()){
-                Glide
-                        .with(context)
-                        .load(data.getFactImageUrl())
-                        .fitCenter()
-                        .crossFade()
-                        .animate(R.anim.slide_in_left)
-                        .override(400,data.getHeight())
-                        .into(holder.fact_image);
+
+                    if(data.getHeight() == 0){
+
+                        Glide
+                                .with(context)
+                                .load(data.getFactImageUrl())
+                                .fitCenter()
+                                .crossFade()
+                                .animate(R.anim.slide_in_left)
+                                .override(400, (int) CheckingUtils.convertPixelsToDp(400, context))
+                                .into(holder.fact_image);
+                    }else{
+                        Glide
+                                .with(context)
+                                .load(data.getFactImageUrl())
+                                .fitCenter()
+                                .crossFade()
+                                .animate(R.anim.slide_in_left)
+                                .override(400,data.getHeight())
+                                .into(holder.fact_image);
+                    }
+
                 }else{
                     Glide.clear(holder.fact_image);
                 }
