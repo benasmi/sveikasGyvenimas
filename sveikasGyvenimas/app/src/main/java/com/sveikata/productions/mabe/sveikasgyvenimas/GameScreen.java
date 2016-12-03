@@ -146,8 +146,8 @@ public class GameScreen extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 canClick =true;
-                bottom = generateNewBottom();
                 top = generateNewTop();
+                bottom = generateNewBottom();
             }
 
             @Override
