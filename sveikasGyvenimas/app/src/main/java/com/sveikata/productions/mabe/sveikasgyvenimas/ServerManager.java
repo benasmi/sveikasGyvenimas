@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -76,7 +77,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADRESS_I_FAILED_CHALLENGE = "http://dvp.lt/android/failed_challenge.php";
     public static final String SERVER_ADRESS_COMPLETE_CHALLENGE = "http://dvp.lt/android/complete_challenge.php";
     public static final String SERVER_ADRESS_UPDATE_EVENT = "http://dvp.lt/android/update_event.php";
-
+    public static final String SERVER_ADRESS_SEND_FORGOT_PASSWORD_ACTIVATION_CODE = "http://dvp.lt/android/send_forgot_password_code.php";
+    public static final String SERVER_ADRESS_CHANGE_PASSWORD = "http://dvp.lt/android/change_password.php";
     private String type;
     private String device_id;
     private String first_name;
@@ -271,8 +273,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String title = params[4];
             String username = params[5];
             String password = params[6];
+            String note = params[7];
 
-            response = send_challenge(username, password,challenge, title, time, mail);
+            response = send_challenge(username, password,challenge, title, time, mail, note);
         }
 
         if(method_type.equals("I_FAILED_CHALLENGE")){
@@ -286,6 +289,20 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String password = params[2];
 
             completed_challenge(username, password);
+        }
+
+        if(method_type.equals("SEND_CHANGE_PASSWORD_CODE")){
+            String mail = params[1];
+            String code = params[2];
+
+            response = send_forgot_password_code(mail, code);
+        }
+
+        if(method_type.equals("CHANGE_PASSWORD")){
+            String code = params[1];
+            String password = params[2];
+
+            response = change_password(password, code);
         }
 
         return null;
@@ -314,7 +331,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                 case 4:
 
                     sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", username_register);
                     editor.putString("password", password_register);
@@ -363,6 +379,42 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 1));
         }
 
+        if(method_type.equals("SEND_CHANGE_PASSWORD_CODE")){
+            Log.i("TEST", String.valueOf(response) + "responsas jau switch");
+            switch (response){
+                case 0:
+                    CheckingUtils.createErrorBox("Šis paštas yra naudojamas 'facebook' arba 'gmail' prisijungimui!", context, R.style.CasualStyle);
+                    break;
+
+                case 1:
+                    CheckingUtils.createErrorBox("Aktyvacijos kodas išsiųstas sėkmingai. Patikrinkite paštą", context, R.style.CasualStyle);
+                    break;
+            }
+        }
+
+        if(method_type.equals("CHANGE_PASSWORD")){
+            Log.i("TEST", String.valueOf(response) + "keisti pass");
+            switch (response){
+                case 0:
+
+
+                    new AlertDialog.Builder(context, R.style.ScheduleDialogStyle)
+                            .setMessage("Slaptažodis pakeistas sėkmingai!")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(context, LoginActivity.class);
+                                    intent.putExtra("isAnimDisabled", true);
+                                    context.startActivity(intent);
+
+                                }
+                            })
+
+                            .show();
+
+                    break;
+            }
+        }
 
         if(method_type.equals("ACCEPT_CHALLENGE")){
             startFetchingData(1, true);
@@ -684,6 +736,100 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
     }
 
+    private int send_forgot_password_code(String mail, String code){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_SEND_FORGOT_PASSWORD_ACTIVATION_CODE);
+
+
+        int reset_code = Integer.parseInt(code);
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("mail", mail);
+            jsonObject.putOpt("code",reset_code);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType content_type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), content_type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Log.i("TEST", String.valueOf(responseObject.getInt("code")) + "Responsas is metodo");
+            return responseObject.getInt("code");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+    private int change_password(String password, String code){
+        Log.i("TEST", password + ", " + code);
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_CHANGE_PASSWORD);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        int forgot_code = Integer.parseInt(code);
+
+        try {
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("code", forgot_code);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType content_type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), content_type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            return responseObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     private int login(String username, String password, String device_id, String type) {
 
@@ -780,7 +926,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
-    private int send_challenge(String username, String password, String challenge,String title, String time, String mail) {
+    private int send_challenge(String username, String password, String challenge,String title, String time, String mail, String note) {
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -797,6 +943,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("time", time);
             jsonObject.putOpt("title", title);
             jsonObject.putOpt("mail", mail);
+            jsonObject.putOpt("note", note);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1068,7 +1216,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String responseBody = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = new JSONArray(responseBody);
 
-            Log.i("TEST", responseBody);
+            //Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("FactData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("fact_data", jsonArray.toString()).commit();
@@ -1193,7 +1341,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             JSONArray jsonArray = new JSONArray(responseBody);
 
 
-            Log.i("TEST", responseBody);
+            //Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("user_data", jsonArray.toString()).commit();
@@ -1208,7 +1356,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
     public void fetchChallenges(){
-
 
 
 
@@ -1239,7 +1386,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             JSONArray jsonArray = new JSONArray(responseBody);
 
 
-            Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("challenge_data", jsonArray.toString()).commit();

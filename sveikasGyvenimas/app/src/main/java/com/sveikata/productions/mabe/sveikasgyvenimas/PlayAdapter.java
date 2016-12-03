@@ -4,7 +4,9 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
  * Created by Martyno on 2016.10.03.
  */
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -29,6 +31,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -146,13 +150,17 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 holder.challenge_title.setText(data.getChallengeTitle());
                 holder.challenge_description.setText(data.getChallengeDescription());
                 holder.challenge_sender.setText(data.getChallengeSender());
+                holder.challenge_note.setText("Pastaba:" +data.getChallengeNote());
                 holder.timer.setText("Iššūkis truks " + data.getChallengeTime() + " d.");
+
                 break;
             case 2: //Send challenge layout
                 break;
+
             case 3: //Completed challenges
                 holder.completed_challenge_description.setText(data.getChallengeDescription());
                 holder.completed_challenge_title.setText(data.getChallengeTitle());
+                holder.completed_challenge_note.setText("Pastaba:" +data.getChallengeNote());
                 holder.completed_challenge_sender.setText(data.getChallengeTitle());
                 holder.completed_challenge_share.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -162,11 +170,13 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     }
                 });
 
+
                 break;
             case 4: //Challenge in progress layout
                 holder.challenge_in_progress_description.setText(data.getChallengeDescription());
                 holder.challenge_in_progress_title.setText(data.getChallengeTitle());
                 holder.challenge_in_progress_sender.setText(data.getChallengeTitle());
+                holder.challenge_in_progress_note.setText("Pastaba:" +data.getChallengeNote());
                 countDownStart(holder.days_proggress, holder.hours_progress, holder.minutes_progress, holder.seconds_progress, data.getChallengeTime());
 
                 break;
@@ -261,6 +271,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         //New challenge layout
         private TextView timer;
         private TextView challenge_title;
+        private TextView challenge_note;
         private TextView challenge_description;
         private ImageButton accept_challenge;
         private ImageButton decline_challenge;
@@ -271,11 +282,13 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         private TextView challenge_in_progress_title;
         private TextView challenge_in_progress_description;
         private TextView challenge_in_progress_sender;
+        private TextView challenge_in_progress_note;
 
         //Completed challenge layout
         private TextView completed_challenge_title;
         private TextView completed_challenge_description;
         private TextView completed_challenge_sender;
+        private TextView completed_challenge_note;
         private AppCompatButton completed_challenge_share;
 
         public TextView days_proggress;
@@ -384,6 +397,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
 
                     challenge_description = (TextView) itemView.findViewById(R.id.new_challenge_description);
                     challenge_title = (TextView) itemView.findViewById(R.id.new_challenge_title);
+                    challenge_note = (TextView) itemView.findViewById(R.id.new_challenge_note);
                     accept_challenge = (ImageButton) itemView.findViewById(R.id.accept_button);
                     decline_challenge = (ImageButton) itemView.findViewById(R.id.decline_button);
                     challenge_sender = (TextView) itemView.findViewById(R.id.challenge_sender);
@@ -454,6 +468,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     completed_challenge_title = (TextView) itemView.findViewById(R.id.trophy_title);
                     completed_challenge_description = (TextView) itemView.findViewById(R.id.trophy_description);
                     completed_challenge_sender = (TextView) itemView.findViewById(R.id.trophy_sender);
+                    completed_challenge_note = (TextView) itemView.findViewById(R.id.trophy_note);
                     completed_challenge_share = (AppCompatButton) itemView.findViewById(R.id.send_challenge_ccmpleted);
                     break;
 
@@ -461,6 +476,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     challenge_in_progress_description = (TextView) itemView.findViewById(R.id.challenge_in_progress_description);
                     challenge_in_progress_title = (TextView) itemView.findViewById(R.id.challenge_in_progress_title);
                     challenge_in_progress_sender = (TextView) itemView.findViewById(R.id.challenge_in_progress_sender);
+                    challenge_in_progress_note = (TextView) itemView.findViewById(R.id.challenge_in_progress_note);
 
                     days_proggress = (TextView) itemView.findViewById(R.id.days);
                     hours_progress = (TextView) itemView.findViewById(R.id.hours );
@@ -662,48 +678,66 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
         }
     }
 
-    private void launchCalculator(int which_img)
+    private void launchCalculator(final int which_img)
     {
-        Uri uri = null;
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-        switch (which_img){
-            case 0:
-                uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
-                intent.setData(uri);
-                context.startActivity(intent);
+        new AlertDialog.Builder(context, R.style.PlayDialogStyle)
+                .setMessage("Ar jums yra daugiau negu 18 metų ?")
+                .setPositiveButton("Taip, įeiti", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri uri = null;
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        Log.i("TEST", String.valueOf(which_img) + "KURIS LINKAS?");
+                        switch (which_img){
+                            case 0:
+                                uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
+                                intent.setData(uri);
+                                context.startActivity(intent);
 
-                break;
-            case 1:
-                uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
-                intent.setData(uri);
-                context.startActivity(intent);
+                                break;
+                            case 1:
+                                uri = Uri.parse("http://www.sulieknek.lt/skaiciuokles/skysciu-paros-normos-skaiciuokle/");
+                                intent.setData(uri);
+                                context.startActivity(intent);
 
-                break;
-            case 2:
-                uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
-                intent.setData(uri);
-                context.startActivity(intent);
+                                break;
+                            case 2:
+                                uri = Uri.parse("https://www.drinkiq.com/en-gb/whats-in-your-drink/");
+                                intent.setData(uri);
+                                context.startActivity(intent);
 
-                break;
-            case 3:
-                uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
-                intent.setData(uri);
-                context.startActivity(intent);
+                                break;
+                            case 3:
+                                uri = Uri.parse("http://www.los.lt/kiek-kaloriju-suvartojama-dirbant-ir-sportuojant/");
+                                intent.setData(uri);
+                                context.startActivity(intent);
 
-                break;
-            case 4:
-                uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
-                intent.setData(uri);
-                context.startActivity(intent);
+                                break;
+                            case 4:
+                                uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
+                                intent.setData(uri);
+                                context.startActivity(intent);
 
-            case 5:
-                uri = Uri.parse("https://www.drinkaware.co.uk/alcohol-facts/health-effects-of-alcohol/calories/calories-in-alcohol/");
-                intent.setData(uri);
-                context.startActivity(intent);
+                            case 5:
+                                uri = Uri.parse("https://www.drinkaware.co.uk/alcohol-facts/health-effects-of-alcohol/calories/calories-in-alcohol/");
+                                intent.setData(uri);
+                                context.startActivity(intent);
 
-                break;
-        }
+                                break;
+                        }
+
+                    }
+                })
+                .setNegativeButton("Ne", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
+
+
 
 
     }

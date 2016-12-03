@@ -65,6 +65,14 @@
             android:id="@+id/trophy_description"
             android:textSize="15dp"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Nevalgiau kebabu 10 dienu. Tai yra labai didelis pasiekimas"
+            android:id="@+id/trophy_note"
+            android:textSize="11dp"/>
+
         <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="23dp"

@@ -453,6 +453,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                             public void onFinish(int responseCode) {
                                                 if(responseCode == 1){
                                                     event_fb_link.setError("Netinkama nuoroda!");
+                                                    return;
                                                 }else{
 
 

@@ -53,6 +53,7 @@ public class CreateChallengeManually extends AppCompatActivity {
         final EditText challenge_mail = (EditText) findViewById(R.id.challenge_mail);
         final EditText challenge_title = (EditText) findViewById(R.id.challenge_title);
         final EditText challenge_body = (EditText) findViewById(R.id.challenge_body);
+        final EditText challenge_note = (EditText) findViewById(R.id.challenge_note);
         AppCompatButton send_challenge = (AppCompatButton) findViewById(R.id.send_challenge_manually);
 
         send_challenge.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,7 @@ public class CreateChallengeManually extends AppCompatActivity {
                 String mail = challenge_mail.getText().toString();
                 String title = challenge_title.getText().toString();
                 String body = challenge_body.getText().toString();
+                String note = challenge_note.getText().toString();
                 String time_value = time_spin.getSelectedItem().toString();
                 String username = sharedPreferences.getString("username", "");
                 String password = sharedPreferences.getString("password", "");
@@ -98,7 +100,7 @@ public class CreateChallengeManually extends AppCompatActivity {
                     return;
                 }
 
-                new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", body,mail,time_value,title, username,password);
+                new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", body,mail,time_value,title, username, password, note);
 
 
 
@@ -116,7 +118,7 @@ public class CreateChallengeManually extends AppCompatActivity {
 
 
         final EditText mail_receiver = (EditText) findViewById(R.id.mail_receiver);
-
+        final EditText note_challenge = (EditText) findViewById(R.id.created_challenge_note);
         send_challenge = (AppCompatButton) findViewById(R.id.send_challenge);
         send_challenge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +133,7 @@ public class CreateChallengeManually extends AppCompatActivity {
                 String mail = mail_receiver.getText().toString();
                 String username = sharedPreferences.getString("username", "");
                 String password = sharedPreferences.getString("password", "");
+                String note = note_challenge.getText().toString();
                 String title =null;
                 String time =null;
 
@@ -149,7 +152,7 @@ public class CreateChallengeManually extends AppCompatActivity {
                     CheckingUtils.vibrate(CreateChallengeManually.this, 100);
                     return;
                 }
-                new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password);
+                new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password, note);
             }
         });
 

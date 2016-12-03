@@ -68,6 +68,13 @@
                 android:text="Nevalgiau kebabu 10 dienu. Tai yra labai didelis pasiekimas"
                 android:id="@+id/new_challenge_description"
                 android:textSize="15dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Nevalgiau kebabu 10 dienu. Tai yra labai didelis pasiekimas"
+                android:id="@+id/new_challenge_note"
+                android:textSize="11dp"/>
 
         </LinearLayout>
 

@@ -212,6 +212,37 @@ public class CheckingUtils {
     }
 
 
+
+    public static void ageOver18ErrorBox(final String message, final Context context, int theme) {
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+
+        }else{
+            new AlertDialog.Builder(context)
+                    .setMessage(message)
+                    .setPositiveButton("Pasidalinti", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                    "Sveikas, parsisųsk 'appsa' čia: https://www.google.com");
+                            sendIntent.setType("text/plain");
+                            context.startActivity(sendIntent);
+                        }
+                    })
+                    .setNegativeButton("Grižti", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .show();
+        }
+    }
+
+
+
     public static ProgressDialog progressDialog(Context context, String message, int theme){
 
         ProgressDialog progressDialog = null;
