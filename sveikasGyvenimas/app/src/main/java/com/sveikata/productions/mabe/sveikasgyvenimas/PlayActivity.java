@@ -139,17 +139,20 @@ public class PlayActivity extends android.support.v4.app.Fragment {
         for(int i = 0; i < challenges.length(); i++){
             JSONObject challenge = challenges.getJSONObject(i);
 
+
             String description = challenge.getString("challenge");
             String time = challenge.getString("time");
             String title = challenge.getString("challenge_title");
             String sender = challenge.getString("challenge_sender");
+            String note = challenge.getString("challenge_note");
 
             if(challenge.getString("challenge_state").equals("0")){
-                info.add(new PlayInfoHolder(1, description, time, title, sender));
+                info.add(new PlayInfoHolder(1, description, time, title, sender, note));
             }
             if(challenge.getString("challenge_state").equals("2")){
-                info.add(new PlayInfoHolder(4, description, time, title, sender));
+                info.add(new PlayInfoHolder(4, description, time, title, sender, note));
             }
+            Log.i("TEST", challenge.toString());
         }
     }
 
@@ -165,12 +168,13 @@ public class PlayActivity extends android.support.v4.app.Fragment {
                 String title = challenge.getString("challenge_title");
                 String challenge_state = challenge.getString("challenge_state");
                 String sender = challenge.getString("challenge_sender");
+                String note = challenge.getString("challenge_note");
 
                 if(challenge_state.equals("1")){
-                    info.add(new PlayInfoHolder(3, description, time, title, sender));
+                    info.add(new PlayInfoHolder(3, description, time, title, sender, note));
                 }
 
-
+                Log.i("TEST", challenge.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

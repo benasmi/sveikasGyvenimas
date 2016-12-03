@@ -188,5 +188,16 @@
         android:layout_alignLeft="@+id/login_password_text"
         android:layout_alignStart="@+id/login_password_text" />
 
+    <TextView
+        android:text="Pamiršai slaptažodį? Prisiminti padėsime čia"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="2dp"
+        android:onClick="forgot_password"
+        android:textColor="#484848"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/regular_login_button"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView4" />
+
 </RelativeLayout>
 

@@ -69,7 +69,7 @@
             android:text="Siųsti savo iššūkį"
             android:id="@+id/send_challenge_manually"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/challenge_body"
+            android:layout_below="@+id/challenge_note"
             android:background="@drawable/game_over_buttons"
             android:textColor="#FFFF"
             android:layout_alignParentLeft="true"
@@ -93,6 +93,23 @@
             android:hint="Iššūkis"
             android:textSize="15dp"
             android:paddingLeft="7dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/transparent_backgrounds"
+            android:id="@+id/challenge_note"
+            android:layout_below="@+id/challenge_body"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textColor="#FFF1C40F"
+            android:textColorHint="#eac73c"
+            android:layout_marginRight="5dp"
+            android:drawablePadding="7dp"
+            android:layout_marginLeft="5dp"
+            android:hint="Pastaba(Ką padarysi, jei įvykdys iššūkį ir pnš.)"
+            android:textSize="15dp"
+            android:paddingLeft="7dp" />
     </RelativeLayout>
 
 
@@ -102,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/create_challenge"
         android:id="@+id/select_challenge"
-        android:layout_marginTop="75dp">
+        android:layout_marginTop="80dp">
 
 
         <Spinner
@@ -110,42 +127,14 @@
             android:layout_height="35dp"
             android:background="@drawable/transparent_backgrounds"
             android:id="@+id/challenges_created"
-            android:layout_below="@+id/mail_receiver"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            android:layout_alignLeft="@+id/mail_receiver"
-            android:layout_alignStart="@+id/mail_receiver"
-            android:layout_marginTop="5dp" />
-
-        <EditText
-            android:layout_width="340dp"
-            android:layout_height="35dp"
-            android:background="@drawable/transparent_backgrounds"
-            android:id="@+id/mail_receiver"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:inputType="textEmailAddress"
-            android:textColor="#FFF1C40F"
-            android:textColorHint="#eac73c"
-            android:hint="Kam nori nusiųsti? (El.Paštas)"
-            android:layout_marginTop="2dp"
-            android:drawablePadding="7dp"
-            android:paddingLeft="7dp"
-            android:textSize="15dp" />
+            android:layout_marginTop="10dp" />
 
 
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="arba pasirink jau sukurtą"
-        android:id="@+id/textView8"
-        android:textSize="25dp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@+id/create_challenge"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
 
     <android.support.v7.widget.AppCompatButton
         android:layout_width="350dp"
@@ -155,7 +144,7 @@
         android:background="@drawable/game_over_buttons"
         android:layout_marginTop="5dp"
         android:textColor="#FFFF"
-        android:layout_below="@+id/select_challenge"
+        android:layout_below="@+id/created_challenge_note"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -170,6 +159,50 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="arba pasirink jau sukurtą"
+        android:id="@+id/textView8"
+        android:textSize="25dp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/create_challenge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp" />
+
+    <EditText
+        android:layout_width="340dp"
+        android:layout_height="35dp"
+        android:background="@drawable/transparent_backgrounds"
+        android:id="@+id/mail_receiver"
+        android:inputType="textEmailAddress"
+        android:textColor="#FFF1C40F"
+        android:layout_marginTop="5dp"
+        android:textColorHint="#eac73c"
+        android:hint="Kam nori nusiųsti? (El.Paštas)"
+        android:drawablePadding="7dp"
+        android:paddingLeft="7dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="340dp"
+        android:layout_height="35dp"
+        android:background="@drawable/transparent_backgrounds"
+        android:id="@+id/created_challenge_note"
+        android:inputType="textEmailAddress"
+        android:textColor="#FFF1C40F"
+        android:textColorHint="#eac73c"
+        android:layout_marginTop="5dp"
+        android:hint="Iššūkio pastaba"
+        android:drawablePadding="7dp"
+        android:paddingLeft="7dp"
+        android:textSize="15dp"
+        android:layout_below="@+id/select_challenge"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
