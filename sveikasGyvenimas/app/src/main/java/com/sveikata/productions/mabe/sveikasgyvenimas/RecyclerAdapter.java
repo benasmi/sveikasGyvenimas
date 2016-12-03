@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,9 +41,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.plus.model.people.Person;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,12 +120,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){
-            case 0:
+            case 0: //Event
                 View schedule = layoutInflater.inflate(R.layout.schedule_item, parent, false);
                 ViewHolder schedule_item = new ViewHolder(schedule, 0);
                 return schedule_item;
 
-            case 1:
+            case 1: //Map
                 View view = layoutInflater.inflate(R.layout.layout_map, parent, false);
                 ViewHolder holder = new ViewHolder(view, 1);
                 return holder;
@@ -128,6 +135,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 View view1 = layoutInflater.inflate(R.layout.layout_description, parent, false);
                 ViewHolder holder1 = new ViewHolder(view1, 2);
                 return holder1;
+            case 3: //Admin schedule item
+
+                View admin_shedule = layoutInflater.inflate(R.layout.schedule_item_admin, parent, false);
+                ViewHolder schedule_admin_holder = new ViewHolder(admin_shedule, 3);
+                return schedule_admin_holder;
+
 
         }
 
@@ -144,10 +157,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         final InfoHolder data = infoHolder.get(position);
         String dataType = data.getRecycler_view_type();
 
-        if(dataType.equals("0")){
-            holder.event_date_and_place.setText(data.getEvent_location_and_date());
-            holder.event_name.setText(data.getEvent_name());
-            holder.event_description.setText(data.getEvent_description());
+        if(dataType.equals("0") || dataType.equals("3")){
+
+            if(dataType.equals("0")){
+                holder.event_date_and_place.setText(data.getEvent_location_and_date());
+                holder.event_name.setText(data.getEvent_name());
+                holder.event_description.setText(data.getEvent_description());
+            }
+            if(dataType.equals("3")){
+                holder.event_date_and_place_field_admin.setText(data.getEvent_location_and_date());
+                holder.event_name_field_admin.setText(data.getEvent_name());
+                holder.event_description_field_admin.setText(data.getEvent_description());
+            }
 
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_schedule);
             holder.layout.startAnimation(animation);
@@ -168,13 +189,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             if(position % 2 == 0) {
                 holder.layout.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
-
-
-
-
         }
 
-        if(dataType.equals("1") || dataType.equals("2")){
+
+
+        if(dataType.equals("1") || dataType.equals("2") || dataType.equals("3")){
 
             if(!showMap){
                 editor.putBoolean("showMap", true).commit();
@@ -190,7 +209,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         .show();
             }
 
-           refreshMap(holder);
+            try {
+                refreshMap(holder);
+            }catch (Exception e){
+            }
         }
 
     }
@@ -311,12 +333,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private TextView event_date_and_place;
         private TextView event_description;
         private boolean isClicked = true;
+        private AppCompatButton will_participate;
+
+        //Admin schedule item
+        private EditText event_name_field_admin;
+        private EditText event_date_and_place_field_admin;
+        private EditText event_description_field_admin;
+        private ImageView delete_cross_admin;
+        private AppCompatImageButton save_button;
+        private AppCompatButton will_participate_admin;
 
         //Admin Map layout
         private EditText event_name_admin;
         private EditText event_date_admin;
         private EditText event_description_admin;
         private EditText event_place_admin;
+        private EditText event_fb_link;
 
         private EditText notif_message;
         private EditText notif_description;
@@ -335,7 +367,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
 
             switch (type) {
-                case 0:
+                case 0: //Sending message
                     event_date_and_place = (TextView) itemView.findViewById(R.id.event_date_and_place);
                     event_name = (TextView) itemView.findViewById(R.id.event_name);
                     event_description = (TextView) itemView.findViewById(R.id.event_description);
@@ -343,34 +375,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     event_name.setTypeface(tf);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
 
-                    if(is_administrator.equals("1")){
+                    will_participate = (AppCompatButton) itemView.findViewById(R.id.will_participate);
 
-
-                        layout.setOnLongClickListener(new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-
-                                String username = sharedPreferences.getString("username", "");
-                                String password = sharedPreferences.getString("password", "");
-                                String description = infoHolder.get(getAdapterPosition()).getEvent_description();
-                                String event_date = infoHolder.get(getAdapterPosition()).getEvent_location_and_date();
-                                String name = infoHolder.get(getAdapterPosition()).getEvent_name();
-
-
-                                if(!CheckingUtils.isNetworkConnected(context)){
-                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
-                                    return false;
-                                }
-
-                                delete_event(context,username,password,name,description, getAdapterPosition());
-                                return true;
-                            }
-                        });
-
-                    }
+                    will_participate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            participate(infoHolder.get(getAdapterPosition()).getFbPage());
+                        }
+                    });
 
                     break;
-                case 1:
+                case 1: //Adding event
                     event_name_admin = (EditText) itemView.findViewById(R.id.event_name_admin);
                     event_date_admin = (EditText) itemView.findViewById(R.id.event_date_admin);
                     event_description_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
@@ -378,6 +393,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                     notif_message = (EditText) itemView.findViewById(R.id.message_notification);
                     notif_description = (EditText) itemView.findViewById(R.id.description_notification);
+
+                    event_fb_link = (EditText) itemView.findViewById(R.id.event_fb_link_admin) ;
 
                     event_add_button = (AppCompatButton) itemView.findViewById(R.id.add_event);
                     event_add_button.setOnClickListener(new View.OnClickListener() {
@@ -387,6 +404,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             final  String event_date = event_date_admin.getText().toString().trim();
                             final String event_description = event_description_admin.getText().toString().trim();
                             final String event_location = event_place_admin.getText().toString().trim();
+
+                            final String  event_fb = event_fb_link.getText().toString().trim();
 
                             final String username = sharedPreferences.getString("username", "");
                             final String password = sharedPreferences.getString("password", "");
@@ -404,34 +423,96 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     CheckingUtils.createErrorBox("Norėdami pridėti renginį, jums reikia įjungti internetą", context, R.style.ScheduleDialogStyle);
                                     return;
                                 }else{
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                                    builder.setMessage("Ar tikrai norite pridėti renginį ?")
-                                            .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    event_name_admin.setText("");
-                                                    event_date_admin.setText("");
-                                                    event_description_admin.setText("");
-                                                    event_place_admin.setText("");
+                                    if(event_name.isEmpty()){
+                                        event_name_admin.setError("Šis laukelis negali būti tuščias!");
+                                        return;
+                                    }
+                                    if(event_date.isEmpty()){
+                                        event_date_admin.setError("Šis laukelis negali būti tuščias!");
+                                        return;
+                                    }
+                                    if(event_description.isEmpty()){
+                                        event_description_admin.setError("Šis laukelis negali būti tuščias!");
+                                        return;
+                                    }
+                                    if(event_location.isEmpty()){
+                                        event_place_admin.setError("Šis laukelis negali būti tuščias!");
+                                        return;
+                                    }
+                                    if(event_fb.isEmpty()){
+                                        event_fb_link.setError("Šis laukelis negali būti tuščias!");
+                                        return;
+                                    }
+                                    if(!CheckingUtils.connectionToServer(event_fb, 3000)){
+                                        ServerManager mngr = new ServerManager(context, "");
 
-                                                    new ServerManager(RecyclerAdapter.this.context, "INSERT_EVENT").execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description);
-                                                    add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "0", latitude, longtitude), 1);
+                                        mngr.setOnFinishListener(new OnFinishListener() {
+                                            @Override
+                                            public void onFinish(int responseCode) {
+                                                if(responseCode == 1){
+                                                    event_fb_link.setError("Netinkama nuoroda!");
+                                                }else{
 
-                                                }
-                                            })
-                                            .setNegativeButton("NE", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    return;
-                                                }
-                                            });
-                                    builder.show();
-                                    builder.create();
+
+                                                builder.setMessage("Ar tikrai norite pridėti renginį ?")
+                                                        .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                event_name_admin.setText("");
+                                                                event_date_admin.setText("");
+                                                                event_description_admin.setText("");
+                                                                event_place_admin.setText("");
+                                                                event_fb_link.setText("");
+
+                                                                new ServerManager(RecyclerAdapter.this.context, "INSERT_EVENT").execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description, event_fb);
+
+                                                                int id = 0;
+
+                                                                for (int i = 0; i < infoHolder.size(); i++){
+                                                                    try{
+                                                                        int unchecked_id = Integer.parseInt(infoHolder.get(i).getId());
+
+                                                                        if(unchecked_id > id){
+                                                                            id = unchecked_id;
+                                                                        }
+                                                                    }catch (Exception e){
+                                                                    }
+                                                                }
+
+                                                                add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "3", latitude, longtitude, String.valueOf(id+1), event_fb), 1);
+
+
+                                                            }
+                                                        })
+                                                        .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                return;
+                                                            }
+                                                        });
+                                                builder.show();
+                                                builder.create();
+
+
+                                            }
+                                            }
+
+                                        });
+
+                                        mngr.execute("PING", event_fb);
+
+
+                                        return;
+                                    }
+
+
                                 }
 
 
                             } catch (Exception e) {
+                                e.printStackTrace();
                                 CheckingUtils.createErrorBox("Adresas neteisingas", RecyclerAdapter.this.context, R.style.ScheduleDialogStyle);
                             }
 
@@ -476,13 +557,80 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                     map = (MapView) itemView.findViewById(R.id.map_container);
                     break;
-                case 2:
+                case 2: //Map
                     map = (MapView) itemView.findViewById(R.id.map_container_client);
+
+                    break;
+                case 3:
+                    event_date_and_place_field_admin = (EditText) itemView.findViewById(R.id.event_date_and_place_admin);
+                    event_name_field_admin = (EditText) itemView.findViewById(R.id.event_name_admin);
+                    event_description_field_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
+                    Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    event_name_field_admin.setTypeface(typeface);
+                    layout = (LinearLayout) itemView.findViewById(R.id.text_wrap_admin);
+                    will_participate_admin = (AppCompatButton) itemView.findViewById(R.id.will_participate_admin);
+                    delete_cross_admin = (ImageView) itemView.findViewById(R.id.delete_cross_admin);
+                    save_button = (AppCompatImageButton) itemView.findViewById(R.id.save_event);
+
+                    event_date_and_place_field_admin.setEnabled(false); //Just in case they change their minds
+
+                    //Deleting event
+                    delete_cross_admin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                                    String username = sharedPreferences.getString("username", "");
+                                    String password = sharedPreferences.getString("password", "");
+                                    String description = infoHolder.get(getAdapterPosition()).getEvent_description();
+                                    String event_date = infoHolder.get(getAdapterPosition()).getEvent_location_and_date();
+                                    String name = infoHolder.get(getAdapterPosition()).getEvent_name();
+
+
+                                    if(!CheckingUtils.isNetworkConnected(context)){
+                                        CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
+                                        return;
+                                    }
+
+                                    delete_event(context,username,password,name,description, getAdapterPosition());
+                                }
+                    });
+
+                    //Saving event
+                    save_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String event_name = event_name_field_admin.getText().toString().trim();
+                            String event_description = event_description_field_admin.getText().toString().trim();
+
+                            String id = infoHolder.get(getAdapterPosition()).getId();
+
+                            new ServerManager(context, "UPDATE_EVENT").execute("MODIFY_EVENT",id, event_name, event_description);
+                        }
+                    });
+
+                    //Participating in an event
+                    will_participate_admin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SharedPreferences sharedPreferencesSchedule = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
+
+                            String id = sharedPreferencesSchedule.getString("id", "-1");
+
+                            participate(infoHolder.get(getAdapterPosition()).getFbPage());
+                        }
+                    });
+
 
                     break;
             }
 
 
+        }
+
+        private void participate(String link){
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(link));
+            context.startActivity(i);
         }
     }
 }

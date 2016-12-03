@@ -16,16 +16,35 @@ public class InfoHolder {
     public String recycler_view_type;
     public double longtitude;
     public double latitude;
+    public String fb_page;
+    public String id;
 
-    public InfoHolder(String event_name, String event_location_and_date, String event_description, String recycler_view_type, double latitude, double longtitude) {
+    public InfoHolder(String event_name, String event_location_and_date, String event_description, String recycler_view_type, double latitude, double longtitude, String id, String fb_page) {
         this.recycler_view_type = recycler_view_type;
         this.event_description = event_description;
         this.event_name = event_name;
         this.event_location_and_date = event_location_and_date;
         this.longtitude = longtitude;
         this.latitude = latitude;
+        this.id = id;
+        this.fb_page = fb_page;
     }
 
+    public String getFbPage() {
+        return fb_page;
+    }
+
+    public void setFbPage(String fb_page) {
+        this.fb_page = fb_page;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public double getLongtitude() {
         return longtitude;

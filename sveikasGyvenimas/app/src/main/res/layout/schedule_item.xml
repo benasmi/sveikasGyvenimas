@@ -81,6 +81,18 @@
             android:layout_alignParentEnd="true"
             android:gravity="center" />
 
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/event_description"
+            android:background="#16a085"
+            android:text="DALYVAUSIU!"
+            android:id="@+id/will_participate"
+            android:textColor="#ecf0f1"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:alpha="0.9"/>
+
 
     </RelativeLayout>
 

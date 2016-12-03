@@ -75,6 +75,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADRESS_FETCH_CHALLENGES = "http://dvp.lt/android/fetch_challenges.php";
     public static final String SERVER_ADRESS_I_FAILED_CHALLENGE = "http://dvp.lt/android/failed_challenge.php";
     public static final String SERVER_ADRESS_COMPLETE_CHALLENGE = "http://dvp.lt/android/complete_challenge.php";
+    public static final String SERVER_ADRESS_UPDATE_EVENT = "http://dvp.lt/android/update_event.php";
 
     private String type;
     private String device_id;
@@ -84,6 +85,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     private String birthday;
     private String gender;
     private String mail;
+    private boolean isConnected;
 
 
     public ServerManager(Context context, String dialogType){
@@ -106,6 +108,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(dialogType.equals("LOGIN_GMAIL_AND_REGISTER")){
             progressDialog = CheckingUtils.progressDialog(context, "Prisijungiama...", R.style.ScheduleDialogStyle);
         }
+        if(dialogType.equals("UPDATE_EVENT")){
+            progressDialog = CheckingUtils.progressDialog(context, "Atnaujinamas renginys...", R.style.ScheduleDialogStyle);
+        }
         super.onPreExecute();
     }
 
@@ -117,6 +122,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String...params){
 
         method_type = params[0];
+
+        if(method_type.equals("PING")){
+            String url = params[1];
+            isConnected = CheckingUtils.connectionToServer(url, 3000);
+        }
 
         if(method_type.equals("REGISTRATION")){
 
@@ -132,6 +142,23 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
             response = register(name,last_name,username_register,password_register,mail,gender,years,type, token);
+
+
+
+        }
+        if(method_type.equals("MODIFY_EVENT")){
+
+            String id = params[1];
+            String name = params[2];
+            String description = params[3];
+
+            SharedPreferences userdata = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+
+            String username = userdata.getString("username", "");
+            String password = userdata.getString("password", "");
+
+
+            modify_event(username, password, id, name, description);
 
 
 
@@ -186,10 +213,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             double longtitude = Double.parseDouble(params[6]);
             String name = params[7];
             String description = params[8];
+            String fb_link = params[9];
 
 
 
-            insert_event_data(username, password,event_location,date,latitude,longtitude, name, description);
+            insert_event_data(username, password,event_location,date,latitude,longtitude, name, description, fb_link);
 
         }
         if(method_type.equals("SEND_NOTIFICATION")){
@@ -266,6 +294,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
 
+        if(method_type.equals("PING")){
+            onfinishlistener.onFinish(isConnected ? 0 : 1);
+        }
 
         if (method_type.equals("REGISTRATION")) {
             progressDialog.cancel();
@@ -294,6 +325,12 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             }
         }
+
+        if(method_type.equals("MODIFY_EVENT")){
+            progressDialog.cancel();
+        }
+
+
         if(method_type.equals("SEND_CHALLENGE")){
             switch (response){
 
@@ -989,7 +1026,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             JSONArray jsonArray = new JSONArray(responseBody);
 
 
-            Log.i("TEST", responseBody);
             SharedPreferences sharedPreferences = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("schedule_data", jsonArray.toString()).commit();
@@ -1046,7 +1082,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     }
 
 
-    public void insert_event_data(String username, String password, String location, String date, double latitude, double longtitude, String name, String description){
+    public void insert_event_data(String username, String password, String location, String date, double latitude, double longtitude, String name, String description, String fb_link){
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -1067,6 +1103,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("date", date);
             jsonObject.putOpt("latitude", latitude);
             jsonObject.putOpt("longtitude", longtitude);
+            jsonObject.putOpt("fb_link", fb_link);
 
             MultipartEntityBuilder entity = MultipartEntityBuilder.create();
             ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
@@ -1083,6 +1120,44 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
     }
+
+    public void modify_event(String username, String password, String id, String name, String description){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_UPDATE_EVENT);
+
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("description", description);
+            jsonObject.putOpt("name", name);
+            jsonObject.putOpt("id", id);
+
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+            ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+            entity.addTextBody("json", jsonObject.toString(), type);
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void fetchUserData(){
 

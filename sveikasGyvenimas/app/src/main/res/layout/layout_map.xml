@@ -18,62 +18,75 @@
 
 
 <RelativeLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:padding="5dp"
-android:background="#ecf0f1"
-android:layout_below="@+id/map_container"
-android:id="@+id/add_layout">
-
-<EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="Renginio pavadinimas"
-    android:padding="7dp"
-    android:textSize="15dp"
-    android:background="@drawable/custom_borders"
-    android:gravity="center"
-    android:id="@+id/event_name_admin"
-    android:textColor="#ecf0f1"
-    android:textColorHint="#ecf0f1" />
+    android:padding="5dp"
+    android:background="#ecf0f1"
+    android:layout_below="@+id/map_container"
+    android:id="@+id/add_layout">
 
-<EditText
-    android:layout_width="150dp"
-    android:layout_height="30dp"
-    android:hint="Data"
-    android:gravity="center"
-    android:background="@drawable/custom_borders"
-    android:textSize="15dp"
-    android:id="@id/event_date_admin"
-    android:layout_below="@id/event_name_admin"
-    android:textColorHint="#ecf0f1"
-    android:textColor="#ecf0f1" />
-<EditText
-    android:layout_width="200dp"
-    android:layout_height="30dp"
-    android:hint="Tikslus adresas"
-    android:textSize="15dp"
-    android:background="@drawable/custom_borders"
-    android:gravity="center"
-    android:id="@id/event_location_admin"
-    android:layout_toRightOf="@id/event_date_admin"
-    android:layout_below="@id/event_name_admin"
-    android:layout_alignParentRight="true"
-    android:textColor="#ecf0f1"
-    android:textColorHint="#ecf0f1" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Renginio pavadinimas"
+        android:padding="7dp"
+        android:textSize="15dp"
+        android:background="@drawable/custom_borders"
+        android:gravity="center"
+        android:id="@+id/event_name_admin"
+        android:textColor="#ecf0f1"
+        android:textColorHint="#ecf0f1" />
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="7dp"
-    android:hint="Aprašymas"
-    android:textSize="15dp"
-    android:gravity="center"
-    android:background="@drawable/custom_borders"
-    android:layout_below="@id/event_date_admin"
-    android:id="@+id/event_description_admin"
-    android:textColorHint="#ecf0f1"
-    android:textColor="#ecf0f1" />
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:hint="Data"
+        android:gravity="center"
+        android:background="@drawable/custom_borders"
+        android:textSize="15dp"
+        android:id="@id/event_date_admin"
+        android:layout_below="@id/event_name_admin"
+        android:textColorHint="#ecf0f1"
+        android:textColor="#ecf0f1" />
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:hint="Tikslus adresas"
+        android:textSize="15dp"
+        android:background="@drawable/custom_borders"
+        android:gravity="center"
+        android:id="@id/event_location_admin"
+        android:layout_toRightOf="@id/event_date_admin"
+        android:layout_below="@id/event_name_admin"
+        android:layout_alignParentRight="true"
+        android:textColor="#ecf0f1"
+        android:textColorHint="#ecf0f1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:hint="Aprašymas"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:background="@drawable/custom_borders"
+        android:layout_below="@id/event_date_admin"
+        android:id="@+id/event_description_admin"
+        android:textColorHint="#ecf0f1"
+        android:textColor="#ecf0f1" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:hint="Facebook puslapis"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:background="@drawable/custom_borders"
+        android:layout_below="@id/event_description_admin"
+        android:id="@+id/event_fb_link_admin"
+        android:textColorHint="#ecf0f1"
+        android:textColor="#ecf0f1" />
 
 <android.support.v7.widget.AppCompatButton
     android:layout_width="match_parent"
@@ -83,7 +96,7 @@ android:id="@+id/add_layout">
     android:layout_marginBottom="10dp"
     android:id="@+id/add_event"
     android:background="@drawable/button_borders_green"
-    android:layout_below="@id/event_description_admin"
+    android:layout_below="@id/event_fb_link_admin"
     android:textColor="#fcfbfb"
     android:textColorHint="#fcfbfb" />
 

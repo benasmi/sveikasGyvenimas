@@ -27,6 +27,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     private ArrayList<InfoHolder> data = new ArrayList<InfoHolder>();
     public static RecyclerView recyclerView;
     private RecyclerAdapter adapter;
+    public final static String DEFAULT_FB_LINK = "https://www.facebook.com";
 
     //OBJECTS for checking if user is admin
     private JSONArray jsonArray;
@@ -106,7 +107,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             swipeRefreshLayout.setEnabled(true);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
-                public void onRefresh() { //TODO: fix swipe spam glitch
+                public void onRefresh() {
                     adapter.currentPos = new LatLng(55.3, 23.7);
                     adapter.mapZoom = 5.8f;
                     adapter.notifyDataSetChanged();
@@ -152,8 +153,10 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String event_date = scheduleData.getString("date");
                 double latitude = Double.parseDouble(scheduleData.getString("latitude"));
                 double longtitude = Double.parseDouble(scheduleData.getString("longtitude"));
+                String id = scheduleData.getString("id");
+                String fb_link = scheduleData.getString("fb_link");
 
-                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description,"0", latitude, longtitude), 0);
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description, is_administrator.equals("1") ? "3" : "0", latitude, longtitude, id, fb_link), 0);
             }
 
 
@@ -165,7 +168,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     }
 
     public void initializeDataFirstTime(RecyclerAdapter adapter, String type){
-                adapter.add(new InfoHolder("", "","",type, 123, 123), 0);
+                adapter.add(new InfoHolder("", "","",type, 123, 123, "", DEFAULT_FB_LINK), 0);
     }
 
 
