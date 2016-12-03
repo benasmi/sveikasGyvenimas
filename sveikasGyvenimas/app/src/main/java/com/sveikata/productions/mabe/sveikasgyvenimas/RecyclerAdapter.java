@@ -452,8 +452,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                             @Override
                                             public void onFinish(int responseCode) {
                                                 if(responseCode == 1){
+                                                    Log.i("TEST", "response: " + responseCode);
                                                     event_fb_link.setError("Netinkama nuoroda!");
-                                                    return;
                                                 }else{
 
 
@@ -467,20 +467,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                                                 event_place_admin.setText("");
                                                                 event_fb_link.setText("");
 
-                                                                new ServerManager(RecyclerAdapter.this.context, "INSERT_EVENT").execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description, event_fb);
+                                                                new ServerManager(RecyclerAdapter.this.context, "INSERT_EVENT").execute("INSERT_EVENT", username, password, event_location, event_date, String.valueOf(latitude), String.valueOf(longtitude), event_name, event_description, event_fb, infoHolder.size()>1 ? "0" : "1");
 
                                                                 int id = 0;
 
-                                                                for (int i = 0; i < infoHolder.size(); i++){
-                                                                    try{
-                                                                        int unchecked_id = Integer.parseInt(infoHolder.get(i).getId());
+                                                                    for (int i = 0; i < infoHolder.size(); i++){
+                                                                        try{
+                                                                            int unchecked_id = Integer.parseInt(infoHolder.get(i).getId());
 
-                                                                        if(unchecked_id > id){
-                                                                            id = unchecked_id;
+                                                                            if(unchecked_id > id){
+                                                                                id = unchecked_id;
+                                                                            }
+                                                                        }catch (Exception e){
                                                                         }
-                                                                    }catch (Exception e){
                                                                     }
-                                                                }
 
                                                                 add(new InfoHolder(event_name, event_location + " " + event_date, event_description, "3", latitude, longtitude, String.valueOf(id+1), event_fb), 1);
 

@@ -216,10 +216,18 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String name = params[7];
             String description = params[8];
             String fb_link = params[9];
+            boolean shouldFetchAfterwards = false;
+            if(params[10].equals("1")){
+                shouldFetchAfterwards=true;
+            }
 
 
 
             insert_event_data(username, password,event_location,date,latitude,longtitude, name, description, fb_link);
+
+            if(shouldFetchAfterwards){
+                startFetchingData(0, false );
+            }
 
         }
         if(method_type.equals("SEND_NOTIFICATION")){
@@ -313,6 +321,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         if(method_type.equals("PING")){
             onfinishlistener.onFinish(isConnected ? 0 : 1);
+            return;
         }
 
         if (method_type.equals("REGISTRATION")) {
