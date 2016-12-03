@@ -146,8 +146,8 @@ public class GameScreen extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 canClick =true;
-                bottom = generateNewBottom();
                 top = generateNewTop();
+                bottom = generateNewBottom();
             }
 
             @Override
@@ -412,8 +412,11 @@ public class GameScreen extends AppCompatActivity {
     private int generateNewBottom(){
         final Animation fade_anim = AnimationUtils.loadAnimation(this, R.anim.fade_in);
 
-
         int bottom = (int) (Math.random()*alcoholList.size());
+
+        while(bottom==top){
+            bottom = (int) (Math.random()*alcoholList.size());
+        }
 
         int image_resource = alcoholList.get(bottom).getResource();
 
