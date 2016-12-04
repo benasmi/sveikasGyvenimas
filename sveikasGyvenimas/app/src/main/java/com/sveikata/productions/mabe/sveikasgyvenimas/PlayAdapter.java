@@ -688,7 +688,6 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                     public void onClick(DialogInterface dialog, int which) {
                         Uri uri = null;
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        Log.i("TEST", String.valueOf(which_img) + "KURIS LINKAS?");
                         switch (which_img){
                             case 0:
                                 uri = Uri.parse("http://www.megaukismaistu.lt/2016/kaloriju-iseikvojimo-skaiciuokle");
@@ -718,6 +717,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                                 uri = Uri.parse("https://www.drinkiq.com/en-gb/drink-calculator/");
                                 intent.setData(uri);
                                 context.startActivity(intent);
+                                break;
 
                             case 5:
                                 uri = Uri.parse("https://www.drinkaware.co.uk/alcohol-facts/health-effects-of-alcohol/calories/calories-in-alcohol/");

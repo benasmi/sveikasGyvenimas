@@ -1256,7 +1256,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("password", password);
             jsonObject.putOpt("description", description);
             jsonObject.putOpt("name", name);
-            jsonObject.putOpt("location", location);
+            jsonObject.putOpt("location", location + " | ");
             jsonObject.putOpt("date", date);
             jsonObject.putOpt("latitude", latitude);
             jsonObject.putOpt("longtitude", longtitude);
