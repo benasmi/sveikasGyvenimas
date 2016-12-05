@@ -94,11 +94,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".YouLostQuizActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SuicideActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ForgotPassword"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".InsertFaqActivity"></activity>
     </application>
 
 </manifest>

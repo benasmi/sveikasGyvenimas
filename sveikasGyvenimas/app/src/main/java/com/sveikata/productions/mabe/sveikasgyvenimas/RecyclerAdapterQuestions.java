@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,10 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                 viewHolder = new ViewHolder(phone_help, 3);
                 return viewHolder;
 
+            case 4:
+                View insert_fq = layoutInflater.inflate(R.layout.insert_faq_button, parent, false);
+                viewHolder = new ViewHolder(insert_fq, 4);
+                return viewHolder;
         }
 
         return viewHolder;
@@ -145,6 +150,8 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         private GifImageView ask_pro;
 
 
+        //Inser faq Btn
+        private AppCompatButton insert_faq_button;
 
         private boolean isClicked = false;
 
@@ -289,7 +296,20 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     });
                     break;
 
+                case 4:
+
+                    insert_faq_button = (AppCompatButton) itemView.findViewById(R.id.insert_faq_btn);
+
+                    insert_faq_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            context.startActivity(new Intent(context, InsertFaqActivity.class));
+                        }
+                    });
             }
+
+
+
 
 
 

@@ -79,6 +79,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADRESS_UPDATE_EVENT = "http://dvp.lt/android/update_event.php";
     public static final String SERVER_ADRESS_SEND_FORGOT_PASSWORD_ACTIVATION_CODE = "http://dvp.lt/android/send_forgot_password_code.php";
     public static final String SERVER_ADRESS_CHANGE_PASSWORD = "http://dvp.lt/android/change_password.php";
+    public static final String SERVER_ADRESS_FETCH_FAQ_DATA = "http://dvp.lt/android/fetch_faq.php";
+    public static final String SERVER_ADRESS_INSERT_FAQ_DATA = "http://dvp.lt/android/insert_faq.php";
+
     private String type;
     private String device_id;
     private String first_name;
@@ -312,6 +315,14 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             response = change_password(password, code);
         }
+        if(method_type.equals("INSERT_FAQ")){
+            String faq_title = params[1];
+            String faq_body = params[2];
+            String username = params[3];
+            String password = params[4];
+
+            response = insertFaq(faq_title, faq_body, username, password);
+        }
 
         return null;
     }
@@ -353,6 +364,19 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         if(method_type.equals("MODIFY_EVENT")){
             progressDialog.cancel();
+        }
+
+        if(method_type.equals("INSERT_FAQ")) {
+            switch (response) {
+                case 0:
+                    PlayActivity.shouldAddInfo = true;
+                    AskQuestionsActivity.addFAQData = true;
+                    HealthyLifeActivity.addData = true;
+                    InterestingFactsActivity.addFactsFirstTime = true;
+                    startFetchingData(3, false);
+                    Toast.makeText(context, "DUK klausimas sekmingai pridetas...", Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
 
 
@@ -1315,6 +1339,97 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     }
 
+    public void fetchFaqData(){
+        SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+        String username =loginPrefs.getString("username","");
+        String password = loginPrefs.getString("password","");
+
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_FETCH_FAQ_DATA);
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+            ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+            entity.addTextBody("json", jsonObject.toString(), type);
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+
+            //Log.i("TEST", responseBody);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("faq_data", jsonArray.toString()).commit();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    private int insertFaq(String faq_title, String faq_body, String username, String password) {
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_INSERT_FAQ_DATA);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("faq_title", faq_title);
+            jsonObject.putOpt("faq_body", faq_body);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            return responseObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+    }
 
     public void fetchUserData(){
 

@@ -87,8 +87,8 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
     }
     public void initializeDataFirstTime(RecyclerAdapterQuestions adapter){
         adapter.add(new QuestionsDataHolder("","",1),0);
-
         adapter.add(new QuestionsDataHolder("", "", 3), 0);
+        adapter.add(new QuestionsDataHolder("","",4),0);
     }
 
 
