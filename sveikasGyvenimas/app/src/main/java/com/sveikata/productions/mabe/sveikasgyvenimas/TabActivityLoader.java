@@ -3,6 +3,7 @@ package com.sveikata.productions.mabe.sveikasgyvenimas;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -156,6 +157,8 @@ public class TabActivityLoader extends AppCompatActivity {
                     CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this, R.style.CasualStyle);
                     return false;
                 }else{
+                    SharedPreferences prefs = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+                    prefs.edit().putBoolean("isFirstTime", true).commit();
                     new ServerManager(TabActivityLoader.this, "LOGOUT").execute("LOGOUT", username, password);
                 }
 

@@ -1,29 +1,28 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
-/**
- * Created by Benas on 9/15/2016.
- */
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Map;
 
-
-/**
- * Created by Benas on 6/19/2016.
- */
 public class GcmMessageReceiver extends FirebaseMessagingService {
 
 
@@ -63,6 +62,29 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
             String description= String.valueOf(data.get("description"));
             sendFactNotif(message, description);
         }
+        if(type.equals("faq")){
+            String title = String.valueOf(data.get("faq_title"));
+            String body = String.valueOf(data.get("faq_body"));
+
+            SharedPreferences sharedPreferences = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
+            try {
+                JSONArray current_faq = new JSONArray(sharedPreferences.getString("faq_data", ""));
+                JSONObject obj = new JSONObject();
+                obj.put("faq_title", title);
+                obj.put("faq_body", body);
+                current_faq.put(obj);
+
+                editor.putString("faq_data", current_faq.toString());
+                editor.commit();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
 
 
 

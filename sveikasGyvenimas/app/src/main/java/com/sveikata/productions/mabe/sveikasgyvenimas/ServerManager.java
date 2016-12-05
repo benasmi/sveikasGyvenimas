@@ -1367,9 +1367,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String responseBody = EntityUtils.toString(response.getEntity());
             JSONArray jsonArray = new JSONArray(responseBody);
 
-
-            //Log.i("TEST", responseBody);
-            SharedPreferences sharedPreferences = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("faq_data", jsonArray.toString()).commit();
 
@@ -1544,6 +1542,13 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            SharedPreferences prefs = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+
+            if(prefs.getBoolean("isFirstTime", true)){
+                fetchFaqData();
+                prefs.edit().putBoolean("isFirstTime", false).commit();
+            }
+
             fetchScheduleData();
             fetchUserData();
             fetchFactData();

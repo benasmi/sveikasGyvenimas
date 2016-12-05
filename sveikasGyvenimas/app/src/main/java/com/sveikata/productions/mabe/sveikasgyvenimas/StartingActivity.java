@@ -42,7 +42,7 @@ public class StartingActivity extends AppCompatActivity {
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.i("TEST", "HASH: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//                Log.i("TEST", "HASH: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
 
         } catch (PackageManager.NameNotFoundException e) {

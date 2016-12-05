@@ -12,21 +12,9 @@
 
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:id="@+id/faq_title"
-        android:drawablePadding="5dp"
-        android:layout_below="@+id/body_fact_admin"
-        android:layout_centerHorizontal="true"
-        android:hint="DUK klausimas"
-        android:textSize="15dp"
-        android:background="@drawable/button_borders_different_color"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:id="@+id/faq_body"
+        android:padding="8dp"
         android:drawablePadding="5dp"
         android:hint="DUK atsakymas"
         android:layout_marginTop="5dp"
@@ -48,4 +36,18 @@
         android:layout_below="@+id/faq_body"
         android:layout_centerHorizontal="true"
         android:id="@+id/add_faq_question" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:id="@+id/faq_title"
+        android:drawablePadding="5dp"
+        android:maxLines="1"
+        android:hint="DUK klausimas"
+        android:textSize="15dp"
+        android:background="@drawable/button_borders_different_color"
+        android:paddingLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

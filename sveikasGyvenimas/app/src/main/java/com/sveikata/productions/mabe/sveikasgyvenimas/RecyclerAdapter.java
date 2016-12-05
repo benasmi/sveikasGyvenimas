@@ -195,6 +195,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         if(dataType.equals("1") || dataType.equals("2") || dataType.equals("3")){
 
+            try {
             if(!showMap){
                 editor.putBoolean("showMap", true).commit();
                 new MaterialShowcaseView.Builder((Activity) context)
@@ -209,7 +210,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         .show();
             }
 
-            try {
                 refreshMap(holder);
             }catch (Exception e){
             }
