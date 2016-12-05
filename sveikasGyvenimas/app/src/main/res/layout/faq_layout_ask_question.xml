@@ -5,15 +5,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="D.U.K"
-        android:id="@+id/faq_txt"
-        android:textSize="30dp"
-        android:textIsSelectable="false"
-        android:layout_below="@+id/ask_pro"
-        android:layout_centerHorizontal="true" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="D.U.K"-->
+        <!--android:id="@+id/faq_txt"-->
+        <!--android:textSize="30dp"-->
+        <!--android:textIsSelectable="false"-->
+        <!--android:layout_below="@+id/ask_pro"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"

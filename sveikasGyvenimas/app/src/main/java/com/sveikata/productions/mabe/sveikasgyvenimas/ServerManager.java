@@ -81,6 +81,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADRESS_CHANGE_PASSWORD = "http://dvp.lt/android/change_password.php";
     public static final String SERVER_ADRESS_FETCH_FAQ_DATA = "http://dvp.lt/android/fetch_faq.php";
     public static final String SERVER_ADRESS_INSERT_FAQ_DATA = "http://dvp.lt/android/insert_faq.php";
+    public static final String SERVER_ADDRESS_DELETE_FAQ = "http://dvp.lt/android/delete_faq.php";
 
     private String type;
     private String device_id;
@@ -116,6 +117,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         if(dialogType.equals("UPDATE_EVENT")){
             progressDialog = CheckingUtils.progressDialog(context, "Atnaujinamas renginys...", R.style.ScheduleDialogStyle);
         }
+        if(dialogType.equals("DELETE_FAQ")){
+            progressDialog = CheckingUtils.progressDialog(context, "Panaikinamas klausimas...", R.style.ScheduleDialogStyle);
+        }
+
         super.onPreExecute();
     }
 
@@ -147,10 +152,17 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
             response = register(name,last_name,username_register,password_register,mail,gender,years,type, token);
-
-
-
         }
+
+        if(method_type.equals("DELETE_FAQ")){
+            String username = params[1];
+            String password = params[2];
+            String title = params[3];
+            String body = params[4];
+
+            delete_faq(username, password, title);
+        }
+
         if(method_type.equals("MODIFY_EVENT")){
 
             String id = params[1];
@@ -329,6 +341,14 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
+
+        if(method_type.equals("DELETE_FAQ")){
+            try{
+                progressDialog.cancel();
+            }catch(Exception e){
+
+            }
+        }
 
         if(method_type.equals("PING")){
             onfinishlistener.onFinish(isConnected ? 0 : 1);
@@ -608,6 +628,56 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+    public int delete_faq(String username, String password, String title){
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_DELETE_FAQ);
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("title", title);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type_content = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type_content);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        try {
+            return responseObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+
+    }
 
     public int accept_challenge(String username, String password){
 
@@ -808,7 +878,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
         try {
-            Log.i("TEST", String.valueOf(responseObject.getInt("code")) + "Responsas is metodo");
+//            Log.i("TEST", String.valueOf(responseObject.getInt("code")) + "Responsas is metodo");
             return responseObject.getInt("code");
 
         } catch (JSONException e) {

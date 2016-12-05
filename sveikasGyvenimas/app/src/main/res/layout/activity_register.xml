@@ -197,4 +197,14 @@
     </android.support.v7.widget.AppCompatButton>
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="#ecf0f1"
+        android:text="Su vienu paštu galima susikurti tik vieną paskyrą(t.y jeigu susikursite paprastą paskyra, negalėsite prisijungti su 'facebook' paskyra, jei ji naudos tą patį el. paštą)
+"
+        />
+
 </RelativeLayout>

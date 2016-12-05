@@ -1,9 +1,11 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -176,6 +178,38 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
                     question_title.setTypeface(tf);
 
+                    layout.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setMessage("Ar tikrai norite pašalinti klausimą?")
+                                    .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String username = sharedPreferences.getString("username", "");
+                                            String password = sharedPreferences.getString("password", "");
+                                            String title = question_title.getText().toString();
+                                            String body = question_body.getText().toString();
+
+                                            remove(getAdapterPosition());
+
+                                            new ServerManager(context, "").execute("DELETE_FAQ", username, password, title, body);
+                                        }
+                                    })
+                                    .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            return;
+                                        }
+                                    });
+                            builder.show();
+                            builder.create();
+
+                            return true;
+                        }
+                    });
+
                     //Expansion on click
                     layout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -220,8 +254,8 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     //Ask pro
                     Typeface tf_txt = Typeface.createFromAsset(context.getAssets(), "fonts/comforta.ttf");
 
-                    faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
-                    faq_txt.setTypeface(tf_txt);
+//                    faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
+//                    faq_txt.setTypeface(tf_txt);
 
                     ask_pro = (GifImageView) itemView.findViewById(R.id.ask_pro);
 
@@ -244,6 +278,38 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     arrow_two = (ImageView) itemView.findViewById(R.id.arrow_image_two);
 
                     question_title_two.setTypeface(tf);
+
+                    layout_two.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setMessage("Ar tikrai norite pašalinti klausimą?")
+                                    .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            String username = sharedPreferences.getString("username", "");
+                                            String password = sharedPreferences.getString("password", "");
+                                            String title = question_title_two.getText().toString();
+                                            String body = question_body_two.getText().toString();
+
+                                            remove(getAdapterPosition());
+
+                                            new ServerManager(context, "").execute("DELETE_FAQ", username, password, title, body);
+                                        }
+                                    })
+                                    .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            return;
+                                        }
+                                    });
+                            builder.show();
+                            builder.create();
+
+                            return true;
+                        }
+                    });
 
                     //Expansion on click
                     layout_two.setOnClickListener(new View.OnClickListener() {
