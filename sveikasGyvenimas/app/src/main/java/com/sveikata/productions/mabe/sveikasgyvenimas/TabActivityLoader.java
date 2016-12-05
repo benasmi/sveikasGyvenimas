@@ -159,7 +159,7 @@ public class TabActivityLoader extends AppCompatActivity {
                 }else{
                     SharedPreferences prefs = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
                     prefs.edit().putBoolean("isFirstTime", true).commit();
-                    prefs.edit().putString("faq_data", "");
+                    prefs.edit().putString("faq_data", "").commit();
                     new ServerManager(TabActivityLoader.this, "LOGOUT").execute("LOGOUT", username, password);
                 }
 
