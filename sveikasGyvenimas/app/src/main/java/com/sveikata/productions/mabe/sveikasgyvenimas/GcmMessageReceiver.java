@@ -75,7 +75,7 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
                 JSONObject obj = new JSONObject();
                 obj.put("faq_title", title);
                 obj.put("faq_body", body);
-                current_faq.put(obj);
+                current_faq.put(current_faq.length(), obj);
 
                 editor.putString("faq_data", current_faq.toString());
                 editor.commit();

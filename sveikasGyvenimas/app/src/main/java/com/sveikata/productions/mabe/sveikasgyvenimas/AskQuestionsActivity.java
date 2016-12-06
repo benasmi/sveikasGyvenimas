@@ -1,25 +1,14 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +43,15 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
         recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_recycler);
         adapter = new RecyclerAdapterQuestions(getActivity(),data);
 
+        SharedPreferences userPrefs = getContext().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+
+        try {
+            JSONArray user_data_array = new JSONArray(userPrefs.getString("user_data", ""));
+            JSONObject user_data = user_data_array.getJSONObject(0);
+            is_administrator = user_data.getString("is_admin");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         if(addFAQData){
             addFAQData=false;
@@ -103,7 +101,9 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
     public void initializeDataFirstTime(RecyclerAdapterQuestions adapter){
         adapter.add(new QuestionsDataHolder("","",1),0);
         adapter.add(new QuestionsDataHolder("", "", 3), 0);
-        adapter.add(new QuestionsDataHolder("","",4),0);
+        if(is_administrator.equals("1")){
+            adapter.add(new QuestionsDataHolder("","",4),0);
+        }
     }
 
 
