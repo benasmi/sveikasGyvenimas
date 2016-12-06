@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:weightSum="1">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ececec"
+        android:id="@+id/text_wrap_finished"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/top">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                android:layout_marginLeft="10dp"
+                android:text="Blaivybes brolija"
+                android:id="@+id/event_name_finished"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="19dp"
+                android:gravity="center" />
+
+
+
+            <TextView
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rugpjūčio 18, LITEXPO parodų rūmai "
+                android:id="@+id/event_date_and_place_finished"
+                android:layout_below="@+id/event_name_finished"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#E1E1E1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/top"
+            android:layout_height="wrap_content"
+            android:id="@+id/description_layout">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:textStyle="italic"
+                android:layout_height="wrap_content"
+                android:text="Renginį organizuoja UAB „De Futuro“, sveikatingumo klasteris iVita. Renginio partneriai Lietuvos sporto universitetas, Sveikatos alėja, Sporto klubas „Linija“. Renginys yra skirta jauniems, aktyviems, norintiems pradėti ar mėgstantiems sportuoti, bet nežinantiems nuo ko pradėti žmonėms."
+                android:id="@+id/event_description_finished"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:autoText="false"
+                android:layout_marginBottom="3dp"
+                android:layout_alignParentRight="true"
+                android:textSize="13dp"
+                android:layout_alignParentEnd="true"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="#E1E1E1" />
+
+    </LinearLayout>
+</LinearLayout>

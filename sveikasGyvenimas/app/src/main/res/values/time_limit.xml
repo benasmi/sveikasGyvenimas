@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="time_limit">
-        <item>Laikas</item>
+        <item>Laikas*</item>
         <item>7</item>
         <item>8</item>
         <item>9</item>

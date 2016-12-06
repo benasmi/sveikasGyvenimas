@@ -135,12 +135,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 View view1 = layoutInflater.inflate(R.layout.layout_description, parent, false);
                 ViewHolder holder1 = new ViewHolder(view1, 2);
                 return holder1;
-            case 3: //Admin schedule item
 
+            case 3: //Admin schedule item
                 View admin_shedule = layoutInflater.inflate(R.layout.schedule_item_admin, parent, false);
                 ViewHolder schedule_admin_holder = new ViewHolder(admin_shedule, 3);
                 return schedule_admin_holder;
 
+            case 4: //Line between finished event and not finished
+                View event_line = layoutInflater.inflate(R.layout.line_between_events, parent, false);
+                ViewHolder event_line_holder = new ViewHolder(event_line, 4);
+                return event_line_holder;
+
+            case 5: //Line between finished event and not finished
+                View finished_event = layoutInflater.inflate(R.layout.finished_schedule_item, parent, false);
+                ViewHolder finished_event_holder = new ViewHolder(finished_event, 5);
+                return finished_event_holder;
 
         }
 
@@ -156,6 +165,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder,final int position) {
         final InfoHolder data = infoHolder.get(position);
         String dataType = data.getRecycler_view_type();
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_schedule);
 
         if(dataType.equals("0") || dataType.equals("3")){
 
@@ -170,7 +180,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 holder.event_description_field_admin.setText(data.getEvent_description());
             }
 
-            Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_schedule);
+
             holder.layout.startAnimation(animation);
 
             holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +200,33 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 holder.layout.setBackgroundColor(Color.parseColor("#FAFAFA"));
             }
         }
+        if(dataType.equals("4")){
+            Animation slide_from_left = AnimationUtils.loadAnimation(context, R.anim.slide_in_right);
+            holder.finished_event_txt.startAnimation(slide_from_left);
+        }
+
+
+        if(dataType.equals("5")){
+            Animation slide_from_left = AnimationUtils.loadAnimation(context, R.anim.slide_in_right);
+            Animation slide_from_right = AnimationUtils.loadAnimation(context, R.anim.slide_in_left);
+
+            holder.event_name_finished.setText(data.getEvent_name());
+            holder.event_date_and_place_finished.setText(data.getEvent_location_and_date());
+            holder.event_description_finished.setText(data.getEvent_description());
+
+
+            if(position % 2 ==0){
+                holder.layout_finished.startAnimation(slide_from_right);
+
+            }else{
+                holder.layout_finished.startAnimation(slide_from_left);
+
+            }
+
+
+        }
+
+
 
 
 
@@ -320,6 +357,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         builder.create();
     }
 
+    public void finish_event(final Context context, final String username, final String password, final String name, final String description){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Ar tikrai norite pabaigti renginį(pridėti prie baigtų renginių skilties)?")
+                .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new ServerManager(context, "FINISH_EVENT").execute("FINISH_EVENT",username, password,name,description);
+                    }
+                })
+                .setNegativeButton("NE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        builder.show();
+        builder.create();
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -340,6 +396,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private EditText event_date_and_place_field_admin;
         private EditText event_description_field_admin;
         private ImageView delete_cross_admin;
+        private ImageView finish_event_admin;
         private AppCompatImageButton save_button;
         private AppCompatButton will_participate_admin;
 
@@ -360,7 +417,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private GoogleMap googleMaps;
         private MapView map;
 
+        //Finished event schedule item
+        private TextView event_name_finished;
+        private TextView event_date_and_place_finished;
+        private TextView event_description_finished;
+        private LinearLayout layout_finished;
 
+        //Line between evetns
+        private TextView finished_event_txt;
+
+        private Typeface tf;
+        private Typeface typeface;
+        private Typeface verdanaTf;
 
         public ViewHolder(View itemView, int type) {
 
@@ -371,7 +439,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     event_date_and_place = (TextView) itemView.findViewById(R.id.event_date_and_place);
                     event_name = (TextView) itemView.findViewById(R.id.event_name);
                     event_description = (TextView) itemView.findViewById(R.id.event_description);
-                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    tf = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
                     event_name.setTypeface(tf);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap);
 
@@ -584,11 +652,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     event_date_and_place_field_admin = (EditText) itemView.findViewById(R.id.event_date_and_place_admin);
                     event_name_field_admin = (EditText) itemView.findViewById(R.id.event_name_admin);
                     event_description_field_admin = (EditText) itemView.findViewById(R.id.event_description_admin);
-                    Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    typeface = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
                     event_name_field_admin.setTypeface(typeface);
                     layout = (LinearLayout) itemView.findViewById(R.id.text_wrap_admin);
                     will_participate_admin = (AppCompatButton) itemView.findViewById(R.id.will_participate_admin);
                     delete_cross_admin = (ImageView) itemView.findViewById(R.id.delete_cross_admin);
+                    finish_event_admin = (ImageView) itemView.findViewById(R.id.finish_event);
                     save_button = (AppCompatImageButton) itemView.findViewById(R.id.save_event);
 
                     event_date_and_place_field_admin.setEnabled(false); //Just in case they change their minds
@@ -597,6 +666,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     delete_cross_admin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                                if(!CheckingUtils.isNetworkConnected(context)){
+                                    CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
+                                    return;
+                                    }
 
                                     String username = sharedPreferences.getString("username", "");
                                     String password = sharedPreferences.getString("password", "");
@@ -605,13 +678,27 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                     String name = infoHolder.get(getAdapterPosition()).getEvent_name();
 
 
-                                    if(!CheckingUtils.isNetworkConnected(context)){
-                                        CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
-                                        return;
-                                    }
-
                                     delete_event(context,username,password,name,description, getAdapterPosition());
                                 }
+                    });
+
+                    finish_event_admin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(!CheckingUtils.isNetworkConnected(context)){
+                                CheckingUtils.createErrorBox("Šiam veiksmui atlikti, reikalingas interneto ryšys", context, R.style.ScheduleDialogStyle);
+                                return;
+                            }
+
+
+                            String username = sharedPreferences.getString("username", "");
+                            String password = sharedPreferences.getString("password", "");
+                            String description = infoHolder.get(getAdapterPosition()).getEvent_description();
+                            String name = infoHolder.get(getAdapterPosition()).getEvent_name();
+
+                                    finish_event(context, username, password, name, description);
+
+                        }
                     });
 
                     //Saving event
@@ -640,6 +727,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     });
 
 
+                    break;
+
+                case 4:
+                    finished_event_txt = (TextView) itemView.findViewById(R.id.finished_events_txt);
+                    Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/Verdana.ttf");
+                    finished_event_txt.setTypeface(tf);
+                    break;
+
+                case 5:
+                    event_name_finished = (TextView) itemView.findViewById(R.id.event_name_finished);
+                    event_date_and_place_finished = (TextView) itemView.findViewById(R.id.event_date_and_place_finished);
+                    event_description_finished = (TextView) itemView.findViewById(R.id.event_description_finished);
+
+                    layout_finished = (LinearLayout) itemView.findViewById(R.id.text_wrap_finished);
+                    typeface = Typeface.createFromAsset(context.getAssets(), "fonts/bevan.ttf");
+                    event_name_finished.setTypeface(typeface);
                     break;
             }
 

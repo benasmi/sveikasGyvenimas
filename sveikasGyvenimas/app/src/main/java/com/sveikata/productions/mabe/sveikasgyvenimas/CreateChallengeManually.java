@@ -109,6 +109,7 @@ public class CreateChallengeManually extends AppCompatActivity {
         });
 
 
+
         //ALREADY CREATED CHALLENGES
         final Spinner challenges_spinner = (Spinner) findViewById(R.id.challenges_created);
         final ArrayAdapter<CharSequence> gender_adapter = ArrayAdapter.createFromResource(this,
@@ -116,6 +117,12 @@ public class CreateChallengeManually extends AppCompatActivity {
         gender_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         challenges_spinner.setAdapter(gender_adapter);
 
+
+        final Spinner time_spin_given = (Spinner)findViewById(R.id.given_challenge_time);
+        ArrayAdapter time_adapter_given = ArrayAdapter.createFromResource(this,
+                R.array.time_limit, R.layout.spinner_item_challenge);
+        time_adapter_given.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time_spin_given.setAdapter(time_adapter);
 
         final EditText mail_receiver = (EditText) findViewById(R.id.mail_receiver);
         final EditText note_challenge = (EditText) findViewById(R.id.created_challenge_note);
@@ -130,29 +137,19 @@ public class CreateChallengeManually extends AppCompatActivity {
                 }
 
                 String challenge = challenges_spinner.getSelectedItem().toString();
+                String time = time_spin_given.getSelectedItem().toString();
                 String mail = mail_receiver.getText().toString();
                 String username = sharedPreferences.getString("username", "");
                 String password = sharedPreferences.getString("password", "");
                 String note = note_challenge.getText().toString();
-                String title =null;
-                String time =null;
 
-                if(challenge.equals("Nevartoti alkoholio 7 dienas")){
-                    title = "Nevartoju alkoholio";
-                    time = "7";
-                }
-
-                if(challenge.equals("Gerti daug vandens 14 dienų")){
-                    title = "Gerti vandenį";
-                    time = "14";
-                }
 
                 if(mail.isEmpty()){
                     mail_receiver.setError("Kam nusiųsti?");
                     CheckingUtils.vibrate(CreateChallengeManually.this, 100);
                     return;
                 }
-                new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,title, username,password, note);
+                new ServerManager(CreateChallengeManually.this,"SEND_CHALLENGE").execute("SEND_CHALLENGE", challenge,mail,time,challenge, username,password, note);
             }
         });
 

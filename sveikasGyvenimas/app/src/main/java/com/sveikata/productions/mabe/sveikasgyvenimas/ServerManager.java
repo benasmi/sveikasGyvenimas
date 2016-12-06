@@ -82,6 +82,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADRESS_FETCH_FAQ_DATA = "http://dvp.lt/android/fetch_faq.php";
     public static final String SERVER_ADRESS_INSERT_FAQ_DATA = "http://dvp.lt/android/insert_faq.php";
     public static final String SERVER_ADDRESS_DELETE_FAQ = "http://dvp.lt/android/delete_faq.php";
+    public static final String SERVER_ADDRESS_FINISH_EVENT = "http://dvp.lt/android/finish_event.php";
+    public static final String SERVER_ADRESS_FETCH_SCHEDULE_FINISHED = "http://dvp.lt/android/fetch_finished_schedule.php";
+
 
     private String type;
     private String device_id;
@@ -149,9 +152,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             String years = params[7];
             String type = params[8];
             String token = params[9];
+            String hometown = params[10];
 
 
-            response = register(name,last_name,username_register,password_register,mail,gender,years,type, token);
+            response = register(name,last_name,username_register,password_register,mail,gender,years,type, token, hometown);
         }
 
         if(method_type.equals("DELETE_FAQ")){
@@ -335,6 +339,15 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             response = insertFaq(faq_title, faq_body, username, password);
         }
+        if(method_type.equals("FINISH_EVENT")){
+            String username = params[1];
+            String password = params[2];
+            String name = params[3];
+            String description = params[4];
+
+            finish_event(username, password, name, description);
+
+        }
 
         return null;
     }
@@ -418,11 +431,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
                 case 2:
                     CheckingUtils.createErrorBox("Šis vartotojas jau vykdo iššūkį, bandyk kitą kartą!", context, R.style.SendChallengeCustom);
-                    PlayActivity.shouldAddInfo=true;
-                    AskQuestionsActivity.addFAQData=true;
-                    HealthyLifeActivity.addData=true;
-                    InterestingFactsActivity.addFactsFirstTime =true;
-                    startFetchingData(1, true);
                     break;
 
             }
@@ -557,6 +565,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             progressDialog.dismiss();
 //            context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", 2));
         }
+        if(method_type.equals("FINISH_EVENT")){
+            startFetchingData(0, false);
+        }
 
 
         if(onfinishlistener!=null){
@@ -572,7 +583,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
 
-    public int register(String name, String last_name, String username, String password, String mail, String gender, String age, String type, String token){
+    public int register(String name, String last_name, String username, String password, String mail, String gender, String age, String type, String token, String hometown){
 
         //Connect to mysql.
         HttpClient httpClient = new DefaultHttpClient();
@@ -591,6 +602,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             jsonObject.putOpt("age", age);
             jsonObject.putOpt("type", type);
             jsonObject.putOpt("device_id", token);
+            jsonObject.putOpt("hometown", hometown);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1113,6 +1125,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
     }
+
     public void delete_event(String username, String password, String name, String description){
 
         HttpClient httpClient = new DefaultHttpClient();
@@ -1145,6 +1158,39 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
 
     }
+
+    public void finish_event(String username, String password, String name, String description){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADDRESS_FINISH_EVENT);
+
+        JSONObject jsonObject = new JSONObject();
+
+        try{
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+            jsonObject.putOpt("name", name);
+            jsonObject.putOpt("description", description);
+
+        }catch (Exception e){
+
+        }
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void delete_fact(String username, String password, String title, String url, String source, String body){
 
         HttpClient httpClient = new DefaultHttpClient();
@@ -1280,6 +1326,49 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             SharedPreferences sharedPreferences = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("schedule_data", jsonArray.toString()).commit();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void fetchFinishedScheduleData(){
+
+        SharedPreferences loginPrefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+        String username =loginPrefs.getString("username","");
+        String password = loginPrefs.getString("password","");
+
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_FETCH_SCHEDULE_FINISHED);
+
+
+
+        //Getting response
+        HttpResponse response = null;
+        try {
+
+            //JSON object.
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putOpt("username", username);
+            jsonObject.putOpt("password", password);
+
+            EntityBuilder entity = EntityBuilder.create();
+            entity.setText(jsonObject.toString());
+            httpPost.setEntity(entity.build());
+
+            response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            JSONArray jsonArray = new JSONArray(responseBody);
+
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("ScheduleData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("finished_schedule_data", jsonArray.toString()).commit();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -1620,6 +1709,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             }
 
             fetchScheduleData();
+            fetchFinishedScheduleData();
             fetchUserData();
             fetchFactData();
             fetchChallenges();
