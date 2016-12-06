@@ -183,11 +183,12 @@ public class LoginActivity extends AppCompatActivity {
                                     String mail = object.getString("email");
                                     String gender = object.getString("gender");
                                     String years = object.getString("birthday");
-                                    Log.i("TEST", "bday: " + years);
+                                    JSONObject hometown = object.getJSONObject("hometown");
+                                    String town = hometown.getString("name");
                                     String type = "facebook";
                                     String token = sharedPrefs.getString("device_id", "");
 
-                                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type);
+                                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
                                 }catch (Exception e ){
                                     Log.i("TEST", "ERROR");
                                 }

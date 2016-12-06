@@ -112,10 +112,12 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         Animation animation = AnimationUtils.loadAnimation(context,R.anim.slide_in_left);
         Animation animation_right = AnimationUtils.loadAnimation(context,R.anim.slide_in_right);
 
+
         switch (data.getType()){
             case 0:
                 holder.question_title.setText(data.getQuestionTitle());
                 holder.question_body.setText(data.getQuestionBody());
+
                 if(position%2==0){
                     holder.layout.startAnimation(animation);
                 }else{
@@ -126,6 +128,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
             case 2:
                 holder.question_title_two.setText(data.getQuestionTitle());
                 holder.question_body_two.setText(data.getQuestionBody());
+
                 if(position%2==0){
                     holder.layout_two.startAnimation(animation);
                 }else{
@@ -136,6 +139,23 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         }
 
 
+    }
+
+    @Override
+    public void onViewRecycled(ViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        if(holder.layout != null){
+            holder.isClicked = false;
+            holder.arrow.setImageResource(R.drawable.arrow_down);
+            holder.layout.getLayoutParams().height = (int) holder.shrinked_height;
+        }
+
+        if(holder.layout_two != null) {
+            holder.isClicked = false;
+            holder.arrow_two.setImageResource(R.drawable.arrow_down);
+            holder.layout_two.getLayoutParams().height = (int) holder.shrinked_height_two;
+        }
     }
 
     @Override
@@ -153,6 +173,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         private RelativeLayout question_title_layout;
         private RelativeLayout question_body_layout;
         private ImageView arrow;
+        private float shrinked_height = 0;
 
         //Views for two line faq
         private TextView question_title_two;
@@ -161,6 +182,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         private RelativeLayout question_title_layout_two;
         private RelativeLayout question_body_layout_two;
         private ImageView arrow_two;
+        private float shrinked_height_two = 0;
 
 
         //Ask Question layout
@@ -246,6 +268,8 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                             float additionalHeight = CheckingUtils.convertPixelsToDp(5, context);
                             float collapsedHeight = CheckingUtils.convertPixelsToDp(35, context);
                             float expandedHeight =question_body.getLayout().getHeight() + collapsedHeight + additionalHeight;
+
+                            shrinked_height = collapsedHeight;
 
                             ResizeAnimation expand = new ResizeAnimation(layout, (int) collapsedHeight, (int) expandedHeight);
                             expand.setDuration(200);
@@ -361,6 +385,8 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                             float additionalHeight = CheckingUtils.convertPixelsToDp(5, context);
                             float collapsedHeight = CheckingUtils.convertPixelsToDp(60, context);
                             float expandedHeight =question_body_two.getLayout().getHeight() + collapsedHeight + additionalHeight;
+
+                            shrinked_height_two = collapsedHeight;
 
                             ResizeAnimation expand = new ResizeAnimation(layout_two, (int) collapsedHeight, (int) expandedHeight);
                             expand.setDuration(200);

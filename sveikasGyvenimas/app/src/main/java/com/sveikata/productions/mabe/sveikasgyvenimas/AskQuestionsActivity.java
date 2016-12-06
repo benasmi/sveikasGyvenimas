@@ -55,8 +55,9 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
         if(addFAQData){
             addFAQData=false;
-            initializeDataFirstTime(adapter);
             initializeData(adapter);
+            initializeDataFirstTime(adapter);
+
         }
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -42,7 +42,6 @@
         android:layout_height="35dp"
         android:id="@+id/faq_title"
         android:drawablePadding="5dp"
-        android:maxLines="1"
         android:hint="DUK klausimas"
         android:textSize="15dp"
         android:background="@drawable/button_borders_different_color"
