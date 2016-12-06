@@ -157,8 +157,9 @@ public class TabActivityLoader extends AppCompatActivity {
                     CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this, R.style.CasualStyle);
                     return false;
                 }else{
+                    //Neklausk kodel skirtingi :D
                     SharedPreferences prefs = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-                    prefs.edit().putBoolean("isFirstTime", true).commit();
+                    prefs.edit().putBoolean("isFirstTimeFaq", true).commit();
                     prefs.edit().putString("faq_data", "").commit();
                     new ServerManager(TabActivityLoader.this, "LOGOUT").execute("LOGOUT", username, password);
                 }

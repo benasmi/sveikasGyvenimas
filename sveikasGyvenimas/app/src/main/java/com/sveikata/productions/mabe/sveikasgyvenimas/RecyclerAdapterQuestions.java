@@ -16,6 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -29,6 +34,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     private SharedPreferences sharedPreferences;
     private LayoutInflater layoutInflater;
     private boolean show = false;
+    private String is_admin = "0";
 
     public RecyclerAdapterQuestions(Context context, ArrayList<QuestionsDataHolder> questionsDataHolder) {
         this.context = context;
@@ -37,6 +43,16 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
         layoutInflater = LayoutInflater.from(context);
 
         sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+
+        SharedPreferences userPrefs = context.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+
+        try {
+            JSONArray user_data_array = new JSONArray(userPrefs.getString("user_data", ""));
+            JSONObject user_data = user_data_array.getJSONObject(0);
+            is_admin = user_data.getString("is_admin");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -194,6 +210,16 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
 
                                             remove(getAdapterPosition());
 
+                                            String faq_data = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE).getString("faq_data", "1");
+
+                                            try {
+                                                JSONArray faq_array = new JSONArray(faq_data);
+                                                faq_array.remove(getAdapterPosition());
+                                                context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE).edit().putString("faq_data", faq_array.toString()).commit();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                             new ServerManager(context, "").execute("DELETE_FAQ", username, password, title, body);
                                         }
                                     })
@@ -203,8 +229,11 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                                             return;
                                         }
                                     });
-                            builder.show();
-                            builder.create();
+
+                            if(is_admin.equals("1")){
+                                builder.show();
+                                builder.create();
+                            }
 
                             return true;
                         }
@@ -293,6 +322,16 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                                             String title = question_title_two.getText().toString();
                                             String body = question_body_two.getText().toString();
 
+                                            String faq_data = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE).getString("faq_data", "1");
+
+                                            try {
+                                                JSONArray faq_array = new JSONArray(faq_data);
+                                                faq_array.remove(getAdapterPosition());
+                                                context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE).edit().putString("faq_data", faq_array.toString()).commit();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
                                             remove(getAdapterPosition());
 
                                             new ServerManager(context, "").execute("DELETE_FAQ", username, password, title, body);
@@ -304,8 +343,11 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                                             return;
                                         }
                                     });
-                            builder.show();
-                            builder.create();
+
+                            if(is_admin.equals("1")){
+                                builder.show();
+                                builder.create();
+                            }
 
                             return true;
                         }

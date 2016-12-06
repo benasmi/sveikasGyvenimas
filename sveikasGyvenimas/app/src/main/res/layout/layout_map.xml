@@ -40,13 +40,13 @@
     <EditText
         android:layout_width="150dp"
         android:layout_height="30dp"
-        android:hint="Data"
+        android:hint="Data (yyyy-mm-dd)"
         android:gravity="center"
         android:background="@drawable/custom_borders"
         android:textSize="15dp"
         android:id="@id/event_date_admin"
         android:layout_below="@id/event_name_admin"
-        android:textColorHint="#ecf0f1"
+        android:textColorHint="#d9dbdc"
         android:textColor="#ecf0f1" />
     <EditText
         android:layout_width="200dp"

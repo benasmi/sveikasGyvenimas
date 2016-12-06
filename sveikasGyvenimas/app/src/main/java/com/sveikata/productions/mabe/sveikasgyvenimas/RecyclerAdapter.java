@@ -501,6 +501,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                                         event_date_admin.setError("Šis laukelis negali būti tuščias!");
                                         return;
                                     }
+
+                                    //Checking date format to be yyyy-mm-dd
+                                    for(int i = 0; i < event_date.length(); i++) {
+                                        try {
+                                            Integer.parseInt(String.valueOf(event_date.charAt(i)));
+                                        } catch (Exception e) {
+                                            if (event_date.charAt(i) != '-') {
+                                                event_date_admin.setError("Datos formatas: yyyy-mm-dd");
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    if(event_date.length() > 10){
+                                        event_date_admin.setError("Datos formatas: yyyy-mm-dd");
+                                        return;
+                                    }
+
+
                                     if(event_description.isEmpty()){
                                         event_description_admin.setError("Šis laukelis negali būti tuščias!");
                                         return;

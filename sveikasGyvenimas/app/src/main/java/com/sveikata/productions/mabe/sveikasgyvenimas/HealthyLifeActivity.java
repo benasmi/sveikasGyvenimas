@@ -54,7 +54,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             jsonArray = new JSONArray(user_data);
             userData = jsonArray.getJSONObject(0);
 
-            Log.i("TEST", jsonArray.toString());
+//            Log.i("TEST", jsonArray.toString());
             if(!userData.getString("is_admin").isEmpty()) {
                 is_administrator = userData.getString("is_admin");
             }
