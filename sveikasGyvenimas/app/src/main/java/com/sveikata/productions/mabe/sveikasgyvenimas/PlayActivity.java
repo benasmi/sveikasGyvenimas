@@ -152,7 +152,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
             if(challenge.getString("challenge_state").equals("2")){
                 info.add(new PlayInfoHolder(4, description, time, title, sender, note));
             }
-            Log.i("TEST", challenge.toString());
+//            Log.i("TEST", challenge.toString());
         }
     }
 
@@ -174,7 +174,7 @@ public class PlayActivity extends android.support.v4.app.Fragment {
                     info.add(new PlayInfoHolder(3, description, time, title, sender, note));
                 }
 
-                Log.i("TEST", challenge.toString());
+//                Log.i("TEST", challenge.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
