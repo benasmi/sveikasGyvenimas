@@ -187,6 +187,8 @@ public class LoginActivity extends AppCompatActivity {
                                     String type = "facebook";
                                     String token = sharedPrefs.getString("device_id", "");
 
+                                    Log.i("TEST", object.getString("hometown"));
+
                                     new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type);
                                 }catch (Exception e ){
                                     Log.i("TEST", "ERROR");

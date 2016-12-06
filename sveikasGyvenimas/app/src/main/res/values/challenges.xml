@@ -2,8 +2,8 @@
 <resources>
     <string-array name="challenges">
 
-        <item>Nevartoti alkoholio 7 dienas</item>
-        <item>Gerti daug vandens 14 dienų</item>
+        <item>Nevartoti alkoholio</item>
+        <item>Gerti 5 stiklines vandens</item>
     </string-array>
 
 

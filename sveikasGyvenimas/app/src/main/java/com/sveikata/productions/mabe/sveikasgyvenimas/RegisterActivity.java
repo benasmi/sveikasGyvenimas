@@ -4,8 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -13,6 +17,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
+
+import java.util.List;
+import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -90,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
         password_value = password_ET.getText().toString();
         repeat_password_value = repeat_password_ET.getText().toString();
         mail_value = mail_ET.getText().toString();
-
+        String hometown = "";
         if(username_value.isEmpty()){
             CheckingUtils.vibrate(this, 100);
             username_ET.setError("Prašome įvesti vartotojo vardą");
@@ -171,17 +182,49 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(!CheckingUtils.isNetworkConnected(this)){
             CheckingUtils.vibrate(this, 100);
-            CheckingUtils.createErrorBox("Nori susikurti paskyrą? Įjunk WI-FI arba mobilius ;)",this, R.style.ScheduleDialogStyle);
+            CheckingUtils.createErrorBox("Nori susikurti paskyrą? Įjunk WI-FI arba mobilius )",this, R.style.ScheduleDialogStyle);
             return;
         }
 
+        if(!CheckingUtils.isGpsEnabled(this)){
+            CheckingUtils.buildAlertMessageNoGps("Trumpam įjunkite GPS, reikalinga informacija statistiniams duomenims :)",this, R.style.ScheduleDialogStyle);
+            return;
+        }
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        final double longtitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLongitude();
+        final double latitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLatitude();
+
+
         SharedPreferences sharedPrefs = getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String token = sharedPrefs.getString("device_id", "");
-        new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token);
+
+        try {
+            hometown = address(longtitude, latitude);
+            Log.i("TEST", hometown);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token, hometown);
 
     }
 
     public void goBackToLogin(View view) {
         startActivity(new Intent(this, LoginActivity.class).putExtra("isAnimDisabled", false));
     }
+
+
+    public String address(double longtitude, double latitude) throws Exception{
+
+
+        Geocoder geocoder;
+        List<Address> addressList;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        addressList = geocoder.getFromLocation(latitude,longtitude,1);
+
+        return addressList.get(0).getLocality();
+
+
+    }
+
 }

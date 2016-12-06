@@ -36,6 +36,8 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
     private String is_administrator;
     private View rootView;
 
+    private boolean finishedEventsEmpty = true;
+
     public static boolean addData = true;
 
     @Nullable
@@ -73,8 +75,14 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
             if(addData) {
                 addData = false;
+                finishedEvents(adapter);
+                if(!finishedEventsEmpty){
+                    lineBetweenFisnishedAndNot(adapter);
+                }
                 initializeData(adapter);
                 initializeDataFirstTime(adapter, "1");
+
+
 
             }
 
@@ -118,8 +126,13 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
             if(addData) {
                 addData = false;
 
+                finishedEvents(adapter);
+                if(!finishedEventsEmpty){
+                    lineBetweenFisnishedAndNot(adapter);
+                }
                 initializeData(adapter);
                 initializeDataFirstTime(adapter, "2");
+
 
             }
 
@@ -157,6 +170,7 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
                 String fb_link = scheduleData.getString("fb_link");
 
                 adapter.add(new InfoHolder(event_name, event_location + event_date, event_description, is_administrator.equals("1") ? "3" : "0", latitude, longtitude, id, fb_link), 0);
+
             }
 
 
@@ -167,9 +181,52 @@ public class HealthyLifeActivity extends android.support.v4.app.Fragment {
 
     }
 
+
+    public void finishedEvents(RecyclerAdapter adapter){
+        //Preferences to fetch all schedule data
+        SharedPreferences dataPrefs = getActivity().getSharedPreferences("ScheduleData", getActivity().MODE_PRIVATE);
+        String schedule = dataPrefs.getString("finished_schedule_data", "");
+
+
+
+        try {
+            JSONArray scheduleDataArray = new JSONArray(schedule);
+            for (int i = 0; i<scheduleDataArray.length(); i++){
+                JSONObject scheduleData = scheduleDataArray.getJSONObject(i);
+
+                String event_description = scheduleData.getString("description");
+                String event_name = scheduleData.getString("name");
+                String event_location = scheduleData.getString("location_name");
+                String event_date = scheduleData.getString("date");
+                double latitude = Double.parseDouble(scheduleData.getString("latitude"));
+                double longtitude = Double.parseDouble(scheduleData.getString("longtitude"));
+                String id = scheduleData.getString("id");
+                String fb_link = scheduleData.getString("fb_link");
+
+                adapter.add(new InfoHolder(event_name, event_location + event_date, event_description, "5", latitude, longtitude, id, fb_link), 0);
+
+                if(!event_name.isEmpty()){
+                    finishedEventsEmpty = false;
+                }
+
+                Log.i("TEST", String.valueOf(event_name.isEmpty()));
+
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void lineBetweenFisnishedAndNot(RecyclerAdapter adapter){
+        adapter.add(new InfoHolder("", "", "", "4", 4,4, "",""),0);
+    }
+
     public void initializeDataFirstTime(RecyclerAdapter adapter, String type){
                 adapter.add(new InfoHolder("", "","",type, 123, 123, "", DEFAULT_FB_LINK), 0);
     }
-
 
 }
