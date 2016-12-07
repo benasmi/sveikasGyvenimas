@@ -145,16 +145,18 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     public void onViewRecycled(ViewHolder holder) {
         super.onViewRecycled(holder);
 
+        float collapsedHeight = CheckingUtils.convertPixelsToDp(35, context);
+
         if(holder.layout != null){
             holder.isClicked = false;
             holder.arrow.setImageResource(R.drawable.arrow_down);
-            holder.layout.getLayoutParams().height = (int) holder.shrinked_height;
+            holder.layout.getLayoutParams().height = (int) collapsedHeight;
         }
 
         if(holder.layout_two != null) {
             holder.isClicked = false;
             holder.arrow_two.setImageResource(R.drawable.arrow_down);
-            holder.layout_two.getLayoutParams().height = (int) holder.shrinked_height_two;
+            holder.layout_two.getLayoutParams().height = (int) collapsedHeight;
         }
     }
 
