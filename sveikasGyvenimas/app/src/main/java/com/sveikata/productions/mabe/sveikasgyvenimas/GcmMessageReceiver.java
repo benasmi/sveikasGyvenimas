@@ -62,39 +62,64 @@ public class GcmMessageReceiver extends FirebaseMessagingService {
             String description= String.valueOf(data.get("description"));
             sendFactNotif(message, description);
         }
-        if(type.equals("faq")){
-            String title = String.valueOf(data.get("faq_title"));
-            String body = String.valueOf(data.get("faq_body"));
-
-            SharedPreferences sharedPreferences = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-
-            try {
-                JSONArray current_faq = new JSONArray(sharedPreferences.getString("faq_data", ""));
-                JSONObject obj = new JSONObject();
-                obj.put("faq_title", title);
-                obj.put("faq_body", body);
-                current_faq.put(current_faq.length(), obj);
-
-                editor.putString("faq_data", current_faq.toString());
-                editor.commit();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-
-
-
-
-
-
+//        if(type.equals("faq")){
+//            String title = String.valueOf(data.get("faq_title"));
+//            String body = String.valueOf(data.get("faq_body"));
+//
+//            SharedPreferences sharedPreferences = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//
+//
+//            try {
+//                JSONArray current_faq = new JSONArray(sharedPreferences.getString("faq_data", ""));
+//                JSONObject obj = new JSONObject();
+//                obj.put("faq_title", title);
+//                obj.put("faq_body", body);
+//                current_faq.put(current_faq.length(), obj);
+//
+//                editor.putString("faq_data", current_faq.toString());
+//                editor.commit();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//
+//        if(type.equals("faq_remove")){
+//
+//            String title = String.valueOf(data.get("faq_title"));
+//
+//            SharedPreferences sharedPreferences = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//
+//
+//            JSONArray current_faq = null;
+//            try {
+//                current_faq = new JSONArray(sharedPreferences.getString("faq_data", ""));
+//
+////                Log.i("TEST", current_faq.toString());
+//
+//                for(int i = 0; i < current_faq.length(); i++){
+//                    JSONObject obj = current_faq.getJSONObject(i);
+//
+//                    if(obj.getString("faq_title").equals(title)){
+//                        current_faq = CheckingUtils.RemoveJSONArray(current_faq, i);
+//                    }
+//                }
+//
+////                Log.i("TEST", current_faq.toString());
+//                editor.putString("faq_data", current_faq.toString());
+//                editor.commit();
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            editor.putString("faq_data", current_faq.toString());
+//            editor.commit();
+//
+//        }
         super.onMessageReceived(remoteMessage);
-
-
-
     }
 
     private void sendNotificationGeneral(String message, String description) {

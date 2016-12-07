@@ -156,9 +156,7 @@ public class TabActivityLoader extends AppCompatActivity {
                 if(!CheckingUtils.isNetworkConnected(TabActivityLoader.this)){
                     CheckingUtils.createErrorBox("Jei norite atsijungti, įjunkite internetą", TabActivityLoader.this, R.style.CasualStyle);
                     return false;
-                }else{
-                    //Neklausk kodel skirtingi :D
-                    SharedPreferences prefs = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
+                }else{SharedPreferences prefs = getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
                     prefs.edit().putBoolean("isFirstTimeFaq", true).commit();
                     prefs.edit().putString("faq_data", "").commit();
                     new ServerManager(TabActivityLoader.this, "LOGOUT").execute("LOGOUT", username, password);
@@ -168,13 +166,6 @@ public class TabActivityLoader extends AppCompatActivity {
             }
         });
 
-        menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(TabActivityLoader.this, ProfileActivity.class));
-                return false;
-            }
-        });
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -193,6 +184,8 @@ public class TabActivityLoader extends AppCompatActivity {
             myToolbar.setTitle("Tvarkaraštis");
 
 
+
+
         }else if(position==1){
             tabLayout.getTabAt(0).setIcon(R.drawable.schedule_unactive);
             tabLayout.getTabAt(1).setIcon(R.drawable.play_active);
@@ -205,7 +198,7 @@ public class TabActivityLoader extends AppCompatActivity {
                 new MaterialShowcaseView.Builder(this)
                         .setTarget(this.myToolbar)
                         .setDismissText("SUPRATAU!")
-                        .setContentText("O atėjęs į šią skiltį, Tu galėsi išbandyti įvairias skaičiuokles, pažaisti bei mesti iššūkius draugams. Argi nešaunu?!")
+                        .setContentText("O atėjęs į šią skiltį, Tu galėsi išbandyti įvairias skaičiuokles, pažaisti bei mesti iššūkius draugams. Argi ne šaunu?!")
                         .setFadeDuration(1000) // optional but starting animations immediately in onCreate can make them choppy
                         .setDismissTextColor(Color.parseColor("#FFEAC73C"))
                         .show();
@@ -224,7 +217,7 @@ public class TabActivityLoader extends AppCompatActivity {
                         .setTarget(this.myToolbar)
                         .setDismissText("GERAI")
                         .setDismissTextColor(Color.parseColor("#FFEAC73C"))
-                        .setContentText("Tačiau tai dar ne viskas, nepaisant pramogų, galėsi pasisemti įvairių faktų ir dalintis jais su draugais!")
+                        .setContentText("Tačiau tai dar ne viskas! Nepaisant pramogų, galėsi pasisemti įvairių faktų ir dalintis jais su draugais!")
                         .setFadeDuration(500) // optional but starting animations immediately in onCreate can make them choppy
                         .show();
             }
@@ -243,7 +236,7 @@ public class TabActivityLoader extends AppCompatActivity {
                         .setTarget(this.myToolbar)
                         .setDismissTextColor(Color.parseColor("#FFEAC73C"))
                         .setDismissText("ŠAUNU!")
-                        .setContentText("Nori sužinoti daugiau apie projektą? Čia rasi dažniausiai užduodamus klausimus bei galėsi paklausti specialisto, ko tik širdis geidžia!")
+                        .setContentText("Nori sužinoti daugiau apie projektą? Čia rasi dažniausiai užduodamus klausimus bei galėsi paklausti specialisto ko tik širdis geidžia!")
                         .setFadeDuration(500) // optional but starting animations immediately in onCreate can make them choppy
                         .show();
             }

@@ -227,10 +227,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
 
-
-
-
         if(dataType.equals("1") || dataType.equals("2") || dataType.equals("3")){
+
+            showMap = sharedPreferences.getBoolean("showMap", false);
 
             try {
             if(!showMap){
@@ -246,10 +245,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         .setDelay(1000) // optional but starting animations immediately in onCreate can make them choppy
                         .show();
             }
-
                 refreshMap(holder);
+
             }catch (Exception e){
             }
+
+
         }
 
     }

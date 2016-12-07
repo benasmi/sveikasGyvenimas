@@ -9,9 +9,5 @@
         android:title="Atsijungti"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/profile"
-        android:title="Profilis"
-        app:showAsAction="never"/>
-
 
 </menu>

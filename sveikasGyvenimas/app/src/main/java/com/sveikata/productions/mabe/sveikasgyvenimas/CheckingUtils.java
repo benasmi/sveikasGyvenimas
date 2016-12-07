@@ -35,6 +35,8 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 
+import org.json.JSONArray;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -54,7 +56,18 @@ public class CheckingUtils {
 
     public static boolean show = true;
 
+    //Removes element from json array (non deprecated)
+    public static JSONArray RemoveJSONArray(JSONArray jarray, int pos) {
 
+        JSONArray Njarray = new JSONArray();
+        try {
+            for (int i = 0; i < jarray.length(); i++) {
+                if (i != pos)
+                    Njarray.put(jarray.get(i));
+            }
+        } catch (Exception e) {e.printStackTrace();}
+        return Njarray;
+    }
 
 
     public static boolean connectionToServer(String url, int timeout) {
