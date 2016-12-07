@@ -1703,10 +1703,10 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         protected Void doInBackground(Void... voids) {
             SharedPreferences prefs = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
 
-            if(prefs.getBoolean("isFirstTimeFaq", true)){
+//            if(prefs.getBoolean("isFirstTimeFaq", true)){
                 fetchFaqData();
-                prefs.edit().putBoolean("isFirstTimeFaq", false).commit();
-            }
+//                prefs.edit().putBoolean("isFirstTimeFaq", false).commit();
+//            }
 
             fetchScheduleData();
             fetchFinishedScheduleData();
