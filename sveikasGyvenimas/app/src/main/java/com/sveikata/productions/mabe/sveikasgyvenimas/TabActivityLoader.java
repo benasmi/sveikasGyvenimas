@@ -168,6 +168,14 @@ public class TabActivityLoader extends AppCompatActivity {
             }
         });
 
+        menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(TabActivityLoader.this, ProfileActivity.class));
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 

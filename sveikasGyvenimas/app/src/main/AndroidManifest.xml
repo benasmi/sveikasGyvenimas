@@ -101,7 +101,8 @@
             android:name=".SuicideActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".InsertFaqActivity"></activity>
+        <activity android:name=".InsertFaqActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>
