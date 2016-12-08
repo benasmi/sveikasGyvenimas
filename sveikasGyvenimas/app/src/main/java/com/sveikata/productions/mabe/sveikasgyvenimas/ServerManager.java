@@ -203,9 +203,9 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             gender = params[7];
             mail = params[8];
             type = params[9];
+            hometown = params[10];
 
             response = loginSocials(username_login,password_login, type, device_id);
-
         }
 
         if(method_type.equals("ACCEPT_CHALLENGE")) {
@@ -527,7 +527,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
                 //Failed to login with facebook or gmail
                 case 5:
-                    new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id);
+                    new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id, hometown);
                     break;
 
             }

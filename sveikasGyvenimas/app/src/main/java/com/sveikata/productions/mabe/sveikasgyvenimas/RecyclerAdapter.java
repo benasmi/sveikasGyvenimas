@@ -56,9 +56,7 @@ import java.util.HashMap;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 import uk.co.deanwild.materialshowcaseview.shape.RectangleShape;
 
-/**
- * Created by Martyno on 2016.09.10.
- */
+
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
 

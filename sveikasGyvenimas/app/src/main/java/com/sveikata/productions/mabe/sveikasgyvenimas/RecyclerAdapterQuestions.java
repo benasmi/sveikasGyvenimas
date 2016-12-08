@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,7 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                 holder.question_title.setText(data.getQuestionTitle());
                 holder.question_body.setText(data.getQuestionBody());
 
+
                 if(position%2==0){
                     holder.layout.startAnimation(animation);
                 }else{
@@ -145,16 +147,20 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
     public void onViewRecycled(ViewHolder holder) {
         super.onViewRecycled(holder);
 
-        float collapsedHeight = CheckingUtils.convertPixelsToDp(35, context);
+        float collapsedHeight = CheckingUtils.convertPixelsToDp(60, context);
 
         if(holder.layout != null){
             holder.isClicked = false;
             holder.arrow.setImageResource(R.drawable.arrow_down);
+            holder.layout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+//            Log.i("TEST", "TESTAS: " + holder.question_body.getText().toString());
             holder.layout.getLayoutParams().height = (int) collapsedHeight;
         }
 
         if(holder.layout_two != null) {
             holder.isClicked = false;
+//            holder.question_body_two.getLayoutParams().height = 0;
+//            holder.layout_two.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
             holder.arrow_two.setImageResource(R.drawable.arrow_down);
             holder.layout_two.getLayoutParams().height = (int) collapsedHeight;
         }
@@ -309,8 +315,8 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     //Ask pro
                     Typeface tf_txt = Typeface.createFromAsset(context.getAssets(), "fonts/comforta.ttf");
 
-//                    faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
-//                    faq_txt.setTypeface(tf_txt);
+                    faq_txt = (TextView) itemView.findViewById(R.id.faq_txt);
+                    faq_txt.setTypeface(tf_txt);
 
                     ask_pro = (GifImageView) itemView.findViewById(R.id.ask_pro);
 

@@ -111,9 +111,7 @@ public class InterestingFactsAdapter extends  RecyclerView.Adapter<InterestingFa
 
                 if(data.getFactSource().isEmpty()){
                     holder.fact_source.setText("Mūsų Facebook puslapis");
-                    holder.fact_source.setHint("www.facebook.com");
                 }else{
-                    holder.fact_source.setHint(data.getFactSource());
                     holder.fact_source.setText("Paspausk, kad sužinotum daugiau.");
                 }
 
