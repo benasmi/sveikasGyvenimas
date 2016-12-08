@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="specialists">
-        <item>Pasirink specialistą</item>
-        <item>Sveikatos specialistė</item>
-
+        <item>Klausk sveikatos specialisto</item>
+        <item>Klausk toksikologo</item>
+        <item>Klausk projekto vykdytojo</item>
     </string-array>
 
 

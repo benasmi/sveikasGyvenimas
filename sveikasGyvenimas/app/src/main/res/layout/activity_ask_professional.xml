@@ -14,17 +14,17 @@
 
     <EditText
         android:layout_width="375dp"
-        android:layout_height="90dp"
+        android:layout_height="170dp"
         android:id="@+id/email_message"
         android:background="@drawable/transparent_backgrounds"
         android:paddingLeft="7dp"
-        android:hint="Jūsų klausimas, pasirinktam specialistui"
+        android:hint="Jūsų klausimas, pasirinktam specialistui."
         android:textSize="15dp"
         android:textColor="#FFF1C40F"
         android:textColorHint="#eac73c"
         android:gravity="top|left"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/linearlayout" />
 
     <android.support.v7.widget.AppCompatButton
@@ -47,11 +47,11 @@
         android:layout_marginTop="10dp">
 
         <Spinner
-            android:layout_width="170dp"
             android:layout_height="35dp"
             android:id="@+id/spinner"
             android:background="@drawable/transparent_backgrounds"
-            android:paddingLeft="7dp" />
+            android:paddingLeft="7dp"
+            android:layout_width="375dp" />
 
     </LinearLayout>
 
@@ -65,19 +65,27 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="181dp"
-        android:layout_height="35dp"
-        android:id="@+id/subject_email"
-        android:background="@drawable/transparent_backgrounds"
-        android:paddingLeft="7dp"
-        android:textSize="15dp"
+    <TextView
+        android:text="Jūsų užduotas klausimas bus nusiųstas specialistui į paštą. Atsakymą gausite į elektroninį laišką, kurį panaudojote prisiregistruoajnt aplikacijoje."
+        android:layout_width="375dp"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/ask"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView15" />
 
-        android:textColor="#FFF1C40F"
-        android:textColorHint="#eac73c"
-        android:hint="Tema"
-        android:layout_alignTop="@+id/linearlayout"
-        android:layout_toRightOf="@+id/linearlayout"
-        android:layout_toEndOf="@+id/linearlayout" />
+    <TextView
+        android:text="*Toksikologas - nuodus, jų ypatybes, tiriantis specialistas."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textColor="#FFFFFF"
+        android:textSize="11dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView16" />
 
 </RelativeLayout>

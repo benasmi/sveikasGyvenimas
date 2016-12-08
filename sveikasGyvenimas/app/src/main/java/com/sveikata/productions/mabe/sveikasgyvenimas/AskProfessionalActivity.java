@@ -1,7 +1,11 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -11,15 +15,21 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class AskProfessionalActivity extends AppCompatActivity {
 
     //Button for user
     private AppCompatButton ask_button;
     private EditText message;
-    private EditText subject;
     private Spinner spinner;
+    private String sender;
     private Typeface tf;
     private TextView txt;
+    private SharedPreferences sharedPreferences;
+    private JSONArray jsonArray;
+    private JSONObject userData;
     public static String specialist = "Sveikatos specialistė";
 
 
@@ -28,6 +38,22 @@ public class AskProfessionalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_professional);
         CheckingUtils.changeNotifBarColor("#27382e", getWindow());
+        sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        String user_data = sharedPreferences.getString("user_data", "");
+
+        try{
+            jsonArray = new JSONArray(user_data);
+            userData = jsonArray.getJSONObject(0);
+            sender = userData.getString("mail");
+        }catch (Exception e){
+
+        }
+
+
+
+
+
+
 
         tf = Typeface.createFromAsset(getAssets(),"fonts/Verdana.ttf");
 
@@ -40,14 +66,12 @@ public class AskProfessionalActivity extends AppCompatActivity {
 
         //Sending email
         message = (EditText) findViewById(R.id.email_message);
-        subject = (EditText) findViewById(R.id.subject_email);
         txt = (TextView) findViewById(R.id.ask_new_question_txt);
         ask_button = (AppCompatButton) findViewById(R.id.ask);
         ask_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message_value = message.getText().toString().trim();
-                String subject_value = subject.getText().toString().trim();
                 String specialist = spinner.getSelectedItem().toString();
 
                 if(specialist.equals("Pasirink specialistą")){
@@ -56,7 +80,7 @@ public class AskProfessionalActivity extends AppCompatActivity {
                     return;
                 }
                 if(message_value.equals(null)){
-                    message.setError("Paklausk ko nors :D!");
+                    message.setError("Paklausk ko nors !)");
                     CheckingUtils.vibrate(AskProfessionalActivity.this, 100);
                     return;
                 }
@@ -67,28 +91,32 @@ public class AskProfessionalActivity extends AppCompatActivity {
                     return;
                 }
 
-                else if(specialist.equals(specialist)){
-                    String to [] = {"blaivusgyvenimas@gmail.com"};
-                    sendEmail(to,subject_value,message_value);
-                }
+                send_mail(specialist, message_value);
+
 
             }
         });
 
     }
 
-    public void sendEmail(String[] to, String subject, String message)
-    {
+    public void send_mail(final String subject, final String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Pabaigei pildyti savo klausimą :?")
+                .setPositiveButton("TAIP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new ServerManager(AskProfessionalActivity.this, "SEND_MAIL").execute("SEND_MAIL",subject, message, sender);
 
-        Intent intent =new Intent(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_EMAIL, to);
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, message);
-        intent.setType("message/rfc822");
-
-        Intent email = Intent.createChooser(intent,"Email");
-        this.startActivity(email);
-
+                    }
+                })
+                .setNegativeButton("DAR PATAISYSIU KLAUSIMĄ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        builder.show();
+        builder.create();
     }
 
 }

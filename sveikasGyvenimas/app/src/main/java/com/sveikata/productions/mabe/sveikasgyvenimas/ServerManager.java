@@ -84,7 +84,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     public static final String SERVER_ADDRESS_DELETE_FAQ = "http://dvp.lt/android/delete_faq.php";
     public static final String SERVER_ADDRESS_FINISH_EVENT = "http://dvp.lt/android/finish_event.php";
     public static final String SERVER_ADRESS_FETCH_SCHEDULE_FINISHED = "http://dvp.lt/android/fetch_finished_schedule.php";
-
+    public static final String SERVER_ADRESS_SEND_MAIL = "http://dvp.lt/android/send_mail.php";
 
     private String type;
     private String device_id;
@@ -203,6 +203,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             gender = params[7];
             mail = params[8];
             type = params[9];
+            hometown = params[10];
 
             response = loginSocials(username_login,password_login, type, device_id);
 
@@ -348,12 +349,22 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             finish_event(username, password, name, description);
 
         }
+        if(method_type.equals("SEND_MAIL")){
+            String subject = params[1];
+            String message = params[2];
+            String sender = params[3];
+
+            send_mail(subject, message, sender);
+        }
 
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
+
+
+
 
         if(method_type.equals("DELETE_FAQ")){
             try{
@@ -369,6 +380,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
 
         if (method_type.equals("REGISTRATION")) {
+            Log.i("TEST", response + "REGISTRATION");
             progressDialog.cancel();
             switch (response) {
                 case 0:
@@ -515,6 +527,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
         }
         if(method_type.equals("LOGIN_GMAIL_AND_REGISTER")){
             progressDialog.cancel();
+            Log.i("TEST", response + "LOGIN_GMAIL_AND_REGISTER");
             switch (response) {
                 case 0: //success login regular or other types
                     sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
@@ -527,7 +540,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
                 //Failed to login with facebook or gmail
                 case 5:
-                    new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id);
+                    new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id, hometown);
                     break;
 
             }
@@ -990,6 +1003,47 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             return 0;
         }
 
+
+    }
+    private int send_mail(String subject, String message, String sender) {
+
+        //Connect to mysql.
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(SERVER_ADRESS_SEND_MAIL);
+
+
+        //JSON object.
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.putOpt("subject", subject);
+            jsonObject.putOpt("message", message);
+            jsonObject.putOpt("sender", sender);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+        ContentType content_type = ContentType.create(HTTP.PLAIN_TEXT_TYPE, HTTP.UTF_8);
+        entity.addTextBody("json", jsonObject.toString(), content_type);
+        httpPost.setEntity(entity.build());
+
+        JSONObject responseObject = null;
+
+        try {
+            //Getting response
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseBody = EntityUtils.toString(response.getEntity());
+            System.err.println(responseBody);
+            responseObject = new JSONObject(responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return 0;
 
     }
 

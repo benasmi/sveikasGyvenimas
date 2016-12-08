@@ -91,7 +91,14 @@ public class AskQuestionsActivity extends android.support.v4.app.Fragment{
 
             for(int i = 0; i < faqData.length(); i++){
                 JSONObject obj = faqData.getJSONObject(i);
-                adapter.add(new QuestionsDataHolder(obj.getString("faq_title"), obj.getString("faq_body"), 2), 0);
+                String title = obj.getString("faq_title");
+                String body = obj.getString("faq_body");
+
+
+                adapter.add(new QuestionsDataHolder(title,body, 2), 0);
+
+
+
             }
 
         } catch (JSONException e) {
