@@ -79,6 +79,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient-4.3.jar"
     }
+    compile 'com.cloudrail:cloudrail-si-android:2.11.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

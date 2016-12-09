@@ -8,8 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -363,11 +367,41 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void aVoid) {
 
 
-
-
         if(method_type.equals("DELETE_FAQ")){
             try{
                 progressDialog.cancel();
+            }catch(Exception e){
+
+            }
+        }
+        if(method_type.equals("SEND_MAIL")){
+            try{
+
+                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                    new AlertDialog.Builder(context, R.style.CasualStyle)
+                            .setMessage("Laiškas išsiųstas. Su jumis bus susisiekta per el. paštą.")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Gerai", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startFetchingData(3, true);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }else{
+                    new AlertDialog.Builder(context)
+                            .setMessage("Laiškas išsiųstas. Su jumis bus susisiekta per el. paštą.")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton("Gerai", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startFetchingData(3, true);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
             }catch(Exception e){
 
             }
@@ -392,8 +426,8 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                 case 3:
                     CheckingUtils.createErrorBox("Nejaugi gaila mobilių?", context, R.style.ScheduleDialogStyle);
                     break;
-                case 4:
 
+                case 4:
                     sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", username_register);
@@ -525,10 +559,11 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
         }
         if(method_type.equals("LOGIN_GMAIL_AND_REGISTER")){
-            progressDialog.cancel();
             Log.i("TEST", response + "LOGIN_GMAIL_AND_REGISTER");
             switch (response) {
                 case 0: //success login regular or other types
+                    progressDialog.cancel();
+
                     sharedPreferences = context.getSharedPreferences("DataPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", username_login);
@@ -539,7 +574,51 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
                 //Failed to login with facebook or gmail
                 case 5:
-                    new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id, hometown);
+
+                    final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+                    if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationListener() {
+                            @Override
+                            public void onLocationChanged(Location location) {
+                                double longtitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLongitude();
+                                double latitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLatitude();
+
+                                try {
+                                    hometown = CheckingUtils.address(longtitude, latitude, context);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id, hometown);
+//
+                                progressDialog.cancel();
+//
+                            }
+
+                            @Override
+                            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                            }
+
+                            @Override
+                            public void onProviderEnabled(String provider) {
+
+                            }
+
+                            @Override
+                            public void onProviderDisabled(String provider) {
+
+                            }
+                        }, null);
+
+                    }else{
+                        CheckingUtils.buildAlertMessageNoGps("Trumpam įjunk GPS, nes jis reikalingas statistiniams duomenims. Nesijaudink, neatvažiuosime :)", context, R.style.ScheduleDialogStyle);
+                        progressDialog.cancel();
+
+                    }
+
+
                     break;
 
             }

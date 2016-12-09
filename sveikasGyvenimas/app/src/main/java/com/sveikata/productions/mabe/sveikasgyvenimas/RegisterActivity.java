@@ -228,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
         String token = sharedPrefs.getString("device_id", "");
 
         try {
-            hometown = address(longtitude, latitude);
+            hometown = CheckingUtils.address(longtitude, latitude, this);
             Log.i("TEST", hometown);
         } catch (Exception e) {
             e.printStackTrace();
@@ -241,18 +241,5 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class).putExtra("isAnimDisabled", false));
     }
 
-
-    public String address(double longtitude, double latitude) throws Exception{
-
-
-        Geocoder geocoder;
-        List<Address> addressList;
-        geocoder = new Geocoder(this, Locale.getDefault());
-        addressList = geocoder.getFromLocation(latitude,longtitude,1);
-
-        return addressList.get(0).getLocality();
-
-
-    }
 
 }

@@ -40,7 +40,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ask_new_question_txt"
         android:id="@+id/linearlayout"
@@ -51,7 +51,7 @@
             android:id="@+id/spinner"
             android:background="@drawable/transparent_backgrounds"
             android:paddingLeft="7dp"
-            android:layout_width="375dp" />
+            android:layout_width="match_parent"/>
 
     </LinearLayout>
 

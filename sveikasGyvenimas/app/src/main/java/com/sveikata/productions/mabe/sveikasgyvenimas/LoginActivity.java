@@ -1,8 +1,11 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cloudrail.si.CloudRail;
+import com.cloudrail.si.services.Facebook;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -74,9 +79,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Facebook init
+        CloudRail.setAppKey("584ae79ab4c211193a8472d9");
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
+
 
 
 
@@ -157,66 +164,115 @@ public class LoginActivity extends AppCompatActivity {
 
     //Login with facebook
     public void onfbClick(View view) {
-        callbackManager = CallbackManager.Factory.create();
+//        callbackManager = CallbackManager.Factory.create();
+//
+//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_hometown", "user_birthday"));
+//        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//
+//
+//            @Override
+//            public void onSuccess(final LoginResult loginResult) {
+//                AccessToken accessToken = loginResult.getAccessToken();
+//                Profile profile = Profile.getCurrentProfile();
+//
+//                Bundle parameters = new Bundle();
+//                parameters.putString("fields", "first_name,last_name,email,gender,hometown,birthday");
+//
+//                GraphRequest request = GraphRequest.newMeRequest(
+//                        loginResult.getAccessToken(),
+//                        new GraphRequest.GraphJSONObjectCallback() {
+//                            @Override
+//                            public void onCompleted(JSONObject object, GraphResponse response) {
+//                                //Log.i("TEST", response.getError().toString());
+//
+//                                try {
+//                                    String name = object.getString("first_name");
+//                                    String last_name = object.getString("last_name");
+//                                    String username = object.getString("id");
+//                                    String password = loginResult.getAccessToken().getToken().toString();
+//                                    String mail = object.getString("email");
+//                                    String gender = object.getString("gender");
+//                                    String years = object.getString("birthday");
+//                                    JSONObject hometown = object.getJSONObject("hometown");
+//                                    String town = hometown.getString("name");
+//                                    String type = "facebook";
+//                                    String token = sharedPrefs.getString("device_id", "");
+//
+//                                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
+//
+//                                }catch (Exception e ){
+//                                    Log.i("TEST", "ERROR");
+//                                }
+//                            }
+//                        });
+//
+//
+//
+//                request.setParameters(parameters);
+//                request.executeAsync();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Log.i("TEST", "cancelTriggered");
+//            }
+//
+//            @Override
+//            public void onError(FacebookException exception) {
+//                Log.i("TEST", "errorTriggered");
+//                exception.printStackTrace();
+//
+//            }
+//        });
 
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","public_profile", "user_hometown", "user_birthday"));
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        new AsyncTask<String, String, String>(){
 
+            String username;
+            String password;
+            String mail;
+            String gender;
+            String years;
+            String town;
+            String type;
+            String name = "";
+            String last_name = "";
+            String token;
 
             @Override
-            public void onSuccess(final LoginResult loginResult) {
-                AccessToken accessToken = loginResult.getAccessToken();
-                Profile profile = Profile.getCurrentProfile();
+            protected String doInBackground(String... params) {
+                Facebook facebook = new Facebook(LoginActivity.this, getString(R.string.facebook_app_id), getString(R.string.facebook_secret));
 
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "first_name,last_name,email,gender,hometown,birthday");
+                for(int i = 0; i < facebook.getFullName().length(); i++){
+                    if(facebook.getFullName().charAt(i) == ' '){
+                        name = facebook.getFullName().substring(0, i);
+                        last_name = facebook.getFullName().substring(i, facebook.getFullName().length());
+                    }
+                }
 
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                //Log.i("TEST", response.getError().toString());
-
-                                try {
-                                    String name = object.getString("first_name");
-                                    String last_name = object.getString("last_name");
-                                    String username = object.getString("id");
-                                    String password = loginResult.getAccessToken().getToken().toString();
-                                    String mail = object.getString("email");
-                                    String gender = object.getString("gender");
-                                    String years = object.getString("birthday");
-                                    JSONObject hometown = object.getJSONObject("hometown");
-                                    String town = hometown.getString("name");
-                                    String type = "facebook";
-                                    String token = sharedPrefs.getString("device_id", "");
-                                    
-                                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
-
-                                }catch (Exception e ){
-                                    Log.i("TEST", "ERROR");
-                                }
-                            }
-                        });
-
-
-
-                request.setParameters(parameters);
-                request.executeAsync();
+                username = facebook.getFullName();
+                password = facebook.getIdentifier();
+                mail = facebook.getEmail();
+                gender = facebook.getGender();
+                years = facebook.getDateOfBirth().toString();
+                town = "Not available";
+                type = "facebook";
+                token = sharedPrefs.getString("device_id", "");
+                return null;
             }
 
             @Override
-            public void onCancel() {
-                Log.i("TEST", "cancelTriggered");
-            }
+            protected void onPostExecute(String s) {
+                try{
+                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
+                }catch(Exception e ){
 
-            @Override
-            public void onError(FacebookException exception) {
-                Log.i("TEST", "errorTriggered");
-                exception.printStackTrace();
+                }
 
+//                final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+                super.onPostExecute(s);
             }
-        });
+        }.execute();
 
     }
 
@@ -250,6 +306,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 }else{
                     Log.i("TEST", "ASFASFASFASSAASFASFFSA");
+                Log.i("TEST", result.toString());
                 }
 
             } else {

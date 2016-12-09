@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "114370283840-orbdbj3ukctc385p6q55dn9r12dho3g2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sveikata.productions.mabe.sveikasgyvenimas",
+            "certificate_hash": "5E5694A4EF47666D9B6BC75AA8B8479D44DC3788"
+          }
+        },
+        {
           "client_id": "114370283840-dpsnsqb720qh50tj44fge8cgeudm48n5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

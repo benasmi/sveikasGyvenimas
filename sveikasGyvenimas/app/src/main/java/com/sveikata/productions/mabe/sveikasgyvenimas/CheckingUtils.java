@@ -10,6 +10,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -46,6 +48,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -55,6 +58,22 @@ import java.util.Map;
 public class CheckingUtils {
 
     public static boolean show = true;
+
+
+
+    public static String address(double longtitude, double latitude, Context context) throws Exception{
+
+
+        Geocoder geocoder;
+        List<Address> addressList;
+        geocoder = new Geocoder(context, Locale.getDefault());
+        addressList = geocoder.getFromLocation(latitude,longtitude,1);
+
+        return addressList.get(0).getLocality();
+
+
+    }
+
 
     //Removes element from json array (non deprecated)
     public static JSONArray RemoveJSONArray(JSONArray jarray, int pos) {
@@ -176,6 +195,30 @@ public class CheckingUtils {
             }
         }
 
+
+    public static void createErroBoxWithServerManager(final Context context, int theme, String message, final  String... args){
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            new AlertDialog.Builder(context, theme)
+                    .setMessage(message)
+                    .setPositiveButton("Gerai", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            new ServerManager(context, args[0]).execute(args);
+                        }
+                    })
+                    .show();
+        }else{
+            new AlertDialog.Builder(context)
+                    .setMessage(message)
+                    .setPositiveButton("Gerai", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            new ServerManager(context, args[0]).execute(args);
+                        }
+                    })
+                    .show();
+        }
+    }
 
     public static void createBoxSuggestToFriend(final String message, final Context context, int theme) {
 

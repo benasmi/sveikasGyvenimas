@@ -2,6 +2,7 @@
     <string name="app_name">Aktyvuokis</string>
     <string name="years">Labas</string>
     <string name="facebook_app_id">758055920999143</string>
+    <string name="facebook_secret">d55427286fd7d886c2677493c13b2315</string>
     <string name="alkoholiku_klubas"><u>Anoniminė pagalba vartojantiems alkoholį</u>.</string>
     <string name="nuoroda"><u>Nori daugiau informacijos? Spausk čia!</u>.</string>
     <string name="bbc_dokumentika"><u>Visa tiesa apie alkoholį</u>.</string>
