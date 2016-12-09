@@ -69,9 +69,13 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPrefs;
     private SharedPreferences loginPrefs;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        //Facebook init
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
         super.onCreate(savedInstanceState);
 
 
@@ -114,9 +118,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        //Facebook init
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
+
+
 
         sharedPrefs = getSharedPreferences("UserData", MODE_PRIVATE);
         loginPrefs = getSharedPreferences("DataPrefs", MODE_PRIVATE);
@@ -173,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-//                                Log.i("TEST", response.getError().toString());
+                                //Log.i("TEST", response.getError().toString());
 
                                 try {
                                     String name = object.getString("first_name");
@@ -210,6 +213,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException exception) {
                 Log.i("TEST", "errorTriggered");
+                exception.printStackTrace();
 
             }
         });
@@ -241,7 +245,7 @@ public class LoginActivity extends AppCompatActivity {
                 String type = "gmail";
                 String token = sharedPrefs.getString("device_id", "");
 
-                new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name,years,gender,mail,type);
+                new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name,years,gender,mail,type, "Unknown");
                 firebaseAuthWithGoogle(account);
 
                 }else{

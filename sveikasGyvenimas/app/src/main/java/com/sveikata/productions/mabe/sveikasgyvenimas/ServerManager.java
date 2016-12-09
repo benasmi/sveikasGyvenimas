@@ -206,7 +206,6 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
             hometown = params[10];
 
             response = loginSocials(username_login,password_login, type, device_id);
-
         }
 
         if(method_type.equals("ACCEPT_CHALLENGE")) {
@@ -1778,7 +1777,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
             if(onfinishlistener == null){
                 context.startActivity(new Intent(context, TabActivityLoader.class).putExtra("Tab", tabAfterwards));
-                ((Activity) context).finish();
+                //((Activity) context).finish();
             }else{
                 onfinishlistener.onFinish(response);
             }
