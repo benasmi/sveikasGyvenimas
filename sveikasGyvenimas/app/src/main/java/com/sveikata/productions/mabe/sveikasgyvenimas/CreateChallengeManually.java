@@ -153,11 +153,5 @@ public class CreateChallengeManually extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
     }
 }

@@ -450,11 +450,6 @@ public class RecyclerAdapterQuestions extends  RecyclerView.Adapter<RecyclerAdap
                     });
             }
 
-
-
-
-
-
         }
     }
 

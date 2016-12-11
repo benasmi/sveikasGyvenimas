@@ -161,7 +161,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
                 holder.completed_challenge_description.setText(data.getChallengeDescription());
                 holder.completed_challenge_title.setText(data.getChallengeTitle());
                 holder.completed_challenge_note.setText("Pastaba:" +data.getChallengeNote());
-                holder.completed_challenge_sender.setText(data.getChallengeTitle());
+                holder.completed_challenge_sender.setText(data.getChallengeSender());
                 holder.completed_challenge_share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -175,7 +175,7 @@ public class PlayAdapter extends  RecyclerView.Adapter<PlayAdapter.ViewHolder> {
             case 4: //Challenge in progress layout
                 holder.challenge_in_progress_description.setText(data.getChallengeDescription());
                 holder.challenge_in_progress_title.setText(data.getChallengeTitle());
-                holder.challenge_in_progress_sender.setText(data.getChallengeTitle());
+                holder.challenge_in_progress_sender.setText(data.getChallengeSender());
                 holder.challenge_in_progress_note.setText("Pastaba:" +data.getChallengeNote());
                 countDownStart(holder.days_proggress, holder.hours_progress, holder.minutes_progress, holder.seconds_progress, data.getChallengeTime());
 
