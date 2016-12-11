@@ -242,30 +242,35 @@ public class LoginActivity extends AppCompatActivity {
             protected String doInBackground(String... params) {
                 Facebook facebook = new Facebook(LoginActivity.this, getString(R.string.facebook_app_id), getString(R.string.facebook_secret));
 
-                for(int i = 0; i < facebook.getFullName().length(); i++){
-                    if(facebook.getFullName().charAt(i) == ' '){
-                        name = facebook.getFullName().substring(0, i);
-                        last_name = facebook.getFullName().substring(i, facebook.getFullName().length());
+                try{
+                    for(int i = 0; i < facebook.getFullName().length(); i++){
+                        if(facebook.getFullName().charAt(i) == ' '){
+                            name = facebook.getFullName().substring(0, i);
+                            last_name = facebook.getFullName().substring(i, facebook.getFullName().length());
+                        }
                     }
+
+                    username = facebook.getFullName();
+                    password = facebook.getIdentifier();
+                    mail = facebook.getEmail();
+                    gender = facebook.getGender();
+                    years = facebook.getDateOfBirth().toString();
+                    town = "Not available";
+                    type = "facebook";
+                    token = sharedPrefs.getString("device_id", "");
+                    return null;
+
+                }catch (Exception e){
+                    return null;
                 }
 
-                username = facebook.getFullName();
-                password = facebook.getIdentifier();
-                mail = facebook.getEmail();
-                gender = facebook.getGender();
-                years = facebook.getDateOfBirth().toString();
-                town = "Not available";
-                type = "facebook";
-                token = sharedPrefs.getString("device_id", "");
-                return null;
             }
 
             @Override
             protected void onPostExecute(String s) {
-                try{
-                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
-                }catch(Exception e ){
 
+                if(years != null){
+                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
                 }
 
 //                final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
