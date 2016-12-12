@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="savivaldybe">
-        <item>Savivaldybė</item>
+        <item>Pasirinkti</item>
         <item>Akmenės R.</item>
         <!--<item>Alytaus m.</item>-->
         <item>Alytaus r.</item>
