@@ -1,8 +1,11 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,12 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -197,43 +202,51 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                longtitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLongitude();
-                latitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLatitude();
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        });
-
 
 
         SharedPreferences sharedPrefs = getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        String token = sharedPrefs.getString("device_id", "");
+        final String token = sharedPrefs.getString("device_id", "");
 
         try {
             hometown = CheckingUtils.address(longtitude, latitude, this);
-            Log.i("TEST", hometown);
+//            Log.i("TEST", hometown);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        new ServerManager(this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token, hometown);
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Pasirinkite savivaldybę, kurioje gyvenate");
+
+
+
+        final Spinner spin = new Spinner(this);
+
+        ArrayAdapter<CharSequence> spin_adapter = ArrayAdapter.createFromResource(RegisterActivity.this,
+                R.array.savivaldybe, R.layout.spinner_item_hometown);
+        spin_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) CheckingUtils.convertPixelsToDp(300, this)));
+        spin.setBackgroundColor(Color.parseColor("#FFDDE0E1"));
+        spin.setAdapter(spin_adapter);
+
+        builder.setView(spin);
+
+        builder.setPositiveButton("Pasirinkau", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(spin.getSelectedItemId() != 0){
+                    new ServerManager(RegisterActivity.this, "REGISTRATION").execute("REGISTRATION",name_value,last_name_value,username_value,password_value,mail_value,gender_value,years_value,"regular", token, spin.getSelectedItem().toString());
+                    dialog.cancel();
+                }else{
+                    dialog.cancel();
+                    Toast.makeText(RegisterActivity.this, "Prašome pasirinkti savivaldybę", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        builder.create();
+        builder.show();
+
 
     }
 

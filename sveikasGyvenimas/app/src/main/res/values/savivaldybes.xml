@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="savivaldybe">
+        <item>Savivaldybė</item>
+        <item>Akmenės R.</item>
+        <!--<item>Alytaus m.</item>-->
+        <item>Alytaus r.</item>
+        <item>Anykščių r.</item>
+        <item>Birštono s.</item>
+        <item>Biržų r.</item>
+        <item>Druskininkų s.</item>
+        <item>Elektrėnų r.</item>
+        <item>Ignalinos r.</item>
+        <item>Jonavos r.</item>
+        <item>Joniškio r.</item>
+        <item>Jurbarko r.</item>
+        <item>Kaišiadorių r.</item>
+        <item>Kalvarijos s.</item>
+        <!--<item>Kauno m.-->
+        <item>Kauno r.</item>
+        <item>Kazlų rūda</item>
+        <item>Kelmės r.</item>
+        <item>Kėdainių r.</item>
+        <!--<item>Klaipėdos m. </item>-->
+        <item>Klaipėdos r.</item>
+        <item>Kretingos r.</item>
+        <item>Kupiškio r.</item>
+        <item>Lazdijų r.</item>
+        <item>Marijampolės</item>
+        <item>Mažeikių r.</item>
+        <item>Molėtų r.</item>
+        <item>Neringos r</item>
+        <item>Pagėgių r.</item>
+        <item>Pakruojo r.</item>
+        <item>Palangos m.</item>
+        <!--<item>Panevėžio m.</item>-->
+        <item>Panevėžio r.</item>
+        <item>Pasvalio r.</item>
+        <item>Plungės r.</item>
+        <item>Prienų r.</item>
+        <item>Radviliškio r.</item>
+        <item>Raseinių r.</item>
+        <item>Rietavo r.</item>
+        <item>Rokiškio r.</item>
+        <item>Skuodo r.</item>
+        <item>Šakių r.</item>
+        <item>Šalčininkų r.</item>
+        <!--<item>Šiaulių m.</item>-->
+        <item>Šiaulių r.</item>
+        <item>Šilalės r.</item>
+        <item>Šilutės r.</item>
+        <item>Širvintų r.</item>
+        <item>Švenčionių r.</item>
+        <item>Tauragės r.</item>
+        <item>Telšių r.</item>
+        <item>Trakų r.</item>
+        <item>Ukmergės r.</item>
+        <item>Utenos r.</item>
+        <item>Varėnos r.</item>
+        <item>Vilkaviškio r.</item>
+        <!--<item>Vilniaus m.</item>-->
+        <item>Vilniaus r.</item>
+        <item>Visagino m.</item>
+        <item>Zarasų r.</item>
+    </string-array>
+</resources>

@@ -1,6 +1,9 @@
 package com.sveikata.productions.mabe.sveikasgyvenimas;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -11,8 +14,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -225,6 +230,8 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 
+
+
         new AsyncTask<String, String, String>(){
 
             String username;
@@ -255,7 +262,6 @@ public class LoginActivity extends AppCompatActivity {
                     mail = facebook.getEmail();
                     gender = facebook.getGender();
                     years = facebook.getDateOfBirth().toString();
-                    town = "Not available";
                     type = "facebook";
                     token = sharedPrefs.getString("device_id", "");
                     return null;
@@ -270,7 +276,7 @@ public class LoginActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
 
                 if(years != null){
-                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, town);
+                    new ServerManager(LoginActivity.this, "LOGIN_GMAIL_AND_REGISTER").execute("LOGIN_GMAIL_AND_REGISTER", username, password, token, name, last_name, years, gender, mail, type, "Unknown");
                 }
 
 //                final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -280,6 +286,8 @@ public class LoginActivity extends AppCompatActivity {
         }.execute();
 
     }
+
+
 
 
     @Override

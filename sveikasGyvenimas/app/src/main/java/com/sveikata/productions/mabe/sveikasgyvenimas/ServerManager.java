@@ -8,13 +8,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.internal.http.multipart.MultipartEntity;
@@ -574,51 +579,40 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
 
                 //Failed to login with facebook or gmail
                 case 5:
+                    progressDialog.cancel();
 
-                    final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-                    if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-                        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationListener() {
-                            @Override
-                            public void onLocationChanged(Location location) {
-                                double longtitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLongitude();
-                                double latitude = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER).getLatitude();
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Pasirinkite savivaldybę, kurioje gyvenate");
 
-                                try {
-                                    hometown = CheckingUtils.address(longtitude, latitude, context);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
 
-                                new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id, hometown);
-//
-                                progressDialog.cancel();
-//
+
+                    final Spinner spin = new Spinner(context);
+
+                    ArrayAdapter<CharSequence> spin_adapter = ArrayAdapter.createFromResource(context,
+                            R.array.savivaldybe, R.layout.spinner_item_hometown);
+                    spin_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spin.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    spin.setBackgroundColor(Color.parseColor("#FFDDE0E1"));
+                    spin.setAdapter(spin_adapter);
+
+                    builder.setView(spin);
+
+                    builder.setPositiveButton("Pasirinkau", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(spin.getSelectedItemId() != 0){
+                                new ServerManager(context,"REGISTRATION").execute("REGISTRATION", first_name,last_name,username_login,password_login,mail,gender,birthday,type, device_id, spin.getSelectedItem().toString());
+                                dialog.cancel();
+                            }else{
+                                dialog.cancel();
+                                Toast.makeText(context, "Prašome pasirinkti savivaldybę", Toast.LENGTH_LONG).show();
                             }
+                        }
+                    });
 
-                            @Override
-                            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                            }
-
-                            @Override
-                            public void onProviderEnabled(String provider) {
-
-                            }
-
-                            @Override
-                            public void onProviderDisabled(String provider) {
-
-                            }
-                        }, null);
-
-                    }else{
-                        CheckingUtils.buildAlertMessageNoGps("Trumpam įjunk GPS, nes jis reikalingas statistiniams duomenims. Nesijaudink, neatvažiuosime :)", context, R.style.ScheduleDialogStyle);
-                        progressDialog.cancel();
-
-                    }
-
-
+                    builder.create();
+                    builder.show();
                     break;
 
             }
