@@ -187,7 +187,7 @@
         android:layout_width="370dp"
         android:layout_height="50dp"
         android:background="@drawable/button_borders_green"
-        android:text="Registruotis !"
+        android:text="Tęsti registraciją!"
         android:id="@+id/register"
         android:textColor="#ffffff"
         android:onClick="register"

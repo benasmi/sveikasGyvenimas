@@ -593,7 +593,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                             R.array.savivaldybe, R.layout.spinner_item_hometown);
                     spin_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spin.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    spin.setBackgroundColor(Color.parseColor("#00796B"));
+                    spin.setBackgroundColor(Color.parseColor("#FF006B5E"));
                     spin.setAdapter(spin_adapter);
 
                     builder.setView(spin);
