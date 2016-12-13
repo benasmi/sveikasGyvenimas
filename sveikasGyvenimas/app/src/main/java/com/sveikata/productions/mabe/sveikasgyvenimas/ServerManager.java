@@ -582,7 +582,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                     progressDialog.cancel();
 
 
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.ScheduleDialogStyle);
                     builder.setMessage("Pasirinkite savivaldybę, kurioje gyvenate");
 
 
@@ -593,7 +593,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
                             R.array.savivaldybe, R.layout.spinner_item_hometown);
                     spin_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spin.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    spin.setBackgroundColor(Color.parseColor("#FFDDE0E1"));
+                    spin.setBackgroundColor(Color.parseColor("#00796B"));
                     spin.setAdapter(spin_adapter);
 
                     builder.setView(spin);

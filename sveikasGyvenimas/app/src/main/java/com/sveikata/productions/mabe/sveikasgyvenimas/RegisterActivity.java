@@ -215,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.ScheduleDialogStyle);
         builder.setMessage("Pasirinkite savivaldybę, kurioje gyvenate");
 
 
@@ -226,7 +226,7 @@ public class RegisterActivity extends AppCompatActivity {
                 R.array.savivaldybe, R.layout.spinner_item_hometown);
         spin_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) CheckingUtils.convertPixelsToDp(300, this)));
-        spin.setBackgroundColor(Color.parseColor("#FFDDE0E1"));
+        spin.setBackgroundColor(Color.parseColor("#00796B"));
         spin.setAdapter(spin_adapter);
 
         builder.setView(spin);
