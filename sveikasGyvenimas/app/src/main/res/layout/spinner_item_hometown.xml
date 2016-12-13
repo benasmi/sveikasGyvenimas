@@ -3,7 +3,7 @@
           android:id="@android:id/text1"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:textColorHint="#000000"
+          android:textColorHint="#ecf0f1"
           android:textSize="25dp"
           android:gravity="center"
-          android:textColor="#000000" />
+          android:textColor="#ecf0f1" />

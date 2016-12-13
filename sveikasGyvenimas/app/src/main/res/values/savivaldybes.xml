@@ -2,7 +2,7 @@
 <resources>
     <string-array name="savivaldybe">
         <item>Pasirinkti</item>
-        <item>Akmenės R.</item>
+        <item>Akmenės r.</item>
         <item>Alytaus m.</item>
         <item>Alytaus r.</item>
         <item>Anykščių r.</item>
@@ -18,7 +18,7 @@
         <item>Kalvarijos</item>
         <item>Kauno m.</item>
         <item>Kauno r.</item>
-        <item>Kazlų rūdos</item>
+        <item>Kazlų Rūdos</item>
         <item>Kelmės r.</item>
         <item>Kėdainių r.</item>
         <item>Klaipėdos m. </item>
@@ -29,7 +29,7 @@
         <item>Marijampolės</item>
         <item>Mažeikių r.</item>
         <item>Molėtų r.</item>
-        <item>Neringos r</item>
+        <item>Neringos</item>
         <item>Pagėgių</item>
         <item>Pakruojo r.</item>
         <item>Palangos m.</item>
