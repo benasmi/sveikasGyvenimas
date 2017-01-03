@@ -197,10 +197,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if(!CheckingUtils.isGpsEnabled(this)){
-            CheckingUtils.buildAlertMessageNoGps("Trumpam įjunkite GPS, reikalinga informacija statistiniams duomenims :)",this, R.style.ScheduleDialogStyle);
-            return;
-        }
 
 
 
