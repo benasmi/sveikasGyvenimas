@@ -115,7 +115,7 @@ public class ServerManager extends AsyncTask<String, Void, Void> {
     @Override
     protected void onPreExecute() {
         if(dialogType.equals("LOGIN")){
-            progressDialog = CheckingUtils.progressDialog(context,"1...2...3... Net nespėjai perskaityti, kad čia parašyta", R.style.ScheduleDialogStyle);
+            progressDialog = CheckingUtils.progressDialog(context,"1...2...3... Net nespėjai perskaityti, kas čia parašyta", R.style.ScheduleDialogStyle);
         }
         if(dialogType.equals("REGISTRATION")){
             progressDialog = CheckingUtils.progressDialog(context, "Tik išsaugom tavo duomenis", R.style.ScheduleDialogStyle);
